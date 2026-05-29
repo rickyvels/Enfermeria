@@ -9,37 +9,58 @@ body{
 }
 
 .card-hover{
-    transition:0.3s;
+    transition:0.3s ease;
 }
 
 .card-hover:hover{
-    transform:translateY(-5px);
+    transform:translateY(-8px) scale(1.02);
 }
 
 .input-style{
     width:100%;
     padding:16px;
     border:1px solid #cbd5e1;
-    border-radius:16px;
+    border-radius:18px;
     outline:none;
+    transition:0.3s;
+    background:white;
 }
 
 .input-style:focus{
     border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,0.1);
 }
 
 .btn-primary{
     width:100%;
-    background:#2563eb;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
     color:white;
     padding:16px;
     border:none;
-    border-radius:16px;
+    border-radius:18px;
     font-weight:600;
     cursor:pointer;
     transition:0.3s;
 }
 
 .btn-primary:hover{
-    background:#1d4ed8;
+    transform:translateY(-2px);
+    opacity:0.95;
+}
+
+.sidebar-item{
+    display:block;
+    padding:16px;
+    border-radius:18px;
+    transition:0.3s;
+}
+
+.sidebar-item:hover{
+    background:#f1f5f9;
+    transform:translateX(5px);
+}
+
+.glass{
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(10px);
 }
