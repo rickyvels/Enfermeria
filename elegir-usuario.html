@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Seleccionar Usuario</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="bg-slate-100 min-h-screen flex items-center justify-center">
+
+<div class="text-center">
+
+<h1 class="text-5xl font-bold mb-4">
+¿Quién eres?
+</h1>
+
+<p class="text-slate-500 mb-12">
+Selecciona tu tipo de usuario
+</p>
+
+<div class="grid grid-cols-2 gap-8">
+
+<div
+onclick="window.location.href='registro.html'"
+class="bg-white p-8 rounded-3xl shadow-lg w-[350px] cursor-pointer card-hover"
+>
+
+<div class="text-6xl mb-6">
+👩‍⚕️
+</div>
+
+<h2 class="text-2xl font-bold mb-4">
+Profesional de Enfermería
+</h2>
+
+<p class="text-slate-500">
+Enfermeros titulados con acceso completo.
+</p>
+
+</div>
+
+<div
+onclick="window.location.href='registro.html'"
+class="bg-white p-8 rounded-3xl shadow-lg w-[350px] cursor-pointer card-hover"
+>
+
+<div class="text-6xl mb-6">
+🎓
+</div>
+
+<h2 class="text-2xl font-bold mb-4">
+Estudiante / Practicante
+</h2>
+
+<p class="text-slate-500">
+Funciones académicas y prácticas supervisadas.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
