@@ -20,9 +20,16 @@
 
 <body class="bg-slate-100">
 
+<button
+onclick="history.back()"
+class="fixed top-6 left-6 z-50 bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition"
+>
+← Regresar
+</button>
+
 <div class="flex">
 
-<aside class="w-[260px] h-screen bg-white shadow-xl p-6">
+<aside class="w-[260px] min-h-screen bg-white shadow-xl p-6">
 
 <h1 class="text-3xl font-bold text-blue-600 mb-10">
 NurseCore
@@ -30,23 +37,23 @@ NurseCore
 
 <nav class="space-y-4">
 
-<a href="#" class="block p-4 rounded-2xl bg-blue-100 text-blue-700 font-semibold">
+<a href="#" class="sidebar-item bg-blue-100 text-blue-700 font-semibold">
 Dashboard
 </a>
 
-<a href="#" class="block p-4 rounded-2xl hover:bg-slate-100">
+<a href="#" class="sidebar-item">
 Casos Clínicos
 </a>
 
-<a href="#" class="block p-4 rounded-2xl hover:bg-slate-100">
+<a href="#" class="sidebar-item">
 Registro de Prácticas
 </a>
 
-<a href="#" class="block p-4 rounded-2xl hover:bg-slate-100">
+<a href="#" class="sidebar-item">
 Guías
 </a>
 
-<a href="#" class="block p-4 rounded-2xl hover:bg-slate-100">
+<a href="#" class="sidebar-item">
 Evaluaciones
 </a>
 
@@ -70,15 +77,17 @@ Panel académico y clínico
 
 </div>
 
-<div class="bg-white p-4 rounded-2xl shadow">
-🎓 Estudiante
+<div
+id="usuarioTexto"
+class="glass p-4 rounded-2xl shadow font-semibold"
+>
 </div>
 
 </div>
 
 <div class="grid grid-cols-4 gap-6">
 
-<div class="bg-white p-6 rounded-3xl shadow">
+<div class="bg-white p-6 rounded-3xl shadow-xl card-hover">
 
 <h3 class="text-slate-500">
 Casos Clínicos
@@ -90,7 +99,7 @@ Casos Clínicos
 
 </div>
 
-<div class="bg-white p-6 rounded-3xl shadow">
+<div class="bg-white p-6 rounded-3xl shadow-xl card-hover">
 
 <h3 class="text-slate-500">
 Prácticas
@@ -102,7 +111,7 @@ Prácticas
 
 </div>
 
-<div class="bg-white p-6 rounded-3xl shadow">
+<div class="bg-white p-6 rounded-3xl shadow-xl card-hover">
 
 <h3 class="text-slate-500">
 Guías
@@ -114,7 +123,7 @@ Guías
 
 </div>
 
-<div class="bg-white p-6 rounded-3xl shadow">
+<div class="bg-white p-6 rounded-3xl shadow-xl card-hover">
 
 <h3 class="text-slate-500">
 Evaluaciones
@@ -128,7 +137,7 @@ Evaluaciones
 
 </div>
 
-<div class="bg-white mt-10 p-8 rounded-3xl shadow">
+<div class="bg-white mt-10 p-8 rounded-3xl shadow-xl">
 
 <h3 class="text-2xl font-bold mb-6">
 Actividad reciente
@@ -136,15 +145,15 @@ Actividad reciente
 
 <div class="space-y-4">
 
-<div class="bg-slate-50 p-4 rounded-2xl">
+<div class="bg-slate-50 p-4 rounded-2xl hover:bg-slate-100 transition">
 Nuevo caso clínico disponible
 </div>
 
-<div class="bg-slate-50 p-4 rounded-2xl">
+<div class="bg-slate-50 p-4 rounded-2xl hover:bg-slate-100 transition">
 Práctica supervisada registrada
 </div>
 
-<div class="bg-slate-50 p-4 rounded-2xl">
+<div class="bg-slate-50 p-4 rounded-2xl hover:bg-slate-100 transition">
 Evaluación pendiente
 </div>
 
