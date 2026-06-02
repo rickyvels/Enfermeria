@@ -1,74 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Alertas Médicas</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alertas Médicas — NurseCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-
 <body class="bg-slate-100">
 
-<div class="p-10">
+    <div class="p-10">
 
-<h1 class="text-5xl font-bold text-slate-800 mb-10">
-Alertas Médicas
-</h1>
+        <div class="flex items-center gap-4 mb-8">
+            <button
+                onclick="history.back()"
+                class="bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition text-slate-700 font-medium"
+            >
+                ← Regresar
+            </button>
+        </div>
 
-<div class="space-y-6">
+        <h1 class="text-5xl font-bold text-slate-800 mb-10">Alertas Médicas</h1>
 
-<div class="bg-red-100 border-l-8 border-red-500 p-6 rounded-2xl">
+        <div class="space-y-6">
 
-<h2 class="text-2xl font-bold text-red-700 mb-2">
-Presión arterial elevada
-</h2>
+            <div class="bg-red-50 border-l-8 border-red-500 p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-red-700 mb-2">Presión arterial elevada</h2>
+                <p class="text-red-600">Paciente Juan Pérez presenta valores críticos.</p>
+            </div>
 
-<p class="text-red-600">
-Paciente Juan Pérez presenta valores críticos.
-</p>
+            <div class="bg-yellow-50 border-l-8 border-yellow-500 p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-yellow-700 mb-2">Medicación pendiente</h2>
+                <p class="text-yellow-700">Administración de Losartán programada para las 2:00 PM.</p>
+            </div>
 
-</div>
+            <div class="bg-blue-50 border-l-8 border-blue-500 p-6 rounded-2xl">
+                <h2 class="text-2xl font-bold text-blue-700 mb-2">Nuevo reporte clínico</h2>
+                <p class="text-blue-700">Se registró nueva evolución médica del paciente.</p>
+            </div>
 
-<div class="bg-yellow-100 border-l-8 border-yellow-500 p-6 rounded-2xl">
+        </div>
+    </div>
 
-<h2 class="text-2xl font-bold text-yellow-700 mb-2">
-Medicación pendiente
-</h2>
-
-<p class="text-yellow-700">
-Administración de Losartán programada para las 2:00 PM.
-</p>
-
-</div>
-
-<div class="bg-blue-100 border-l-8 border-blue-500 p-6 rounded-2xl">
-
-<h2 class="text-2xl font-bold text-blue-700 mb-2">
-Nuevo reporte clínico
-</h2>
-
-<p class="text-blue-700">
-Se registró nueva evolución médica del paciente.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<script src="app.js"></script>
-
+    <script src="app.js"></script>
 </body>
 </html>
