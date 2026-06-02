@@ -1,183 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Dashboard Profesional</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Profesional — NurseCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body class="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white">
 
-<div class="fixed top-[-200px] left-[-200px] w-[500px] h-[500px] bg-cyan-400 opacity-20 blur-[140px] rounded-full"></div>
+    <div class="fixed top-[-200px] left-[-200px] w-[500px] h-[500px] bg-cyan-400 opacity-20 blur-[140px] rounded-full"></div>
+    <div class="fixed bottom-[-200px] right-[-200px] w-[500px] h-[500px] bg-blue-700 opacity-20 blur-[140px] rounded-full"></div>
 
-<div class="fixed bottom-[-200px] right-[-200px] w-[500px] h-[500px] bg-blue-700 opacity-20 blur-[140px] rounded-full"></div>
+    <button
+        onclick="history.back()"
+        class="fixed top-6 left-6 z-50 glass px-5 py-3 rounded-2xl hover:scale-105"
+    >
+        ← Regresar
+    </button>
 
-<button
-onclick="history.back()"
-class="fixed top-6 left-6 z-50 glass px-5 py-3 rounded-2xl hover:scale-105"
->
-← Regresar
-</button>
+    <div class="flex relative z-10">
 
-<div class="flex relative z-10">
+        <aside class="w-[280px] min-h-screen bg-white/10 backdrop-blur-xl border-r border-white/10 p-6">
+            <h1 class="text-4xl font-extrabold title-gradient mb-12">NurseCore</h1>
+            <nav class="space-y-4">
+                <a href="dashboard-profesional.html" class="sidebar-item bg-white/10 text-cyan-300">🏠 Dashboard</a>
+                <a href="perfil-paciente.html" class="sidebar-item">🧑‍⚕️ Pacientes</a>
+                <a href="signos-vitales.html" class="sidebar-item">❤️ Signos Vitales</a>
+                <a href="medicamentos.html" class="sidebar-item">💊 Medicación</a>
+                <a href="alertas.html" class="sidebar-item">🚨 Alertas</a>
+                <a href="historial-clinico.html" class="sidebar-item">📋 Historial Clínico</a>
+                <a href="kardex.html" class="sidebar-item">📑 Kardex</a>
+            </nav>
+        </aside>
 
-<aside class="w-[280px] min-h-screen bg-white/10 backdrop-blur-xl border-r border-white/10 p-6">
+        <main class="flex-1 p-10">
 
-<h1 class="text-4xl font-extrabold title-gradient mb-12">
-NurseCore
-</h1>
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h2 class="text-6xl font-extrabold title-gradient">Dashboard</h2>
+                    <p class="text-blue-200 mt-3 text-lg">Bienvenido al sistema inteligente NurseCore</p>
+                </div>
+                <div id="usuarioTexto" class="glass px-6 py-4 rounded-2xl shadow-xl font-semibold glow"></div>
+            </div>
 
-<nav class="space-y-4">
+            <div class="grid grid-cols-4 gap-7">
+                <div class="glass glow p-7 rounded-3xl card-hover soft-border">
+                    <h3 class="text-blue-200 text-lg">Pacientes</h3>
+                    <p class="text-5xl font-extrabold text-cyan-300 mt-4">32</p>
+                </div>
+                <div class="glass glow p-7 rounded-3xl card-hover soft-border">
+                    <h3 class="text-blue-200 text-lg">Alertas</h3>
+                    <p class="text-5xl font-extrabold text-red-400 mt-4">5</p>
+                </div>
+                <div class="glass glow p-7 rounded-3xl card-hover soft-border">
+                    <h3 class="text-blue-200 text-lg">Medicamentos</h3>
+                    <p class="text-5xl font-extrabold text-green-400 mt-4">14</p>
+                </div>
+                <div class="glass glow p-7 rounded-3xl card-hover soft-border">
+                    <h3 class="text-blue-200 text-lg">Reportes</h3>
+                    <p class="text-5xl font-extrabold text-purple-400 mt-4">7</p>
+                </div>
+            </div>
 
-<a href="#" class="sidebar-item bg-white/10 text-cyan-300">
-🏠 Dashboard
-</a>
+            <div class="glass soft-border mt-12 p-8 rounded-3xl shadow-2xl">
+                <h3 class="text-3xl font-bold mb-8">Actividad reciente</h3>
+                <div class="space-y-5">
+                    <div class="bg-white/5 hover:bg-white/10 p-5 rounded-2xl">🧑‍⚕️ Se registró un nuevo paciente</div>
+                    <div class="bg-white/5 hover:bg-white/10 p-5 rounded-2xl">💊 Administración de Paracetamol completada</div>
+                    <div class="bg-white/5 hover:bg-white/10 p-5 rounded-2xl">🚨 Alerta de glucosa pendiente</div>
+                </div>
+            </div>
 
-<a href="perfil-paciente.html" class="sidebar-item">
-🧑‍⚕️ Pacientes
-</a>
+        </main>
+    </div>
 
-<a href="signos-vitales.html" class="sidebar-item">
-❤️ Signos Vitales
-</a>
-
-<a href="medicamentos.html" class="sidebar-item">
-💊 Medicación
-</a>
-
-<a href="alertas.html" class="sidebar-item">
-🚨 Alertas
-</a>
-
-<a href="historial-clinico.html" class="sidebar-item">
-📋 Historial Clínico
-</a>
-
-<a href="kardex.html" class="sidebar-item">
-📑 Kardex
-</a>
-
-</nav>
-
-</aside>
-
-<main class="flex-1 p-10">
-
-<div class="flex justify-between items-center mb-12">
-
-<div>
-
-<h2 class="text-6xl font-extrabold title-gradient">
-Dashboard
-</h2>
-
-<p class="text-blue-200 mt-3 text-lg">
-Bienvenido al sistema inteligente NurseCore
-</p>
-
-</div>
-
-<div
-id="usuarioTexto"
-class="glass px-6 py-4 rounded-2xl shadow-xl font-semibold glow"
->
-</div>
-
-</div>
-
-<div class="grid grid-cols-4 gap-7">
-
-<div class="glass glow p-7 rounded-3xl card-hover soft-border">
-
-<h3 class="text-blue-200 text-lg">
-Pacientes
-</h3>
-
-<p class="text-5xl font-extrabold text-cyan-300 mt-4">
-32
-</p>
-
-</div>
-
-<div class="glass glow p-7 rounded-3xl card-hover soft-border">
-
-<h3 class="text-blue-200 text-lg">
-Alertas
-</h3>
-
-<p class="text-5xl font-extrabold text-red-400 mt-4">
-5
-</p>
-
-</div>
-
-<div class="glass glow p-7 rounded-3xl card-hover soft-border">
-
-<h3 class="text-blue-200 text-lg">
-Medicamentos
-</h3>
-
-<p class="text-5xl font-extrabold text-green-400 mt-4">
-14
-</p>
-
-</div>
-
-<div class="glass glow p-7 rounded-3xl card-hover soft-border">
-
-<h3 class="text-blue-200 text-lg">
-Reportes
-</h3>
-
-<p class="text-5xl font-extrabold text-purple-400 mt-4">
-7
-</p>
-
-</div>
-
-</div>
-
-<div class="glass soft-border mt-12 p-8 rounded-3xl shadow-2xl">
-
-<h3 class="text-3xl font-bold mb-8">
-Actividad reciente
-</h3>
-
-<div class="space-y-5">
-
-<div class="bg-white/5 hover:bg-white/10 p-5 rounded-2xl">
-🧑‍⚕️ Se registró un nuevo paciente
-</div>
-
-<div class="bg-white/5 hover:bg-white/10 p-5 rounded-2xl">
-💊 Administración de Paracetamol completada
-</div>
-
-<div class="bg-white/5 hover:bg-white/10 p-5 rounded-2xl">
-🚨 Alerta de glucosa pendiente
-</div>
-
-</div>
-
-</div>
-
-</main>
-
-</div>
-
-<script src="app.js"></script>
-
+    <script src="app.js"></script>
 </body>
 </html>
