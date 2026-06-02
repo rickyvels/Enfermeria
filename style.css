@@ -1,153 +1,154 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     transition:
-    background 0.3s ease,
-    transform 0.3s ease,
-    opacity 0.3s ease,
-    border 0.3s ease,
-    box-shadow 0.3s ease;
+        background 0.3s ease,
+        transform 0.3s ease,
+        opacity 0.3s ease,
+        border 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
-body{
-    font-family:'Inter', sans-serif;
-    overflow-x:hidden;
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
 
-.card-hover:hover{
-    transform:
-    translateY(-10px)
-    scale(1.03);
+/* ─── CARDS ─────────────────────────────────────── */
+.card-hover:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
 
+/* ─── INPUTS DARK (dashboard profesional) ───────── */
+.input-style {
+    width: 100%;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.input-style::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.input-style:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+}
+
+/* ─── INPUTS LIGHT (login, registro, perfiles) ─── */
+.input-light {
+    width: 100%;
+    padding: 18px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 20px;
+    outline: none;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+.input-light::placeholder {
+    color: #94a3b8;
+}
+
+.input-light:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+    background: #ffffff;
+}
+
+/* ─── BOTÓN PRIMARIO ────────────────────────────── */
+.btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    color: white;
+    padding: 18px;
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+}
+
+/* ─── SIDEBAR DARK (dashboard profesional) ──────── */
+.sidebar-item {
+    display: block;
+    padding: 16px 18px;
+    border-radius: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(6px);
+    color: white;
+}
+
+/* ─── SIDEBAR LIGHT (dashboard estudiante) ──────── */
+.sidebar-item-light {
+    display: block;
+    padding: 16px 18px;
+    border-radius: 18px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.sidebar-item-light:hover {
+    background: #f1f5f9;
+    transform: translateX(6px);
+    color: #1e293b;
+}
+
+.sidebar-item-light.active {
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+/* ─── GLASS / GLOW / EFECTOS ────────────────────── */
+.glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glow {
     box-shadow:
-    0 20px 40px rgba(0,0,0,0.35);
+        0 0 25px rgba(56, 189, 248, 0.25),
+        0 0 60px rgba(37, 99, 235, 0.18);
 }
 
-.input-style{
-    width:100%;
-    padding:18px;
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:20px;
-    outline:none;
-
-    background:rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(12px);
-
-    color:#0f172a;
-
-    font-size:15px;
+.title-gradient {
+    background: linear-gradient(to right, #67e8f9, #60a5fa, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.input-style::placeholder{
-    color:rgba(255,255,255,0.5);
+.soft-border {
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.input-style:focus{
-
-    border-color:#38bdf8;
-
-    box-shadow:
-    0 0 0 4px rgba(56,189,248,0.15);
-}
-
-.btn-primary{
-
-    width:100%;
-
-    background:
-    linear-gradient(
-    135deg,
-    #38bdf8,
-    #2563eb
-    );
-
-    color:white;
-
-    padding:18px;
-
-    border:none;
-
-    border-radius:20px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    letter-spacing:0.5px;
-}
-
-.btn-primary:hover{
-
-    transform:
-    translateY(-3px)
-    scale(1.01);
-
-    box-shadow:
-    0 15px 30px rgba(37,99,235,0.4);
-}
-
-.sidebar-item{
-
-    display:block;
-
-    padding:16px 18px;
-
-    border-radius:18px;
-
-    color:rgba(255,255,255,0.8);
-
-    text-decoration:none;
-
-    font-weight:500;
-}
-
-.sidebar-item:hover{
-
-    background:rgba(255,255,255,0.08);
-
-    transform:translateX(6px);
-
-    color:white;
-}
-
-.glass{
-
-    background:rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,0.08);
-}
-
-.glow{
-
-    box-shadow:
-    0 0 25px rgba(56,189,248,0.25),
-    0 0 60px rgba(37,99,235,0.18);
-}
-
-.title-gradient{
-
-    background:
-    linear-gradient(
-    to right,
-    #67e8f9,
-    #60a5fa,
-    #2563eb
-    );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
-}
-
-.soft-border{
-    border:1px solid rgba(255,255,255,0.08);
-}
-
-.blur-bg{
-    backdrop-filter:blur(20px);
+.blur-bg {
+    backdrop-filter: blur(20px);
 }
