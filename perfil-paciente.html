@@ -1,128 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Perfil Paciente</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Paciente — NurseCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-
 <body class="bg-slate-100">
 
-<div class="p-10">
+    <div class="p-10">
 
-<div class="bg-white rounded-3xl shadow-xl p-10">
+        <div class="flex items-center gap-4 mb-8">
+            <button
+                onclick="history.back()"
+                class="bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition text-slate-700 font-medium"
+            >
+                ← Regresar
+            </button>
+            <span class="text-slate-400">Dashboard → Pacientes</span>
+        </div>
 
-<div class="flex justify-between items-center mb-10">
+        <div class="bg-white rounded-3xl shadow-xl p-10">
 
-<div>
+            <div class="flex justify-between items-center mb-10">
+                <div>
+                    <h1 class="text-5xl font-bold text-slate-800">Juan Pérez</h1>
+                    <p class="text-slate-500 mt-2">Paciente Hospitalizado</p>
+                </div>
+                <div class="bg-blue-100 text-blue-700 px-6 py-3 rounded-2xl font-semibold">Activo</div>
+            </div>
 
-<h1 class="text-5xl font-bold text-slate-800">
-Juan Pérez
-</h1>
+            <div class="grid grid-cols-2 gap-8">
 
-<p class="text-slate-500 mt-2">
-Paciente Hospitalizado
-</p>
+                <div class="bg-slate-50 p-6 rounded-3xl">
+                    <h2 class="text-2xl font-bold mb-5">Información General</h2>
+                    <div class="space-y-4 text-slate-600">
+                        <p><strong>DNI:</strong> 74281934</p>
+                        <p><strong>Edad:</strong> 45 años</p>
+                        <p><strong>Sexo:</strong> Masculino</p>
+                        <p><strong>Historia Clínica:</strong> HC-2026-120</p>
+                    </div>
+                </div>
 
-</div>
+                <div class="bg-slate-50 p-6 rounded-3xl">
+                    <h2 class="text-2xl font-bold mb-5">Diagnóstico</h2>
+                    <p class="text-slate-600 leading-7">
+                        Paciente con hipertensión arterial y control de glucosa.
+                    </p>
+                </div>
 
-<div class="bg-blue-100 text-blue-700 px-6 py-3 rounded-2xl font-semibold">
-Activo
-</div>
+            </div>
 
-</div>
+            <div class="mt-10">
+                <h2 class="text-3xl font-bold mb-6">Medicamentos</h2>
+                <div class="space-y-4">
+                    <div class="bg-slate-50 p-5 rounded-2xl flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-slate-800">Paracetamol</h3>
+                            <p class="text-slate-500">500mg</p>
+                        </div>
+                        <span class="text-green-600 font-semibold bg-green-50 px-4 py-2 rounded-xl">Administrado</span>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-slate-800">Losartán</h3>
+                            <p class="text-slate-500">50mg</p>
+                        </div>
+                        <span class="text-yellow-600 font-semibold bg-yellow-50 px-4 py-2 rounded-xl">Pendiente</span>
+                    </div>
+                </div>
+            </div>
 
-<div class="grid grid-cols-2 gap-8">
+        </div>
+    </div>
 
-<div class="bg-slate-50 p-6 rounded-3xl">
-
-<h2 class="text-2xl font-bold mb-5">
-Información General
-</h2>
-
-<div class="space-y-4 text-slate-600">
-
-<p><strong>DNI:</strong> 74281934</p>
-
-<p><strong>Edad:</strong> 45 años</p>
-
-<p><strong>Sexo:</strong> Masculino</p>
-
-<p><strong>Historia Clínica:</strong> HC-2026-120</p>
-
-</div>
-
-</div>
-
-<div class="bg-slate-50 p-6 rounded-3xl">
-
-<h2 class="text-2xl font-bold mb-5">
-Diagnóstico
-</h2>
-
-<p class="text-slate-600 leading-7">
-Paciente con hipertensión arterial y control de glucosa.
-</p>
-
-</div>
-
-</div>
-
-<div class="bg-white mt-10">
-
-<h2 class="text-3xl font-bold mb-6">
-Medicamentos
-</h2>
-
-<div class="space-y-4">
-
-<div class="bg-slate-50 p-5 rounded-2xl flex justify-between">
-
-<div>
-<h3 class="font-bold">Paracetamol</h3>
-<p class="text-slate-500">500mg</p>
-</div>
-
-<span class="text-green-600 font-semibold">
-Administrado
-</span>
-
-</div>
-
-<div class="bg-slate-50 p-5 rounded-2xl flex justify-between">
-
-<div>
-<h3 class="font-bold">Losartán</h3>
-<p class="text-slate-500">50mg</p>
-</div>
-
-<span class="text-yellow-500 font-semibold">
-Pendiente
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<script src="app.js"></script>
-
+    <script src="app.js"></script>
 </body>
 </html>
