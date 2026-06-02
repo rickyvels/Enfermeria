@@ -1,112 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Medicamentos</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicamentos — NurseCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-
 <body class="bg-slate-100">
 
-<div class="p-10">
+    <div class="p-10">
 
-<div class="flex justify-between items-center mb-10">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex items-center gap-4">
+                <button
+                    onclick="history.back()"
+                    class="bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition text-slate-700 font-medium"
+                >
+                    ← Regresar
+                </button>
+                <h1 class="text-5xl font-bold text-slate-800">Medicamentos</h1>
+            </div>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-2xl font-semibold">
+                + Nuevo Medicamento
+            </button>
+        </div>
 
-<h1 class="text-5xl font-bold text-slate-800">
-Medicamentos
-</h1>
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <table class="w-full">
+                <thead class="bg-blue-600 text-white">
+                    <tr>
+                        <th class="p-5 text-left">Medicamento</th>
+                        <th class="p-5 text-left">Dosis</th>
+                        <th class="p-5 text-left">Frecuencia</th>
+                        <th class="p-5 text-left">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="p-5 text-slate-800">Paracetamol</td>
+                        <td class="p-5 text-slate-600">500mg</td>
+                        <td class="p-5 text-slate-600">Cada 8h</td>
+                        <td class="p-5">
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-lg font-semibold text-sm">Administrado</span>
+                        </td>
+                    </tr>
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="p-5 text-slate-800">Losartán</td>
+                        <td class="p-5 text-slate-600">50mg</td>
+                        <td class="p-5 text-slate-600">Cada 12h</td>
+                        <td class="p-5">
+                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-lg font-semibold text-sm">Pendiente</span>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-5 text-slate-800">Omeprazol</td>
+                        <td class="p-5 text-slate-600">20mg</td>
+                        <td class="p-5 text-slate-600">Diario</td>
+                        <td class="p-5">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg font-semibold text-sm">Programado</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-<button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-2xl font-semibold">
-+ Nuevo Medicamento
-</button>
+    </div>
 
-</div>
-
-<div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-
-<table class="w-full">
-
-<thead class="bg-blue-600 text-white">
-
-<tr>
-
-<th class="p-5 text-left">Medicamento</th>
-
-<th class="p-5 text-left">Dosis</th>
-
-<th class="p-5 text-left">Frecuencia</th>
-
-<th class="p-5 text-left">Estado</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr class="border-b">
-
-<td class="p-5">Paracetamol</td>
-
-<td class="p-5">500mg</td>
-
-<td class="p-5">Cada 8h</td>
-
-<td class="p-5 text-green-600 font-semibold">
-Administrado
-</td>
-
-</tr>
-
-<tr class="border-b">
-
-<td class="p-5">Losartán</td>
-
-<td class="p-5">50mg</td>
-
-<td class="p-5">Cada 12h</td>
-
-<td class="p-5 text-yellow-500 font-semibold">
-Pendiente
-</td>
-
-</tr>
-
-<tr>
-
-<td class="p-5">Omeprazol</td>
-
-<td class="p-5">20mg</td>
-
-<td class="p-5">Diario</td>
-
-<td class="p-5 text-blue-600 font-semibold">
-Programado
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-<script src="app.js"></script>
-
+    <script src="app.js"></script>
 </body>
 </html>
