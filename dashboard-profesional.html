@@ -5,177 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Profesional — NurseCore</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         body {
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #042f2e 0%, #0f3d3a 30%, #134e4a 60%, #0f3d3a 100%);
             min-height: 100vh;
         }
-        .orb-1 {
-            position: fixed; top: -180px; left: -180px;
-            width: 480px; height: 480px;
-            background: radial-gradient(circle, #2dd4bf55, transparent 70%);
-            border-radius: 50%; pointer-events: none;
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-        .orb-2 {
-            position: fixed; bottom: -180px; right: -100px;
-            width: 420px; height: 420px;
-            background: radial-gradient(circle, #0d948855, transparent 70%);
-            border-radius: 50%; pointer-events: none;
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: rgba(153, 246, 228, 0.7);
+            transition: all 0.2s;
         }
-        .orb-3 {
-            position: fixed; top: 40%; right: 15%;
-            width: 260px; height: 260px;
-            background: radial-gradient(circle, #99f6e422, transparent 70%);
-            border-radius: 50%; pointer-events: none;
-        }
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-top: 12px;
+        .sidebar-item:hover, .sidebar-item.active {
+            background: rgba(45, 212, 191, 0.1);
+            color: #2dd4bf;
         }
     </style>
 </head>
-<body class="text-white">
+<body class="text-white relative overflow-x-hidden">
 
-    <div class="orb-1"></div>
-    <div class="orb-2"></div>
-    <div class="orb-3"></div>
+    <div class="fixed -top-[180px] -left-[180px] w-[480px] height-[480px] bg-teal-400/20 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="fixed -bottom-[180px] -right-[100px] w-[420px] height-[420px] bg-teal-600/20 rounded-full blur-[90px] pointer-events-none"></div>
 
-    <div class="flex relative z-10">
+    <div class="flex relative z-10 min-h-screen">
 
-        <!-- SIDEBAR -->
-        <aside class="w-[270px] min-h-screen flex-shrink-0"
-               style="background: rgba(4,47,46,0.7); backdrop-filter: blur(24px); border-right: 1px solid rgba(45,212,191,0.12);">
-
+        <aside class="w-[270px] flex-shrink-0 bg-teal-950/40 backdrop-blur-xl border-r border-teal-400/10 flex flex-col justify-between">
             <div class="p-7">
-                <h1 class="text-3xl font-extrabold title-gradient mb-1">NurseCore</h1>
-                <p style="color: rgba(153,246,228,0.5); font-size: 12px; margin-bottom: 2.5rem;">Sistema de Enfermería</p>
+                <h1 class="text-3xl font-extrabold bg-gradient-to-r lg:text-3xl from-teal-300 to-emerald-400 bg-clip-text text-transparent mb-1">NurseCore</h1>
+                <p class="text-teal-200/50 text-xs mb-10">Sistema de Enfermería</p>
 
                 <nav class="space-y-2">
-                    <a href="dashboard-profesional.html" class="sidebar-item active">🏠 Dashboard</a>
-                    <a href="perfil-paciente.html"        class="sidebar-item">🧑‍⚕️ Pacientes</a>
-                    <a href="signos-vitales.html"         class="sidebar-item">❤️ Signos Vitales</a>
-                    <a href="medicamentos.html"           class="sidebar-item">💊 Medicación</a>
-                    <a href="alertas.html"                class="sidebar-item">🚨 Alertas</a>
-                    <a href="historial-clinico.html"      class="sidebar-item">📋 Historial Clínico</a>
-                    <a href="kardex.html"                 class="sidebar-item">📑 Kardex</a>
+                    <a href="dashboard-profesional.html" class="sidebar-item active"><span>🏠</span> Dashboard</a>
+                    <a href="perfil-paciente.html" class="sidebar-item"><span>🧑‍⚕️</span> Pacientes</a>
+                    <a href="signos-vitales.html" class="sidebar-item"><span>❤️</span> Signos Vitales</a>
+                    <a href="medicamentos.html" class="sidebar-item"><span>💊</span> Medicación</a>
+                    <a href="alertas.html" class="sidebar-item"><span>🚨</span> Alertas</a>
+                    <a href="historial-clinico.html" class="sidebar-item"><span>📋</span> Historial Clínico</a>
+                    <a href="kardex.html" class="sidebar-item"><span>📑</span> Kardex</a>
                 </nav>
             </div>
 
-            <!-- perfil en la parte baja del sidebar -->
-            <div class="absolute bottom-0 left-0 right-0 p-6"
-                 style="border-top: 1px solid rgba(45,212,191,0.1);">
+            <div class="p-6 border-t border-teal-400/10 bg-teal-950/20">
                 <div class="flex items-center gap-3">
-                    <div style="width:40px;height:40px;border-radius:50%;background:rgba(45,212,191,0.2);border:1px solid rgba(45,212,191,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;">
+                    <div class="w-10 h-10 rounded-full bg-teal-400/20 border border-teal-400/30 flex items-center justify-center text-lg">
                         👩‍⚕️
                     </div>
                     <div>
-                        <p style="font-size:14px;font-weight:600;color:#ccfbf1;">Profesional</p>
-                        <p style="font-size:12px;color:rgba(153,246,228,0.5);">Acceso completo</p>
+                        <p class="text-sm font-semibold text-teal-100">Profesional</p>
+                        <p class="text-xs text-teal-200/50">Acceso completo</p>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- MAIN -->
         <main class="flex-1 p-10">
 
-            <!-- HEADER -->
             <div class="flex justify-between items-start mb-12">
                 <div>
-                    <p style="color: rgba(153,246,228,0.6); font-size:14px; margin-bottom:6px; letter-spacing:0.05em;">
-                        BIENVENIDO AL SISTEMA
-                    </p>
-                    <h2 class="text-6xl font-extrabold title-gradient" style="line-height:1.1;">
+                    <p class="text-teal-200/60 text-sm tracking-wider mb-1.5 font-medium">BIENVENIDO AL SISTEMA</p>
+                    <h2 class="text-5xl font-extrabold bg-gradient-to-r from-teal-100 to-teal-300 bg-clip-text text-transparent">
                         Dashboard
                     </h2>
-                    <p style="color: rgba(153,246,228,0.6); margin-top: 10px; font-size:16px;">
-                        Lunes, 2 de junio de 2026
-                    </p>
+                    <p class="text-teal-200/60 mt-2 text-sm">Lunes, 2 de junio de 2026</p>
                 </div>
-                <button
-                    onclick="history.back()"
-                    class="glass px-5 py-3 rounded-2xl hover:scale-105 text-sm font-medium"
-                    style="color: #99f6e4; border-color: rgba(45,212,191,0.2);"
-                >
+                <button onclick="history.back()" class="glass px-5 py-3 rounded-2xl hover:scale-105 transition border border-teal-400/20 text-teal-200 text-sm font-medium">
                     ← Regresar
                 </button>
             </div>
 
-            <!-- STATS -->
-            <div class="grid grid-cols-4 gap-6 mb-10">
-
-                <div class="glass glow p-6 rounded-3xl card-hover soft-border">
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                        <span style="font-size:20px;">🧑‍⚕️</span>
-                        <h3 style="color:rgba(153,246,228,0.7);font-size:14px;font-weight:500;">Pacientes</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                <div class="glass p-6 rounded-3xl border border-white/5 hover:border-teal-400/20 transition-all shadow-xl shadow-black/10">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-xl">🧑‍⚕️</span>
+                        <h3 class="text-teal-200/70 text-sm font-medium">Pacientes</h3>
                     </div>
-                    <p class="stat-number" style="color:#2dd4bf;">32</p>
-                    <p style="color:rgba(153,246,228,0.4);font-size:12px;margin-top:8px;">↑ 3 esta semana</p>
+                    <p class="text-5xl font-extrabold text-teal-400 tracking-tight">32</p>
+                    <p class="text-teal-200/40 text-xs mt-3">↑ 3 esta semana</p>
                 </div>
-
-                <div class="glass glow p-6 rounded-3xl card-hover soft-border">
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                        <span style="font-size:20px;">🚨</span>
-                        <h3 style="color:rgba(153,246,228,0.7);font-size:14px;font-weight:500;">Alertas</h3>
+                <div class="glass p-6 rounded-3xl border border-white/5 hover:border-red-400/20 transition-all shadow-xl shadow-black/10">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-xl">🚨</span>
+                        <h3 class="text-teal-200/70 text-sm font-medium">Alertas</h3>
                     </div>
-                    <p class="stat-number" style="color:#f87171;">5</p>
-                    <p style="color:rgba(153,246,228,0.4);font-size:12px;margin-top:8px;">2 críticas</p>
+                    <p class="text-5xl font-extrabold text-red-400 tracking-tight">5</p>
+                    <p class="text-teal-200/40 text-xs mt-3">2 críticas</p>
                 </div>
-
-                <div class="glass glow p-6 rounded-3xl card-hover soft-border">
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                        <span style="font-size:20px;">💊</span>
-                        <h3 style="color:rgba(153,246,228,0.7);font-size:14px;font-weight:500;">Medicamentos</h3>
+                <div class="glass p-6 rounded-3xl border border-white/5 hover:border-emerald-400/20 transition-all shadow-xl shadow-black/10">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-xl">💊</span>
+                        <h3 class="text-teal-200/70 text-sm font-medium">Medicamentos</h3>
                     </div>
-                    <p class="stat-number" style="color:#34d399;">14</p>
-                    <p style="color:rgba(153,246,228,0.4);font-size:12px;margin-top:8px;">3 pendientes</p>
+                    <p class="text-5xl font-extrabold text-emerald-400 tracking-tight">14</p>
+                    <p class="text-teal-200/40 text-xs mt-3">3 pendientes</p>
                 </div>
-
-                <div class="glass glow p-6 rounded-3xl card-hover soft-border">
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                        <span style="font-size:20px;">📋</span>
-                        <h3 style="color:rgba(153,246,228,0.7);font-size:14px;font-weight:500;">Reportes</h3>
+                <div class="glass p-6 rounded-3xl border border-white/5 hover:border-violet-400/20 transition-all shadow-xl shadow-black/10">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-xl">📋</span>
+                        <h3 class="text-teal-200/70 text-sm font-medium">Reportes</h3>
                     </div>
-                    <p class="stat-number" style="color:#a78bfa;">7</p>
-                    <p style="color:rgba(153,246,228,0.4);font-size:12px;margin-top:8px;">1 nuevo hoy</p>
+                    <p class="text-5xl font-extrabold text-violet-400 tracking-tight">7</p>
+                    <p class="text-teal-200/40 text-xs mt-3">1 nuevo hoy</p>
                 </div>
-
             </div>
 
-            <!-- ACTIVIDAD RECIENTE -->
-            <div class="glass soft-border p-8 rounded-3xl">
-                <h3 class="text-2xl font-bold mb-6" style="color:#ccfbf1;">Actividad reciente</h3>
+            <div class="glass border border-white/5 p-8 rounded-3xl shadow-2xl">
+                <h3 class="text-2xl font-bold mb-6 text-teal-100">Actividad reciente</h3>
                 <div class="space-y-4">
-
-                    <div style="background:rgba(45,212,191,0.06);border:1px solid rgba(45,212,191,0.1);border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;">
-                        <span style="font-size:22px;">🧑‍⚕️</span>
+                    <div class="bg-teal-400/5 border border-teal-400/10 rounded-2xl p-4 flex items-center gap-4">
+                        <span class="text-2xl">🧑‍⚕️</span>
                         <div>
-                            <p style="color:#ccfbf1;font-weight:500;">Se registró un nuevo paciente</p>
-                            <p style="color:rgba(153,246,228,0.45);font-size:13px;">Hace 10 minutos</p>
+                            <p class="text-teal-100 font-medium text-sm">Se registró un nuevo paciente</p>
+                            <p class="text-teal-200/45 text-xs mt-0.5">Hace 10 minutos</p>
                         </div>
                     </div>
-
-                    <div style="background:rgba(45,212,191,0.06);border:1px solid rgba(45,212,191,0.1);border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;">
-                        <span style="font-size:22px;">💊</span>
+                    <div class="bg-teal-400/5 border border-teal-400/10 rounded-2xl p-4 flex items-center gap-4">
+                        <span class="text-2xl">💊</span>
                         <div>
-                            <p style="color:#ccfbf1;font-weight:500;">Administración de Paracetamol completada</p>
-                            <p style="color:rgba(153,246,228,0.45);font-size:13px;">Hace 45 minutos</p>
+                            <p class="text-teal-100 font-medium text-sm">Administración de Paracetamol completada</p>
+                            <p class="text-teal-200/45 text-xs mt-0.5">Hace 45 minutos</p>
                         </div>
                     </div>
-
-                    <div style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;">
-                        <span style="font-size:22px;">🚨</span>
+                    <div class="bg-red-400/5 border border-red-400/10 rounded-2xl p-4 flex items-center gap-4">
+                        <span class="text-2xl">🚨</span>
                         <div>
-                            <p style="color:#fca5a5;font-weight:500;">Alerta de glucosa pendiente</p>
-                            <p style="color:rgba(153,246,228,0.45);font-size:13px;">Hace 1 hora</p>
+                            <p class="text-red-300 font-medium text-sm">Alerta de glucosa pendiente</p>
+                            <p class="text-teal-200/45 text-xs mt-0.5">Hace 1 hora</p>
                         </div>
                     </div>
-
                 </div>
             </div>
 
