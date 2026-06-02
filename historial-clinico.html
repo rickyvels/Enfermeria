@@ -1,98 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Historial Clínico</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial Clínico — NurseCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-
 <body class="bg-slate-100">
 
-<div class="p-10">
+    <div class="p-10">
 
-<h1 class="text-5xl font-bold text-slate-800 mb-10">
-Historial Clínico
-</h1>
+        <div class="flex items-center gap-4 mb-8">
+            <button
+                onclick="history.back()"
+                class="bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition text-slate-700 font-medium"
+            >
+                ← Regresar
+            </button>
+        </div>
 
-<div class="space-y-6">
+        <h1 class="text-5xl font-bold text-slate-800 mb-10">Historial Clínico</h1>
 
-<div class="bg-white p-8 rounded-3xl shadow-xl">
+        <div class="space-y-6">
 
-<div class="flex justify-between items-center mb-4">
+            <div class="bg-white p-8 rounded-3xl shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-slate-800">12 Mayo 2026</h2>
+                    <span class="bg-green-100 text-green-700 px-4 py-2 rounded-xl font-semibold">Estable</span>
+                </div>
+                <p class="text-slate-600 leading-7">
+                    Paciente con evolución favorable. Presión arterial controlada y respuesta positiva al tratamiento antihipertensivo.
+                </p>
+            </div>
 
-<h2 class="text-2xl font-bold">
-12 Mayo 2026
-</h2>
+            <div class="bg-white p-8 rounded-3xl shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-slate-800">10 Mayo 2026</h2>
+                    <span class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded-xl font-semibold">Observación</span>
+                </div>
+                <p class="text-slate-600 leading-7">
+                    Se detectó incremento leve de glucosa. Se indicó monitoreo continuo cada 4 horas.
+                </p>
+            </div>
 
-<span class="bg-green-100 text-green-700 px-4 py-2 rounded-xl">
-Estable
-</span>
+            <div class="bg-white p-8 rounded-3xl shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-slate-800">07 Mayo 2026</h2>
+                    <span class="bg-red-100 text-red-700 px-4 py-2 rounded-xl font-semibold">Crítico</span>
+                </div>
+                <p class="text-slate-600 leading-7">
+                    Paciente ingresó con presión arterial elevada y síntomas de fatiga severa.
+                </p>
+            </div>
 
-</div>
+        </div>
+    </div>
 
-<p class="text-slate-600 leading-7">
-Paciente con evolución favorable. Presión arterial controlada y respuesta positiva al tratamiento antihipertensivo.
-</p>
-
-</div>
-
-<div class="bg-white p-8 rounded-3xl shadow-xl">
-
-<div class="flex justify-between items-center mb-4">
-
-<h2 class="text-2xl font-bold">
-10 Mayo 2026
-</h2>
-
-<span class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded-xl">
-Observación
-</span>
-
-</div>
-
-<p class="text-slate-600 leading-7">
-Se detectó incremento leve de glucosa. Se indicó monitoreo continuo cada 4 horas.
-</p>
-
-</div>
-
-<div class="bg-white p-8 rounded-3xl shadow-xl">
-
-<div class="flex justify-between items-center mb-4">
-
-<h2 class="text-2xl font-bold">
-07 Mayo 2026
-</h2>
-
-<span class="bg-red-100 text-red-700 px-4 py-2 rounded-xl">
-Crítico
-</span>
-
-</div>
-
-<p class="text-slate-600 leading-7">
-Paciente ingresó con presión arterial elevada y síntomas de fatiga severa.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<script src="app.js"></script>
-
+    <script src="app.js"></script>
 </body>
 </html>
