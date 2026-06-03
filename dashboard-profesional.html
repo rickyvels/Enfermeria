@@ -7,49 +7,49 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Inter',sans-serif; background:#f8fafc; min-height:100vh; display:flex; }
 
         .sidebar {
-            width:240px; min-height:100vh; background:#40E0D0;
+            width:240px; min-height:100vh; background:#2EC4B6;
             padding:28px 16px; display:flex; flex-direction:column;
             gap:6px; position:fixed; top:0; left:0; z-index:10;
         }
         .sidebar-logo {
-            font-size:22px; font-weight:700; color:#0d3d38;
+            font-size:22px; font-weight:700; color:#0a3d38;
             padding:0 10px; margin-bottom:28px; letter-spacing:-0.5px;
         }
         .sidebar-logo span {
             font-weight:400; opacity:0.55; font-size:11px; display:block;
-            margin-top:2px; letter-spacing:0.08em; text-transform:uppercase; color:#0d3d38;
+            margin-top:2px; letter-spacing:0.08em; text-transform:uppercase; color:#0a3d38;
         }
         .nav-item {
             display:flex; align-items:center; gap:10px;
             padding:12px 14px; border-radius:14px; font-size:14px;
-            font-weight:500; color:#0a2e2a; text-decoration:none;
+            font-weight:500; color:#0a3d38; text-decoration:none;
             transition:all 0.2s ease; border-left:3px solid transparent;
         }
-        .nav-item:hover { background:rgba(13,61,56,0.1); transform:translateX(4px); }
+        .nav-item:hover { background:rgba(10,61,56,0.1); transform:translateX(4px); }
         .nav-item.active {
-            background:rgba(13,61,56,0.15); font-weight:600;
-            border-left:3px solid #0d3d38;
+            background:rgba(10,61,56,0.16); font-weight:600;
+            border-left:3px solid #0a3d38;
         }
-        .nav-divider { height:1px; background:rgba(13,61,56,0.15); margin:8px 10px; }
+        .nav-divider { height:1px; background:rgba(10,61,56,0.15); margin:8px 10px; }
 
         .main { margin-left:240px; flex:1; min-height:100vh; }
 
         .topbar {
-            background:#0d3d38; padding:22px 36px;
+            background:#0a3d38; padding:22px 36px;
             display:flex; justify-content:space-between; align-items:center;
         }
-        .page-title { font-size:28px; font-weight:700; color:#40E0D0; letter-spacing:-0.5px; }
-        .page-subtitle { font-size:13px; color:#5eada3; margin-top:4px; }
+        .page-title { font-size:28px; font-weight:700; color:#7eeee6; letter-spacing:-0.5px; }
+        .page-subtitle { font-size:13px; color:#8ececa; margin-top:4px; }
         .user-badge {
-            background:rgba(64,224,208,0.15); color:#40E0D0;
+            background:rgba(46,196,182,0.15); color:#2EC4B6;
             padding:10px 18px; border-radius:50px; font-size:13px;
-            font-weight:600; border:1px solid rgba(64,224,208,0.25);
+            font-weight:600; border:1px solid rgba(46,196,182,0.3);
         }
 
         .content { padding:28px 36px; }
@@ -64,24 +64,24 @@
             content:''; position:absolute; top:0; left:0; right:0;
             height:3px; border-radius:18px 18px 0 0;
         }
-        .stat-card:nth-child(odd)::before  { background:#0d3d38; }
-        .stat-card:nth-child(even)::before { background:#40E0D0; }
-        .stat-card:hover { transform:translateY(-5px); box-shadow:0 12px 28px rgba(13,61,56,0.1); }
+        .stat-card:nth-child(odd)::before  { background:#0a3d38; }
+        .stat-card:nth-child(even)::before { background:#2EC4B6; }
+        .stat-card:hover { transform:translateY(-5px); box-shadow:0 12px 28px rgba(10,61,56,0.1); }
 
         .stat-label {
             font-size:11px; font-weight:600; text-transform:uppercase;
             letter-spacing:0.06em; color:#94a3b8; margin-bottom:10px;
         }
         .stat-number { font-size:38px; font-weight:700; line-height:1; letter-spacing:-1px; }
-        .stat-card:nth-child(odd)  .stat-number { color:#0d3d38; }
-        .stat-card:nth-child(even) .stat-number { color:#40E0D0; }
+        .stat-card:nth-child(odd)  .stat-number { color:#0a3d38; }
+        .stat-card:nth-child(even) .stat-number { color:#2EC4B6; }
 
         .activity-panel {
             background:#fff; border-radius:18px; padding:24px;
             border:0.5px solid #e2e8f0;
         }
         .panel-title {
-            font-size:16px; font-weight:600; color:#0d3d38;
+            font-size:16px; font-weight:600; color:#0a3d38;
             margin-bottom:14px; display:flex; align-items:center; gap:8px;
         }
         .panel-title::after { content:''; flex:1; height:0.5px; background:#e2e8f0; }
@@ -91,19 +91,19 @@
             color:#334155; margin-bottom:7px; font-weight:500;
             border-left:3px solid transparent; transition:background 0.2s;
         }
-        .act-item:nth-child(odd)  { background:#f8fafc; border-left-color:#0d3d38; }
-        .act-item:nth-child(even) { background:#f0fdfa; border-left-color:#40E0D0; }
+        .act-item:nth-child(odd)  { background:#f8fafc; border-left-color:#0a3d38; }
+        .act-item:nth-child(even) { background:#f0fdfb; border-left-color:#2EC4B6; }
         .act-item:hover { background:#e6fffa; }
         .act-item:last-child { margin-bottom:0; }
 
         .back-btn {
             position:fixed; top:18px; left:258px;
-            background:rgba(13,61,56,0.7); border:1px solid rgba(64,224,208,0.3);
-            color:#40E0D0; padding:7px 15px; border-radius:50px;
+            background:rgba(10,61,56,0.7); border:1px solid rgba(46,196,182,0.3);
+            color:#2EC4B6; padding:7px 15px; border-radius:50px;
             font-size:12px; font-weight:500; cursor:pointer; z-index:20;
             transition:all 0.2s; font-family:'Inter',sans-serif;
         }
-        .back-btn:hover { background:#0d3d38; }
+        .back-btn:hover { background:#0a3d38; }
     </style>
 </head>
 <body>
