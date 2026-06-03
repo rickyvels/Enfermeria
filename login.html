@@ -43,34 +43,28 @@
     </div>
 
     <script src="app.js"></script>
-    <script>
-        function validarLogin(event) {
-            event.preventDefault(); 
-            
-            const email = document.getElementById("loginEmail").value.trim();
-            const pass = document.getElementById("loginPassword").value.trim();
+   <script>
+function validarRegistro(event) {
+    event.preventDefault();
+    
+    const nombre = document.getElementById("regNombre").value.trim();
+    const codigo = document.getElementById("regCodigo").value.trim();
 
-            // 1. Intentamos recuperar al usuario que se registró previamente
-            const codigoRegistrado = localStorage.getItem("codigoUsuario");
-            const nombreRegistrado = localStorage.getItem("nombreUsuario");
+    if (nombre !== "" && codigo !== "") {
+        // Guardamos los datos del nuevo usuario creados con éxito
+        localStorage.setItem("nombreUsuario", nombre);
+        localStorage.setItem("codigoUsuario", codigo);
 
-            // 2. CONTROL DE SEGURIDAD: Si no hay nadie registrado en el navegador...
-            if (!codigoRegistrado || !nombreRegistrado) {
-                alert("❌ Error: No hay ninguna cuenta registrada en este dispositivo. Por favor, regístrate primero.");
-                window.location.href = "registro.html";
-                return;
-            }
+        // Opcional: Limpiamos elecciones de rol viejas para que no causen bugs
+        localStorage.removeItem("tipoUsuario");
 
-            // 3. VALIDACIÓN COHERENTE
-            if (email.includes(codigoRegistrado) || pass === codigoRegistrado) {
-                // Si coincide, guardamos la sesión y pasa
-                localStorage.setItem("usuarioLogueado", email);
-                window.location.href = "elegir-usuario.html";
-            } else {
-                // Si mete cualquier otra cosa aleatoria, lo rebotamos
-                alert("❌ Credenciales incorrectas. El correo o la contraseña no coinciden con los datos registrados (Tip: Usa tu código de identificación).");
-            }
-        }
-    </script>
+        // Mensaje amigable de éxito
+        alert("✨ ¡Cuenta creada con éxito! Ahora inicia sesión con tus datos.");
+
+        // Redirección correcta: Al Login para verificar sus credenciales
+        window.location.href = "login.html";
+    }
+}
+</script>
 </body>
 </html>
