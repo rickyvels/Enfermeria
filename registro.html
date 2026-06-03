@@ -46,25 +46,27 @@
     <script src="app.js"></script>
     <script>
     function validarRegistro(event) {
-        event.preventDefault();
+    event.preventDefault();
+    
+    const nombre = document.getElementById("regNombre").value.trim();
+    const codigo = document.getElementById("regCodigo").value.trim();
+
+    if (nombre !== "" && codigo !== "") {
+        // 1. LIMPIAR CUALQUIER ROL VIEJO PARA EVITAR REDIRECCIONES FANTASMA
+        localStorage.removeItem("tipoUsuario"); 
         
-        const nombre = document.getElementById("regNombre").value.trim();
-        const codigo = document.getElementById("regCodigo").value.trim();
+        // También puedes usar localStorage.clear(); si quieres borrar TODO lo anterior antes de crear la cuenta
 
-        if (nombre !== "" && codigo !== "") {
-            localStorage.setItem("nombreUsuario", nombre);
-            localStorage.setItem("codigoUsuario", codigo);
+        // 2. Guardamos los datos nuevos
+        localStorage.setItem("nombreUsuario", nombre);
+        localStorage.setItem("codigoUsuario", codigo);
 
-            const tipo = localStorage.getItem("tipoUsuario");
-            if (tipo === "profesional") {
-                window.location.href = "perfil-profesional.html";
-            } else if (tipo === "estudiante") {
-                window.location.href = "perfil-estudiante.html";
-            } else {
-                window.location.href = "elegir-usuario.html"; 
-            }
-        }
+        alert("✨ ¡Cuenta creada con éxito! Ahora inicia sesión con tu código.");
+
+        // 3. Redirección forzada al Login
+        window.location.href = "login.html";
     }
+}
     </script>
 </body>
 </html>
