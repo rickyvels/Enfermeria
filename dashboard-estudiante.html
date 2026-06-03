@@ -9,18 +9,22 @@
 </head>
 <body class="bg-[#f0fdf4] font-sans text-slate-800 flex min-h-screen">
 
+    <!-- SIDEBAR RECEPTOR DE COLOR -->
     <aside id="sidebar" class="w-64 bg-[#86efac] text-emerald-950 flex flex-col justify-between shadow-lg transition-colors duration-300 flex-shrink-0">
         <div class="p-6">
-            <h1 class="text-2xl font-bold tracking-wider mb-8 text-emerald-900">NurseCore <span class="text-xs block font-normal text-emerald-700 tracking-normal">Módulo Educativo</span></h1>
+            <h1 class="text-2xl font-bold tracking-wider text-emerald-900">NurseCore</h1>
+            <p class="text-xs text-emerald-700 mb-8 uppercase tracking-wide font-semibold">Panel Académico</p>
             <nav class="space-y-1">
-                <a href="#" class="block py-3 px-4 rounded-xl bg-white/40 font-bold active-item shadow-sm text-emerald-950">📖 Simulador Casos</a>
-                <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">📋 Práctica Signos Vitales</a>
-                <a href="alertas.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">⚠️ Monitor de Alertas</a>
-                <a href="historial-clinico.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">📂 Análisis de Historiales</a>
-                <a href="medicamentos.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">💊 Guía Farmacológica</a>
-                <a href="kardex.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">🗂️ Registro Kardex</a>
+                <a href="#" class="block py-3 px-4 rounded-xl bg-white/40 font-bold active-item shadow-sm text-emerald-950">🏠 Dashboard</a>
+                <a href="casos-clinicos.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">📚 Casos Clínicos</a>
+                <a href="reg-practicas.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">📝 Reg. de Prácticas</a>
                 
-                <a href="configuracion.html" class="sidebar-item-light bg-black/5 hover:bg-black/10 rounded-xl transition block py-2.5 px-4 mt-6 text-center font-bold">🎨 Ajustar Colores</a>
+                <div class="border-t border-emerald-900/10 my-4"></div>
+                
+                <a href="guias.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">📖 Guías</a>
+                <a href="evaluaciones.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">✅ Evaluaciones</a>
+                
+                <a href="configuracion.html" class="sidebar-item-light bg-black/5 hover:bg-black/10 rounded-xl transition block py-2.5 px-4 mt-6 text-center font-bold text-xs">🎨 Ajustar Colores</a>
             </nav>
         </div>
         <div class="p-6 border-t border-emerald-900/10 text-xs font-semibold text-emerald-800">
@@ -28,31 +32,58 @@
         </div>
     </aside>
 
+    <!-- SECCIÓN CONTENIDO -->
     <div class="flex-1 flex flex-col">
+        <!-- TOPBAR RECEPTOR DE COLOR -->
         <header id="topbar" class="h-20 bg-[#14532d] flex items-center justify-between px-8 text-white shadow-md transition-colors duration-300">
             <div>
-                <h1 class="text-xl font-bold tracking-wide text-emerald-200">Plataforma de Simulación</h1>
-                <p class="text-xs text-emerald-300/80">Área de entrenamiento y desarrollo de competencias</p>
+                <h1 class="text-2xl font-bold tracking-wide text-emerald-200">Dashboard Estudiante</h1>
+                <p class="text-sm text-emerald-300/80">Panel académico y clínico</p>
             </div>
             <div class="flex items-center gap-4">
-                <span class="bg-emerald-500/20 text-emerald-300 text-xs px-3 py-1.5 rounded-full font-bold border border-emerald-500/30">Nivel Principiante</span>
-                <div class="w-10 h-10 bg-emerald-300 rounded-full flex items-center justify-center text-slate-900 font-bold">EST</div>
+                <span class="bg-emerald-500/20 text-emerald-300 text-xs px-4 py-2 rounded-full font-bold border border-emerald-500/30 flex items-center gap-1.5">
+                    🎓 Estudiante
+                </span>
+                
+                <!-- BOTÓN VOLVER / SALIR -->
+                <a href="index.html" class="bg-rose-500/20 hover:bg-rose-500 text-rose-200 hover:text-white transition-all duration-200 text-xs font-bold px-4 py-2 rounded-xl border border-rose-500/30 flex items-center gap-1">
+                    <span>Volver</span> →
+                </a>
             </div>
         </header>
 
-        <main class="p-8 space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-[#86efac]">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Casos Completados</p>
-                    <p class="text-3xl font-black text-slate-800 mt-2">4 / 10</p>
+        <!-- CONTENIDO DINÁMICO -->
+        <main class="p-8 space-y-8">
+            <!-- CARDS ORIGINALES -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Casos Clínicos</p>
+                    <p class="text-5xl font-bold text-emerald-900 mt-2">12</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-blue-400">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Puntaje de Simulación</p>
-                    <p class="text-3xl font-black text-slate-800 mt-2">85%</p>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Prácticas</p>
+                    <p class="text-5xl font-bold text-emerald-500 mt-2">28</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-amber-400">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Horas de Práctica</p>
-                    <p class="text-3xl font-black text-slate-800 mt-2">18 hrs</p>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Guías</p>
+                    <p class="text-5xl font-bold text-emerald-900 mt-2">9</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Evaluaciones</p>
+                    <p class="text-5xl font-bold text-emerald-500 mt-2">4</p>
+                </div>
+            </div>
+
+            <!-- ACTIVIDAD RECIENTE ORIGINAL -->
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">Actividad reciente</h3>
+                <div class="space-y-3">
+                    <div class="bg-[#f0fdf4] p-4 rounded-2xl border-l-4 border-[#86efac] flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <span>📚</span> Nuevo caso clínico disponible
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border-l-4 border-emerald-900 flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <span>📝</span> Práctica supervisada registrada
+                    </div>
                 </div>
             </div>
         </main>
