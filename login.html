@@ -51,17 +51,18 @@ function validarRegistro(event) {
     const codigo = document.getElementById("regCodigo").value.trim();
 
     if (nombre !== "" && codigo !== "") {
-        // Guardamos los datos del nuevo usuario creados con éxito
+        // 1. LIMPIAR CUALQUIER ROL VIEJO PARA EVITAR REDIRECCIONES FANTASMA
+        localStorage.removeItem("tipoUsuario"); 
+        
+        // También puedes usar localStorage.clear(); si quieres borrar TODO lo anterior antes de crear la cuenta
+
+        // 2. Guardamos los datos nuevos
         localStorage.setItem("nombreUsuario", nombre);
         localStorage.setItem("codigoUsuario", codigo);
 
-        // Opcional: Limpiamos elecciones de rol viejas para que no causen bugs
-        localStorage.removeItem("tipoUsuario");
+        alert("✨ ¡Cuenta creada con éxito! Ahora inicia sesión con tu código.");
 
-        // Mensaje amigable de éxito
-        alert("✨ ¡Cuenta creada con éxito! Ahora inicia sesión con tus datos.");
-
-        // Redirección correcta: Al Login para verificar sus credenciales
+        // 3. Redirección forzada al Login
         window.location.href = "login.html";
     }
 }
