@@ -9,18 +9,24 @@
 </head>
 <body class="bg-[#f0fdfa] font-sans text-slate-800 flex min-h-screen">
 
+    <!-- SIDEBAR RECEPTOR DE COLOR -->
     <aside id="sidebar" class="w-64 bg-[#2EC4B6] text-slate-950 flex flex-col justify-between shadow-xl transition-colors duration-300 flex-shrink-0">
         <div class="p-6">
-            <h1 class="text-2xl font-bold tracking-wider mb-8 text-white">NurseCore</h1>
+            <h1 class="text-2xl font-bold tracking-wider text-white">NurseCore</h1>
+            <p class="text-xs text-white/70 mb-8 uppercase tracking-wide">Sistema de Enfermería</p>
             <nav class="space-y-1">
-                <a href="#" class="block py-3 px-4 rounded-xl bg-white/20 font-bold active-item shadow-sm text-white">🏠 Dashboard</a>
-                <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📋 Signos Vitales</a>
-                <a href="alertas.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">⚠️ Alertas Médicas</a>
-                <a href="historial-clinico.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📂 Historial Clínico</a>
-                <a href="medicamentos.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💊 Medicación</a>
-                <a href="kardex.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">🗂️ Kardex</a>
+                <a href="#" class="block py-3 px-4 rounded-xl bg-white/20 font-bold active-item shadow-sm text-slate-900">🏠 Dashboard</a>
+                <a href="pacientes.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">👨‍⚕️ Pacientes</a>
+                <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💗 Signos Vitales</a>
+                <a href="medicacion.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💊 Medicación</a>
                 
-                <a href="configuracion.html" class="sidebar-item-light bg-black/10 hover:bg-black/20 rounded-xl transition block py-2.5 px-4 mt-6 text-center font-bold">⚙️ Personalizar Color</a>
+                <div class="border-t border-black/10 my-4"></div>
+                
+                <a href="alertas.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">🚨 Alertas</a>
+                <a href="historial-clinico.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📋 Historial Clínico</a>
+                <a href="kardex.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📄 Kardex</a>
+                
+                <a href="configuracion.html" class="sidebar-item-light bg-black/10 hover:bg-black/20 rounded-xl transition block py-2.5 px-4 mt-6 text-center font-bold text-xs">⚙️ Personalizar Color</a>
             </nav>
         </div>
         <div class="p-6 border-t border-black/5 text-xs opacity-75 font-medium">
@@ -28,31 +34,61 @@
         </div>
     </aside>
 
+    <!-- SECCIÓN CONTENIDO -->
     <div class="flex-1 flex flex-col">
+        <!-- TOPBAR RECEPTOR DE COLOR -->
         <header id="topbar" class="h-20 bg-[#0d3d38] flex items-center justify-between px-8 text-white shadow-md transition-colors duration-300">
             <div>
-                <h1 class="text-xl font-bold tracking-wide text-[#7eeee6]">Dashboard Profesional</h1>
-                <p class="text-xs text-[#8ececa]">Sistema Clínico de Monitoreo Centralizado</p>
+                <h1 class="text-2xl font-bold tracking-wide text-[#7eeee6]">Dashboard</h1>
+                <p class="text-sm text-[#8ececa]">Bienvenido al sistema NurseCore</p>
             </div>
             <div class="flex items-center gap-4">
-                <span class="bg-teal-500/20 text-[#40E0D0] text-xs px-3 py-1.5 rounded-full font-bold border border-[#40E0D0]/30">Panel Activo</span>
-                <div class="w-10 h-10 bg-teal-400 rounded-full flex items-center justify-center text-slate-900 font-bold">DR</div>
+                <span class="bg-teal-500/20 text-[#40E0D0] text-xs px-4 py-2 rounded-full font-bold border border-[#40E0D0]/30 flex items-center gap-1.5">
+                    🧑‍⚕️ Profesional
+                </span>
+                
+                <!-- BOTÓN VOLVER / SALIR -->
+                <a href="index.html" class="bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white transition-all duration-200 text-xs font-bold px-4 py-2 rounded-xl border border-rose-500/30 flex items-center gap-1">
+                    <span>Volver</span> →
+                </a>
             </div>
         </header>
 
-        <main class="p-8 space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-[#2EC4B6]">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pacientes Asignados</p>
-                    <p class="text-3xl font-black text-slate-800 mt-2">12</p>
+        <!-- CONTENIDO DINÁMICO -->
+        <main class="p-8 space-y-8">
+            <!-- CARDS ORIGINALES -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pacientes</p>
+                    <p class="text-5xl font-bold text-slate-800 mt-2">32</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-amber-400">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Alertas Pendientes</p>
-                    <p class="text-3xl font-black text-slate-800 mt-2">3</p>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Alertas</p>
+                    <p class="text-5xl font-bold text-teal-400 mt-2">5</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-emerald-500">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Turno Actual</p>
-                    <p class="text-sm font-bold text-slate-700 mt-3 bg-emerald-50 p-2 rounded-lg text-center">Piso 4 - UCI General</p>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Medicamentos</p>
+                    <p class="text-5xl font-bold text-slate-800 mt-2">14</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Reportes</p>
+                    <p class="text-5xl font-bold text-teal-400 mt-2">7</p>
+                </div>
+            </div>
+
+            <!-- ACTIVIDAD RECIENTE ORIGINAL -->
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">Actividad reciente</h3>
+                <div class="space-y-3">
+                    <div class="bg-[#f0fdfa] p-4 rounded-2xl border-l-4 border-[#2EC4B6] flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <span>👨‍⚕️</span> Se registró un nuevo paciente
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border-l-4 border-slate-800 flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <span>💊</span> Administración de Paracetamol completada
+                    </div>
+                    <div class="bg-[#f0fdfa] p-4 rounded-2xl border-l-4 border-[#2EC4B6] flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <span>🚨</span> Alerta de otra cosa pendiente
+                    </div>
                 </div>
             </div>
         </main>
