@@ -3,66 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil Estudiante — NurseCore</title>
+    <title>Configurar Perfil Estudiante - NurseCore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-100 min-h-screen flex items-center justify-center">
+<body class="bg-[#f0fdf4] font-sans text-slate-800 flex flex-col items-center justify-center min-h-screen p-4">
 
-    <button
-        onclick="history.back()"
-        class="absolute top-6 left-6 bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition text-slate-700 font-medium"
-    >
-        ← Regresar
-    </button>
-
-    <div class="bg-white w-[550px] p-10 rounded-3xl shadow-xl">
-
-        <div class="text-center mb-8">
-            <div class="text-5xl mb-3">🎓</div>
-            <h1 class="text-4xl font-bold text-blue-600">Perfil Estudiante</h1>
-            <p class="text-slate-500 mt-2">Completa tu información académica</p>
+    <div class="max-w-md w-full bg-white p-8 rounded-3xl shadow-md border border-slate-100">
+        <div class="text-center mb-6">
+            <span class="text-4xl">🎓</span>
+            <h1 class="text-2xl font-black text-emerald-900 mt-2">Perfil Académico</h1>
+            <p class="text-xs text-slate-400 font-medium mt-1">Configura tu entorno de simulación estudiantil</p>
         </div>
 
-        <div class="space-y-5">
+        <form id="formPerfilEst" onsubmit="guardarPerfilEstudiante(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1">Universidad / Instituto</label>
+                <input type="text" id="estUniversidad" required 
+                       class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-500 bg-slate-50 text-sm" 
+                       placeholder="Ej. Universidad Católica San Pablo">
+            </div>
 
-            <input
-                type="text"
-                placeholder="Universidad"
-                class="input-light"
-            />
+            <div>
+                <label class="block text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1">Ciclo / Semestre Académico</label>
+                <input type="text" id="estCiclo" required 
+                       class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-500 bg-slate-50 text-sm" 
+                       placeholder="Ej. 6to Semestre">
+            </div>
 
-            <input
-                type="text"
-                placeholder="Ciclo / Semestre"
-                class="input-light"
-            />
+            <div>
+                <label class="block text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1">Docente Supervisor</label>
+                <input type="text" id="estDocente" required 
+                       class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-500 bg-slate-50 text-sm" 
+                       placeholder="Ej. Dra. María Mendoza">
+            </div>
 
-            <input
-                type="text"
-                placeholder="Centro de prácticas"
-                class="input-light"
-            />
-
-            <input
-                type="text"
-                placeholder="Supervisor (Opcional)"
-                class="input-light"
-            />
-
-            <!-- irDashboard() va al dashboard-estudiante.html -->
-            <button
-                onclick="irDashboard()"
-                class="btn-primary"
-            >
-                Finalizar Registro
+            <button type="submit" class="w-full bg-[#86efac] hover:bg-[#6be094] text-emerald-950 font-bold py-3.5 rounded-xl shadow-md transition-all text-sm mt-6 flex items-center justify-center gap-1">
+                <span>Guardar y Finalizar Configuración</span> →
             </button>
-
-        </div>
+        </form>
     </div>
 
     <script src="app.js"></script>
+    <script>
+        function guardarPerfilEstudiante(event) {
+            event.preventDefault(); // Detiene la recarga de página por defecto
+            
+            // Captura de valores validados
+            const universidad = document.getElementById("estUniversidad").value.trim();
+            const ciclo = document.getElementById("estCiclo").value.trim();
+            const docente = document.getElementById("estDocente").value.trim();
+
+            // Guardado persistente local
+            localStorage.setItem("est_universidad", universidad);
+            localStorage.setItem("est_ciclo", ciclo);
+            localStorage.setItem("est_docente", docente);
+            localStorage.setItem("perfilConfigurado", "true");
+
+            // Redirección segura al dashboard correcto
+            window.location.href = "dashboard-estudiante.html";
+        }
+    </script>
 </body>
 </html>
