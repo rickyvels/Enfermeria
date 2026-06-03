@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración — NurseCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; background:#f8fafc; min-height:100vh; display:flex; }
+
+        /* ── Sidebar (usa colores guardados) ── */
+        .sidebar {
+            width:240px; min-height:100vh;
+            padding:28px 16px; display:flex; flex-direction:column;
+            gap:6px; position:fixed; top:0; left:0; z-index:10;
+        }
+        .sidebar-logo { font-size:22px; font-weight:700; padding:0 10px; margin-bottom:28px; letter-spacing:-0.5px; }
+        .sidebar-logo span { font-weight:400; opacity:0.55; font-size:11px; display:block; margin-top:2px; letter-spacing:0.08em; text-transform:uppercase; }
+        .nav-item {
+            display:flex; align-items:center; gap:10px; padding:12px 14px;
+            border-radius:14px; font-size:14px; font-weight:500; text-decoration:none;
+            transition:all 0.2s ease; border-left:3px solid transparent;
+        }
+        .nav-item:hover { transform:translateX(4px); }
+        .nav-item.active { font-weight:600; }
+        .nav-divider { height:1px; margin:8px 10px; }
+
+        .main { margin-left:240px; flex:1; min-height:100vh; }
+
+        /* ── Topbar ── */
+        .topbar { padding:22px 36px; display:flex; justify-content:space-between; align-items:center; }
+        .page-title { font-size:28px; font-weight:700; letter-spacing:-0.5px; }
+        .page-subtitle { font-size:13px; margin-top:4px; }
+
+        /* ── Contenido ── */
+        .content { padding:28px 36px; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+
+        .panel {
+            background:#fff; border-radius:18px; padding:24px;
+            border:0.5px solid #e2e8f0;
+        }
+        .panel-title {
+            font-size:15px; font-weight:600; color:#0f172a;
+            margin-bottom:18px; display:flex; align-items:center; gap:8px;
+        }
+        .panel-title::after { content:''; flex:1; height:0.5px; background:#e2e8f0; }
+
+        .field { margin-bottom:16px; }
+        .field label { display:block; font-size:12px; font-weight:500; color:#64748b; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em; }
+        .color-row { display:flex; align-items:center; gap:10px; }
+        .color-row input[type=color] {
+            width:44px; height:44px; border:0.5px solid #e2e8f0;
+            border-radius:12px; cursor:pointer; padding:3px; background:#fff;
+        }
+        .color-row input[type=text] {
+            flex:1; padding:11px 14px; border:0.5px solid #e2e8f0;
+            border-radius:12px; font-size:13px; font-family:monospace;
+            color:#0f172a; background:#f8fafc; outline:none;
+        }
+        .color-row input[type=text]:focus { border-color:#2EC4B6; background:#fff; }
+
+        .presets-label { font-size:12px; font-weight:500; color:#64748b; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em; }
+        .presets { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+        .preset {
+            width:32px; height:32px; border-radius:10px; cursor:pointer;
+            border:2px solid transparent; transition:transform 0.15s, border-color 0.15s;
+            position:relative;
+        }
+        .preset:hover { transform:scale(1.15); }
+        .preset.active { border-color:#0f172a; }
+        .preset .preset-tip {
+            display:none; position:absolute; bottom:calc(100% + 6px); left:50%;
+            transform:translateX(-50%); background:#0f172a; color:#fff;
+            font-size:10px; padding:3px 7px; border-radius:6px; white-space:nowrap;
+            font-family:'Inter',sans-serif;
+        }
+        .preset:hover .preset-tip { display:block; }
+
+        .divider { height:0.5px; background:#e2e8f0; margin:18px 0; }
+
+        /* Preview */
+        .preview-wrap { border-radius:14px; overflow:hidden; border:0.5px solid #e2e8f0; }
+        .prev-sb { padding:16px 12px; display:flex; flex-direction:column; gap:4px; }
+        .prev-logo { font-size:15px; font-weight:700; padding:0 6px; margin-bottom:14px; }
+        .prev-logo small { display:block; font-size:8px; opacity:0.55; font-weight:400; letter-spacing:0.07em; text-transform:uppercase; margin-top:1px; }
+        .prev-ni { display:block; padding:8px 10px; border-radius:8px; font-size:11px; font-weight:500; border-left:3px solid transparent; }
+        .prev-ni.on { font-weight:600; }
+        .prev-ndiv { height:1px; margin:4px 6px; }
+        .prev-main { flex:1; background:#f8fafc; }
+        .prev-topbar { padding:12px 16px; display:flex; justify-content:space-between; align-items:center; }
+        .prev-title { font-size:16px; font-weight:700; }
+        .prev-sub { font-size:10px; margin-top:2px; }
+        .prev-badge { padding:5px 12px; border-radius:50px; font-size:10px; font-weight:600; border:1px solid; }
+        .prev-content { padding:12px; }
+        .prev-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:7px; margin-bottom:8px; }
+        .prev-card { background:#fff; border-radius:10px; padding:11px; border:0.5px solid #e2e8f0; position:relative; overflow:hidden; }
+        .prev-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+        .prev-clabel { font-size:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#94a3b8; margin-bottom:3px; }
+        .prev-cnum { font-size:18px; font-weight:700; }
+        .prev-act { background:#fff; border-radius:10px; padding:11px; border:0.5px solid #e2e8f0; }
+        .prev-atitle { font-size:10px; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:5px; }
+        .prev-atitle::after { content:''; flex:1; height:0.5px; background:#e2e8f0; }
+        .prev-ai { padding:6px 8px; border-radius:6px; font-size:10px; color:#334155; margin-bottom:4px; border-left:2px solid transparent; }
+        .prev-ai:nth-child(odd) { background:#f8fafc; }
+        .prev-ai:nth-child(even) { background:#f0fdfb; }
+        .prev-ai:last-child { margin-bottom:0; }
+
+        /* Botones */
+        .btn-save {
+            width:100%; padding:14px; border-radius:14px; border:none;
+            font-size:14px; font-weight:600; cursor:pointer;
+            font-family:'Inter',sans-serif; margin-top:4px;
+            transition:all 0.2s; color:#fff;
+        }
+        .btn-save:hover { opacity:0.9; transform:translateY(-2px); }
+        .btn-reset {
+            width:100%; padding:11px; border-radius:14px;
+            font-size:13px; font-weight:500; cursor:pointer;
+            font-family:'Inter',sans-serif; margin-top:8px;
+            background:#f8fafc; border:0.5px solid #e2e8f0; color:#64748b;
+            transition:all 0.2s;
+        }
+        .btn-reset:hover { background:#f1f5f9; }
+
+        .toast {
+            position:fixed; bottom:28px; right:28px;
+            background:#0f172a; color:#fff; padding:12px 20px;
+            border-radius:12px; font-size:13px; font-weight:500;
+            opacity:0; transform:translateY(10px);
+            transition:all 0.3s; pointer-events:none; z-index:100;
+        }
+        .toast.show { opacity:1; transform:translateY(0); }
+
+        .back-btn {
+            position:fixed; top:18px; left:258px;
+            background:rgba(10,61,56,0.7); border:1px solid rgba(46,196,182,0.3);
+            color:#2EC4B6; padding:7px 15px; border-radius:50px;
+            font-size:12px; font-weight:500; cursor:pointer; z-index:20;
+            transition:all 0.2s; font-family:'Inter',sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()">← Regresar</button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo" id="sidebarLogo">
+            NurseCore
+            <span>Sistema de enfermería</span>
+        </div>
+        <a href="dashboard-profesional.html" class="nav-item" id="ni1">🏠 Dashboard</a>
+        <a href="perfil-paciente.html"        class="nav-item" id="ni2">🧑‍⚕️ Pacientes</a>
+        <a href="signos-vitales.html"         class="nav-item" id="ni3">❤️ Signos Vitales</a>
+        <a href="medicamentos.html"           class="nav-item" id="ni4">💊 Medicación</a>
+        <div class="nav-divider" id="navDiv"></div>
+        <a href="alertas.html"               class="nav-item" id="ni5">🚨 Alertas</a>
+        <a href="historial-clinico.html"      class="nav-item" id="ni6">📋 Historial Clínico</a>
+        <a href="kardex.html"                class="nav-item" id="ni7">📑 Kardex</a>
+        <div class="nav-divider" id="navDiv2"></div>
+        <a href="configuracion.html"          class="nav-item active" id="ni8">⚙️ Configuración</a>
+    </aside>
+
+    <main class="main">
+        <div class="topbar" id="topbar">
+            <div>
+                <div class="page-title" id="topTitle">Configuración</div>
+                <div class="page-subtitle" id="topSub">Personaliza los colores del sistema</div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- Panel izquierdo: controles -->
+            <div>
+                <div class="panel">
+                    <div class="panel-title">Colores del sistema</div>
+
+                    <div class="field">
+                        <label>Color del sidebar</label>
+                        <div class="color-row">
+                            <input type="color" id="sidebarColor" value="#2EC4B6">
+                            <input type="text"  id="sidebarHex"   value="#2EC4B6" maxlength="7" placeholder="#2EC4B6">
+                        </div>
+                    </div>
+
+                    <div class="presets-label">Presets sidebar</div>
+                    <div class="presets" id="sidebarPresets">
+                        <div class="preset active" style="background:#2EC4B6" data-color="#2EC4B6" data-target="sidebar"><span class="preset-tip">#2EC4B6</span></div>
+                        <div class="preset" style="background:#40E0D0" data-color="#40E0D0" data-target="sidebar"><span class="preset-tip">#40E0D0</span></div>
+                        <div class="preset" style="background:#1BC8A0" data-color="#1BC8A0" data-target="sidebar"><span class="preset-tip">#1BC8A0</span></div>
+                        <div class="preset" style="background:#86efac" data-color="#86efac" data-target="sidebar"><span class="preset-tip">#86efac</span></div>
+                        <div class="preset" style="background:#60a5fa" data-color="#60a5fa" data-target="sidebar"><span class="preset-tip">#60a5fa</span></div>
+                        <div class="preset" style="background:#a78bfa" data-color="#a78bfa" data-target="sidebar"><span class="preset-tip">#a78bfa</span></div>
+                        <div class="preset" style="background:#f9a8d4" data-color="#f9a8d4" data-target="sidebar"><span class="preset-tip">#f9a8d4</span></div>
+                        <div class="preset" style="background:#fbbf24" data-color="#fbbf24" data-target="sidebar"><span class="preset-tip">#fbbf24</span></div>
+                        <div class="preset" style="background:#fb923c" data-color="#fb923c" data-target="sidebar"><span class="preset-tip">#fb923c</span></div>
+                        <div class="preset" style="background:#e2e8f0" data-color="#e2e8f0" data-target="sidebar"><span class="preset-tip">#e2e8f0</span></div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="field">
+                        <label>Color del topbar</label>
+                        <div class="color-row">
+                            <input type="color" id="topbarColor" value="#0a3d38">
+                            <input type="text"  id="topbarHex"   value="#0a3d38" maxlength="7" placeholder="#0a3d38">
+                        </div>
+                    </div>
+
+                    <div class="presets-label">Presets topbar</div>
+                    <div class="presets" id="topbarPresets">
+                        <div class="preset active" style="background:#0a3d38" data-color="#0a3d38" data-target="topbar"><span class="preset-tip">#0a3d38</span></div>
+                        <div class="preset" style="background:#0f172a" data-color="#0f172a" data-target="topbar"><span class="preset-tip">#0f172a</span></div>
+                        <div class="preset" style="background:#14532d" data-color="#14532d" data-target="topbar"><span class="preset-tip">#14532d</span></div>
+                        <div class="preset" style="background:#1e3a5f" data-color="#1e3a5f" data-target="topbar"><span class="preset-tip">#1e3a5f</span></div>
+                        <div class="preset" style="background:#312e81" data-color="#312e81" data-target="topbar"><span class="preset-tip">#312e81</span></div>
+                        <div class="preset" style="background:#831843" data-color="#831843" data-target="topbar"><span class="preset-tip">#831843</span></div>
+                        <div class="preset" style="background:#78350f" data-color="#78350f" data-target="topbar"><span class="preset-tip">#78350f</span></div>
+                        <div class="preset" style="background:#1e293b" data-color="#1e293b" data-target="topbar"><span class="preset-tip">#1e293b</span></div>
+                    </div>
+
+                    <button class="btn-save" id="btnSave" onclick="guardarColores()">
+                        Guardar y aplicar
+                    </button>
+                    <button class="btn-reset" onclick="resetearColores()">
+                        Restablecer por defecto
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel derecho: preview en vivo -->
+            <div>
+                <div class="panel">
+                    <div class="panel-title">Vista previa</div>
+                    <div class="preview-wrap" style="display:flex;">
+                        <div class="prev-sb" id="prevSb" style="width:140px; flex-shrink:0;">
+                            <div class="prev-logo" id="prevLogo">NurseCore <small>Enfermería</small></div>
+                            <a class="prev-ni on" id="pni1">🏠 Dashboard</a>
+                            <a class="prev-ni" id="pni2">🧑‍⚕️ Pacientes</a>
+                            <a class="prev-ni" id="pni3">❤️ Signos</a>
+                            <div class="prev-ndiv" id="prevNdiv"></div>
+                            <a class="prev-ni" id="pni4">🚨 Alertas</a>
+                            <a class="prev-ni" id="pni5">📋 Historial</a>
+                        </div>
+                        <div class="prev-main">
+                            <div class="prev-topbar" id="prevTopbar">
+                                <div>
+                                    <div class="prev-title" id="prevTitle">Dashboard</div>
+                                    <div class="prev-sub"   id="prevSub">Sistema NurseCore</div>
+                                </div>
+                                <div class="prev-badge" id="prevBadge">👩‍⚕️ Pro</div>
+                            </div>
+                            <div class="prev-content">
+                                <div class="prev-grid">
+                                    <div class="prev-card" id="pcard1"><div class="prev-clabel">Pacientes</div><div class="prev-cnum" id="pcnum1">32</div></div>
+                                    <div class="prev-card" id="pcard2"><div class="prev-clabel">Alertas</div><div class="prev-cnum"    id="pcnum2">5</div></div>
+                                    <div class="prev-card" id="pcard3"><div class="prev-clabel">Medicamentos</div><div class="prev-cnum" id="pcnum3">14</div></div>
+                                    <div class="prev-card" id="pcard4"><div class="prev-clabel">Reportes</div><div class="prev-cnum"  id="pcnum4">7</div></div>
+                                </div>
+                                <div class="prev-act">
+                                    <div class="prev-atitle" id="prevActTitle">Actividad reciente</div>
+                                    <div class="prev-ai" id="pai1">🧑‍⚕️ Nuevo paciente</div>
+                                    <div class="prev-ai" id="pai2">💊 Paracetamol dado</div>
+                                    <div class="prev-ai" id="pai3">🚨 Alerta glucosa</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="toast" id="toast">✅ Colores guardados correctamente</div>
+
+    <script src="app.js"></script>
+    <script>
+        // ── Utilidades de color ──────────────────────────
+        function hexToRgb(hex) {
+            const r = parseInt(hex.slice(1,3),16);
+            const g = parseInt(hex.slice(3,5),16);
+            const b = parseInt(hex.slice(5,7),16);
+            return {r,g,b};
+        }
+        function isDark(hex) {
+            const {r,g,b} = hexToRgb(hex);
+            return (0.299*r + 0.587*g + 0.114*b) < 160;
+        }
+        function lighten(hex, amt) {
+            const {r,g,b} = hexToRgb(hex);
+            return '#' + [r,g,b].map(v => Math.min(255,v+amt).toString(16).padStart(2,'0')).join('');
+        }
+        function darken(hex, amt) {
+            const {r,g,b} = hexToRgb(hex);
+            return '#' + [r,g,b].map(v => Math.max(0,v-amt).toString(16).padStart(2,'0')).join('');
+        }
+        function alpha(hex, a) {
+            const {r,g,b} = hexToRgb(hex);
+            return `rgba(${r},${g},${b},${a})`;
+        }
+        function isValidHex(hex) { return /^#[0-9a-fA-F]{6}$/.test(hex); }
+
+        // ── Aplicar colores al sidebar real de esta página ──
+        function aplicarSidebar(sbHex) {
+            if(!isValidHex(sbHex)) return;
+            const dark = isDark(sbHex);
+            const text = dark ? '#e2e8f0' : darken(sbHex, 120);
+            const activeB = dark ? alpha('#fff',0.12) : alpha(darken(sbHex,120),0.15);
+            const borderC = dark ? alpha('#fff',0.12) : alpha(darken(sbHex,120),0.15);
+
+            document.getElementById('sidebar').style.background = sbHex;
+            document.getElementById('sidebarLogo').style.color = text;
+            for(let i=1;i<=8;i++){
+                const el = document.getElementById('ni'+i);
+                if(!el) continue;
+                el.style.color = text;
+                if(el.classList.contains('active')) {
+                    el.style.background = activeB;
+                    el.style.borderLeftColor = text;
+                } else {
+                    el.style.background = '';
+                    el.style.borderLeftColor = 'transparent';
+                }
+            }
+            document.getElementById('navDiv').style.background  = borderC;
+            document.getElementById('navDiv2').style.background = borderC;
+        }
+
+        function aplicarTopbar(sbHex, tbHex) {
+            if(!isValidHex(tbHex)) return;
+            const tbDark = isDark(tbHex);
+            const titleColor = tbDark ? lighten(sbHex, 60) : darken(sbHex, 80);
+            const subColor   = tbDark ? lighten(sbHex, 20) : darken(sbHex, 50);
+
+            document.getElementById('topbar').style.background = tbHex;
+            document.getElementById('topTitle').style.color    = titleColor;
+            document.getElementById('topSub').style.color      = subColor;
+            document.getElementById('btnSave').style.background = tbHex;
+        }
+
+        // ── Aplicar colores a la PREVIEW ──────────────────
+        function aplicarPreview(sbHex, tbHex) {
+            if(!isValidHex(sbHex) || !isValidHex(tbHex)) return;
+            const sbDark = isDark(sbHex);
+            const tbDark = isDark(tbHex);
+            const sbText  = sbDark ? '#e2e8f0' : darken(sbHex, 120);
+            const sbActB  = sbDark ? alpha('#fff',0.12) : alpha(darken(sbHex,120),0.15);
+            const sbBord  = sbDark ? alpha('#fff',0.12) : alpha(darken(sbHex,120),0.15);
+            const tbTitle = tbDark ? lighten(sbHex, 60) : darken(sbHex, 80);
+            const tbSub   = tbDark ? lighten(sbHex, 20) : darken(sbHex, 50);
+            const bdgClr  = sbDark ? lighten(sbHex, 60) : sbHex;
+
+            document.getElementById('prevSb').style.background = sbHex;
+            document.getElementById('prevLogo').style.color = sbText;
+            ['pni1','pni2','pni3','pni4','pni5'].forEach((id,i) => {
+                const el = document.getElementById(id);
+                el.style.color = sbText;
+                if(id==='pni1') { el.style.background = sbActB; el.style.borderLeftColor = sbText; }
+            });
+            document.getElementById('prevNdiv').style.background = sbBord;
+
+            document.getElementById('prevTopbar').style.background = tbHex;
+            document.getElementById('prevTitle').style.color  = tbTitle;
+            document.getElementById('prevSub').style.color    = tbSub;
+            const bdg = document.getElementById('prevBadge');
+            bdg.style.background  = alpha(sbHex, 0.15);
+            bdg.style.color       = bdgClr;
+            bdg.style.borderColor = alpha(sbHex, 0.3);
+
+            [1,2,3,4].forEach(i => {
+                const card = document.getElementById('pcard'+i);
+                const num  = document.getElementById('pcnum'+i);
+                card.style.borderTopWidth = '3px';
+                card.style.borderTopStyle = 'solid';
+                if(i%2!==0) { card.style.borderTopColor = tbHex; num.style.color = tbHex; }
+                else         { card.style.borderTopColor = sbHex; num.style.color = sbHex; }
+            });
+
+            document.getElementById('prevActTitle').style.color = tbHex;
+            document.getElementById('pai1').style.borderLeftColor = tbHex;
+            document.getElementById('pai2').style.borderLeftColor = sbHex;
+            document.getElementById('pai3').style.borderLeftColor = tbHex;
+        }
+
+        // ── Sincronizar inputs ────────────────────────────
+        function sync(type, hex) {
+            if(!isValidHex(hex)) return;
+            if(type==='sidebar') {
+                document.getElementById('sidebarColor').value = hex;
+                document.getElementById('sidebarHex').value   = hex;
+            } else {
+                document.getElementById('topbarColor').value = hex;
+                document.getElementById('topbarHex').value   = hex;
+            }
+            const sb = document.getElementById('sidebarHex').value;
+            const tb = document.getElementById('topbarHex').value;
+            aplicarPreview(sb, tb);
+            aplicarSidebar(sb);
+            aplicarTopbar(sb, tb);
+        }
+
+        // ── Guardar en localStorage ───────────────────────
+        function guardarColores() {
+            const sb = document.getElementById('sidebarHex').value;
+            const tb = document.getElementById('topbarHex').value;
+            if(!isValidHex(sb) || !isValidHex(tb)) return;
+            localStorage.setItem('nc_sidebar', sb);
+            localStorage.setItem('nc_topbar',  tb);
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function resetearColores() {
+            localStorage.removeItem('nc_sidebar');
+            localStorage.removeItem('nc_topbar');
+            sync('sidebar','#2EC4B6');
+            sync('topbar', '#0a3d38');
+            document.querySelectorAll('.preset').forEach(p => {
+                p.classList.remove('active');
+                if(p.dataset.color==='#2EC4B6' && p.dataset.target==='sidebar') p.classList.add('active');
+                if(p.dataset.color==='#0a3d38' && p.dataset.target==='topbar')  p.classList.add('active');
+            });
+        }
+
+        // ── Eventos ───────────────────────────────────────
+        document.getElementById('sidebarColor').addEventListener('input', e => sync('sidebar', e.target.value));
+        document.getElementById('topbarColor').addEventListener('input',  e => sync('topbar',  e.target.value));
+        document.getElementById('sidebarHex').addEventListener('input',   e => sync('sidebar', e.target.value));
+        document.getElementById('topbarHex').addEventListener('input',    e => sync('topbar',  e.target.value));
+
+        document.querySelectorAll('.preset').forEach(p => {
+            p.addEventListener('click', () => {
+                const target = p.dataset.target;
+                document.querySelectorAll('.preset').forEach(x => { if(x.dataset.target===target) x.classList.remove('active'); });
+                p.classList.add('active');
+                sync(target, p.dataset.color);
+            });
+        });
+
+        // ── Cargar colores guardados al iniciar ───────────
+        (function init() {
+            const sb = localStorage.getItem('nc_sidebar') || '#2EC4B6';
+            const tb = localStorage.getItem('nc_topbar')  || '#0a3d38';
+            document.getElementById('sidebarHex').value   = sb;
+            document.getElementById('sidebarColor').value = sb;
+            document.getElementById('topbarHex').value    = tb;
+            document.getElementById('topbarColor').value  = tb;
+            document.querySelectorAll('.preset').forEach(p => {
+                p.classList.remove('active');
+                if(p.dataset.color===sb && p.dataset.target==='sidebar') p.classList.add('active');
+                if(p.dataset.color===tb && p.dataset.target==='topbar')  p.classList.add('active');
+            });
+            aplicarPreview(sb, tb);
+            aplicarSidebar(sb);
+            aplicarTopbar(sb, tb);
+        })();
+    </script>
+</body>
+</html>
