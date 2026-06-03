@@ -3,164 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Profesional — NurseCore</title>
+    <title>Dashboard Profesional - NurseCore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Inter',sans-serif; background:#f8fafc; min-height:100vh; display:flex; }
-
-        .sidebar {
-            width:240px; min-height:100vh; background:#2EC4B6;
-            padding:28px 16px; display:flex; flex-direction:column;
-            gap:6px; position:fixed; top:0; left:0; z-index:10;
-        }
-        .sidebar-logo {
-            font-size:22px; font-weight:700; color:#0a3d38;
-            padding:0 10px; margin-bottom:28px; letter-spacing:-0.5px;
-        }
-        .sidebar-logo span {
-            font-weight:400; opacity:0.55; font-size:11px; display:block;
-            margin-top:2px; letter-spacing:0.08em; text-transform:uppercase; color:#0a3d38;
-        }
-        .nav-item {
-            display:flex; align-items:center; gap:10px;
-            padding:12px 14px; border-radius:14px; font-size:14px;
-            font-weight:500; color:#0a3d38; text-decoration:none;
-            transition:all 0.2s ease; border-left:3px solid transparent;
-        }
-        .nav-item:hover { background:rgba(10,61,56,0.1); transform:translateX(4px); }
-        .nav-item.active {
-            background:rgba(10,61,56,0.16); font-weight:600;
-            border-left:3px solid #0a3d38;
-        }
-        .nav-divider { height:1px; background:rgba(10,61,56,0.15); margin:8px 10px; }
-
-        .main { margin-left:240px; flex:1; min-height:100vh; }
-
-        .topbar {
-            background:#0a3d38; padding:22px 36px;
-            display:flex; justify-content:space-between; align-items:center;
-        }
-        .page-title { font-size:28px; font-weight:700; color:#7eeee6; letter-spacing:-0.5px; }
-        .page-subtitle { font-size:13px; color:#8ececa; margin-top:4px; }
-        .user-badge {
-            background:rgba(46,196,182,0.15); color:#2EC4B6;
-            padding:10px 18px; border-radius:50px; font-size:13px;
-            font-weight:600; border:1px solid rgba(46,196,182,0.3);
-        }
-
-        .content { padding:28px 36px; }
-
-        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
-        .stat-card {
-            background:#fff; border-radius:18px; padding:20px;
-            border:0.5px solid #e2e8f0; position:relative; overflow:hidden;
-            transition:transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .stat-card::before {
-            content:''; position:absolute; top:0; left:0; right:0;
-            height:3px; border-radius:18px 18px 0 0;
-        }
-        .stat-card:nth-child(odd)::before  { background:#0a3d38; }
-        .stat-card:nth-child(even)::before { background:#2EC4B6; }
-        .stat-card:hover { transform:translateY(-5px); box-shadow:0 12px 28px rgba(10,61,56,0.1); }
-
-        .stat-label {
-            font-size:11px; font-weight:600; text-transform:uppercase;
-            letter-spacing:0.06em; color:#94a3b8; margin-bottom:10px;
-        }
-        .stat-number { font-size:38px; font-weight:700; line-height:1; letter-spacing:-1px; }
-        .stat-card:nth-child(odd)  .stat-number { color:#0a3d38; }
-        .stat-card:nth-child(even) .stat-number { color:#2EC4B6; }
-
-        .activity-panel {
-            background:#fff; border-radius:18px; padding:24px;
-            border:0.5px solid #e2e8f0;
-        }
-        .panel-title {
-            font-size:16px; font-weight:600; color:#0a3d38;
-            margin-bottom:14px; display:flex; align-items:center; gap:8px;
-        }
-        .panel-title::after { content:''; flex:1; height:0.5px; background:#e2e8f0; }
-
-        .act-item {
-            padding:12px 15px; border-radius:10px; font-size:13px;
-            color:#334155; margin-bottom:7px; font-weight:500;
-            border-left:3px solid transparent; transition:background 0.2s;
-        }
-        .act-item:nth-child(odd)  { background:#f8fafc; border-left-color:#0a3d38; }
-        .act-item:nth-child(even) { background:#f0fdfb; border-left-color:#2EC4B6; }
-        .act-item:hover { background:#e6fffa; }
-        .act-item:last-child { margin-bottom:0; }
-
-        .back-btn {
-            position:fixed; top:18px; left:258px;
-            background:rgba(10,61,56,0.7); border:1px solid rgba(46,196,182,0.3);
-            color:#2EC4B6; padding:7px 15px; border-radius:50px;
-            font-size:12px; font-weight:500; cursor:pointer; z-index:20;
-            transition:all 0.2s; font-family:'Inter',sans-serif;
-        }
-        .back-btn:hover { background:#0a3d38; }
-    </style>
 </head>
-<body>
-    <button class="back-btn" onclick="history.back()">← Regresar</button>
+<body class="bg-[#f0fdfa] font-sans text-slate-800 flex min-h-screen">
 
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            NurseCore
-            <span>Sistema de enfermería</span>
+    <!-- SIDEBAR RECEPTOR DE COLOR -->
+    <aside id="sidebar" class="w-64 bg-[#2EC4B6] text-slate-900 flex flex-col justify-between shadow-xl transition-colors duration-300">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold tracking-wider mb-8 text-white">NurseCore</h1>
+            <nav class="space-y-2">
+                <a href="#" class="block py-3 px-4 rounded-xl bg-white/20 font-bold active-item shadow-sm">Dashboard</a>
+                <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-3 px-4">Pacientes</a>
+                <a href="alertas.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-3 px-4">Alertas Críticas</a>
+                <a href="configuracion.html" class="sidebar-item-light bg-black/5 hover:bg-black/10 rounded-xl transition block py-3 px-4 mt-6 text-center font-semibold">⚙️ Personalizar</a>
+            </nav>
         </div>
-        <a href="dashboard-profesional.html" class="nav-item active">🏠 Dashboard</a>
-        <a href="perfil-paciente.html"        class="nav-item">🧑‍⚕️ Pacientes</a>
-        <a href="signos-vitales.html"         class="nav-item">❤️ Signos Vitales</a>
-        <a href="medicamentos.html"           class="nav-item">💊 Medicación</a>
-        <div class="nav-divider"></div>
-        <a href="alertas.html"               class="nav-item">🚨 Alertas</a>
-        <a href="historial-clinico.html"      class="nav-item">📋 Historial Clínico</a>
-        <a href="kardex.html"                class="nav-item">📑 Kardex</a>
+        <div class="p-6 border-t border-black/5 text-xs opacity-75 font-medium">
+            Entorno Profesional Verificado
+        </div>
     </aside>
 
-    <main class="main">
-        <div class="topbar">
+    <!-- SECCIÓN CONTENIDO -->
+    <div class="flex-1 flex flex-col">
+        <!-- TOPBAR RECEPTOR DE COLOR -->
+        <header id="topbar" class="h-20 bg-[#0d3d38] flex items-center justify-between px-8 text-white shadow-md transition-colors duration-300">
             <div>
-                <div class="page-title">Dashboard</div>
-                <div class="page-subtitle">Bienvenido al sistema inteligente NurseCore</div>
+                <h1 class="text-xl font-bold tracking-wide text-[#7eeee6]">Dashboard Profesional</h1>
+                <p class="text-xs text-[#8ececa]">Sistema Clínico de Monitoreo Centralizado</p>
             </div>
-            <div id="usuarioTexto" class="user-badge"></div>
-        </div>
+            <div class="flex items-center gap-4">
+                <span class="bg-teal-500/20 text-[#40E0D0] text-xs px-3 py-1.5 rounded-full font-bold border border-[#40E0D0]/30">Panel de Control Activo</span>
+                <div class="w-10 h-10 bg-teal-400 rounded-full border-2 border-[#40E0D0] flex items-center justify-center text-slate-900 font-bold">DR</div>
+            </div>
+        </header>
 
-        <div class="content">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Pacientes</div>
-                    <div class="stat-number">32</div>
+        <!-- CONTENIDO DINÁMICO -->
+        <main class="p-8 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Cards Clínicas de Estado -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-[#2EC4B6]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pacientes Asignados</p>
+                    <p class="text-3xl font-black text-slate-800 mt-2">12</p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Alertas</div>
-                    <div class="stat-number">5</div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-amber-400">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Alertas Pendientes</p>
+                    <p class="text-3xl font-black text-slate-800 mt-2">3</p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Medicamentos</div>
-                    <div class="stat-number">14</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Reportes</div>
-                    <div class="stat-number">7</div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-emerald-500">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Turno Actual</p>
+                    <p class="text-sm font-bold text-slate-700 mt-3 bg-emerald-50 p-2 rounded-lg text-center">Piso 4 - UCI General</p>
                 </div>
             </div>
-
-            <div class="activity-panel">
-                <div class="panel-title">Actividad reciente</div>
-                <div class="act-item">🧑‍⚕️ Se registró un nuevo paciente</div>
-                <div class="act-item">💊 Administración de Paracetamol completada</div>
-                <div class="act-item">🚨 Alerta de glucosa pendiente</div>
-            </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <script src="app.js"></script>
 </body>
