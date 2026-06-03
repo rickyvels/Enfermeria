@@ -9,15 +9,18 @@
 </head>
 <body class="bg-[#f0fdfa] font-sans text-slate-800 flex min-h-screen">
 
-    <!-- SIDEBAR RECEPTOR DE COLOR -->
-    <aside id="sidebar" class="w-64 bg-[#2EC4B6] text-slate-900 flex flex-col justify-between shadow-xl transition-colors duration-300">
+    <aside id="sidebar" class="w-64 bg-[#2EC4B6] text-slate-950 flex flex-col justify-between shadow-xl transition-colors duration-300 flex-shrink-0">
         <div class="p-6">
             <h1 class="text-2xl font-bold tracking-wider mb-8 text-white">NurseCore</h1>
-            <nav class="space-y-2">
-                <a href="#" class="block py-3 px-4 rounded-xl bg-white/20 font-bold active-item shadow-sm">Dashboard</a>
-                <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-3 px-4">Pacientes</a>
-                <a href="alertas.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-3 px-4">Alertas Críticas</a>
-                <a href="configuracion.html" class="sidebar-item-light bg-black/5 hover:bg-black/10 rounded-xl transition block py-3 px-4 mt-6 text-center font-semibold">⚙️ Personalizar</a>
+            <nav class="space-y-1">
+                <a href="#" class="block py-3 px-4 rounded-xl bg-white/20 font-bold active-item shadow-sm text-white">🏠 Dashboard</a>
+                <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📋 Signos Vitales</a>
+                <a href="alertas.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">⚠️ Alertas Médicas</a>
+                <a href="historial-clinico.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📂 Historial Clínico</a>
+                <a href="medicamentos.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💊 Medicación</a>
+                <a href="kardex.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">🗂️ Kardex</a>
+                
+                <a href="configuracion.html" class="sidebar-item-light bg-black/10 hover:bg-black/20 rounded-xl transition block py-2.5 px-4 mt-6 text-center font-bold">⚙️ Personalizar Color</a>
             </nav>
         </div>
         <div class="p-6 border-t border-black/5 text-xs opacity-75 font-medium">
@@ -25,24 +28,20 @@
         </div>
     </aside>
 
-    <!-- SECCIÓN CONTENIDO -->
     <div class="flex-1 flex flex-col">
-        <!-- TOPBAR RECEPTOR DE COLOR -->
         <header id="topbar" class="h-20 bg-[#0d3d38] flex items-center justify-between px-8 text-white shadow-md transition-colors duration-300">
             <div>
                 <h1 class="text-xl font-bold tracking-wide text-[#7eeee6]">Dashboard Profesional</h1>
                 <p class="text-xs text-[#8ececa]">Sistema Clínico de Monitoreo Centralizado</p>
             </div>
             <div class="flex items-center gap-4">
-                <span class="bg-teal-500/20 text-[#40E0D0] text-xs px-3 py-1.5 rounded-full font-bold border border-[#40E0D0]/30">Panel de Control Activo</span>
-                <div class="w-10 h-10 bg-teal-400 rounded-full border-2 border-[#40E0D0] flex items-center justify-center text-slate-900 font-bold">DR</div>
+                <span class="bg-teal-500/20 text-[#40E0D0] text-xs px-3 py-1.5 rounded-full font-bold border border-[#40E0D0]/30">Panel Activo</span>
+                <div class="w-10 h-10 bg-teal-400 rounded-full flex items-center justify-center text-slate-900 font-bold">DR</div>
             </div>
         </header>
 
-        <!-- CONTENIDO DINÁMICO -->
         <main class="p-8 space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Cards Clínicas de Estado -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-[#2EC4B6]">
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pacientes Asignados</p>
                     <p class="text-3xl font-black text-slate-800 mt-2">12</p>
