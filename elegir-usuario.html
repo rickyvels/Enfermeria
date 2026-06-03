@@ -3,49 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seleccionar Usuario — NurseCore</title>
+    <title>¿Quién eres? - NurseCore</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-100 min-h-screen flex items-center justify-center">
+<body class="bg-slate-50 font-sans text-slate-800 flex flex-col items-center justify-center min-h-screen p-4">
 
-    <button
-        onclick="history.back()"
-        class="absolute top-6 left-6 bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition text-slate-700 font-medium"
-    >
-        ← Regresar
-    </button>
-
-    <div class="text-center">
-
-        <h1 class="text-5xl font-bold text-slate-800 mb-4">¿Quién eres?</h1>
-        <p class="text-slate-500 mb-12">Selecciona tu tipo de usuario</p>
-
-        <div class="grid grid-cols-2 gap-8">
-
-            <div
-                onclick="seleccionarUsuario('profesional')"
-                class="bg-white p-8 rounded-3xl shadow-lg w-[350px] cursor-pointer card-hover border-2 border-transparent hover:border-blue-200"
-            >
-                <div class="text-6xl mb-6">👩‍⚕️</div>
-                <h2 class="text-2xl font-bold text-slate-800 mb-4">Profesional de Enfermería</h2>
-                <p class="text-slate-500">Enfermeros titulados con acceso completo.</p>
-            </div>
-
-            <div
-                onclick="seleccionarUsuario('estudiante')"
-                class="bg-white p-8 rounded-3xl shadow-lg w-[350px] cursor-pointer card-hover border-2 border-transparent hover:border-blue-200"
-            >
-                <div class="text-6xl mb-6">🎓</div>
-                <h2 class="text-2xl font-bold text-slate-800 mb-4">Estudiante / Practicante</h2>
-                <p class="text-slate-500">Funciones académicas y prácticas supervisadas.</p>
-            </div>
-
-        </div>
+    <div class="text-center mb-12">
+        <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight mb-3">¿Quién eres?</h1>
+        <p class="text-base text-slate-500 font-medium">Selecciona tu tipo de usuario para configurar tu entorno</p>
     </div>
 
+    <!-- CONTENEDOR DE TARJETAS SELECCIONABLES -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full px-4">
+        
+        <!-- TARJETA: PROFESIONAL (Interactiva) -->
+        <div onclick="seleccionarUsuario('profesional')" 
+             class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-teal-400 group">
+            
+            <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110">👩‍⚕️</div>
+            
+            <h2 class="text-2xl font-bold text-slate-800 mb-3 group-hover:text-teal-600 transition-colors">
+                Profesional de Enfermería
+            </h2>
+            
+            <p class="text-sm text-slate-500 leading-relaxed max-w-[240px]">
+                Enfermeros titulados con acceso completo al monitoreo clínico.
+            </p>
+        </div>
+
+        <!-- TARJETA: ESTUDIANTE (Interactiva) -->
+        <div onclick="seleccionarUsuario('estudiante')" 
+             class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-emerald-400 group">
+            
+            <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110">🎓</div>
+            
+            <h2 class="text-2xl font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">
+                Estudiante / Practicante
+            </h2>
+            
+            <p class="text-sm text-slate-500 leading-relaxed max-w-[240px]">
+                Funciones académicas, guías de simulación y prácticas supervisadas.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT DE LOGICA DE ENRUTAMIENTO -->
     <script src="app.js"></script>
+    <script>
+        function seleccionarUsuario(tipo) {
+            // Guardamos la elección en el navegador
+            localStorage.setItem("tipoUsuario", tipo);
+            
+            // Flujo corregido: Una vez elegido, lo mandamos al registro 
+            // para que desde ahí use 'irPerfil()' o vaya directo
+            window.location.href = "registro.html";
+        }
+    </script>
 </body>
 </html>
