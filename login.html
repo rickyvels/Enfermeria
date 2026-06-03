@@ -45,19 +45,31 @@
     <script src="app.js"></script>
     <script>
         function validarLogin(event) {
-            // 1. Evita que la página se recargue bruscamente
             event.preventDefault(); 
             
-            // 2. Captura los datos ingresados limpiando espacios vacíos
             const email = document.getElementById("loginEmail").value.trim();
             const pass = document.getElementById("loginPassword").value.trim();
 
-            // 3. Como usamos 'required', el navegador ya validó que no estén vacíos.
-            // Guardamos una sesión simulada en el navegador
-            localStorage.setItem("usuarioLogueado", email);
-            
-            // 4. Redirige de forma obligatoria a la pantalla de selección de rol
-            window.location.href = "elegir-usuario.html";
+            // 1. Intentamos recuperar al usuario que se registró previamente
+            const codigoRegistrado = localStorage.getItem("codigoUsuario");
+            const nombreRegistrado = localStorage.getItem("nombreUsuario");
+
+            // 2. CONTROL DE SEGURIDAD: Si no hay nadie registrado en el navegador...
+            if (!codigoRegistrado || !nombreRegistrado) {
+                alert("❌ Error: No hay ninguna cuenta registrada en este dispositivo. Por favor, regístrate primero.");
+                window.location.href = "registro.html";
+                return;
+            }
+
+            // 3. VALIDACIÓN COHERENTE
+            if (email.includes(codigoRegistrado) || pass === codigoRegistrado) {
+                // Si coincide, guardamos la sesión y pasa
+                localStorage.setItem("usuarioLogueado", email);
+                window.location.href = "elegir-usuario.html";
+            } else {
+                // Si mete cualquier otra cosa aleatoria, lo rebotamos
+                alert("❌ Credenciales incorrectas. El correo o la contraseña no coinciden con los datos registrados (Tip: Usa tu código de identificación).");
+            }
         }
     </script>
 </body>
