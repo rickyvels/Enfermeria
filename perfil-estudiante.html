@@ -46,6 +46,11 @@
 
     <script src="app.js"></script>
     <script>
+        // ESCUDO DE SEGURIDAD: Evita el rebote al login si vienes del registro correcto
+        if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "estudiante") {
+            window.location.href = "login.html";
+        }
+
         function guardarPerfilEstudiante(event) {
             event.preventDefault();
             
