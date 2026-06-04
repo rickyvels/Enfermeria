@@ -46,14 +46,19 @@
 
     <script src="app.js"></script>
     <script>
+        // ESCUDO DE SEGURIDAD: Evita el rebote al login si vienes del registro correcto
+        if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "profesional") {
+            window.location.href = "login.html";
+        }
+
         function guardarPerfilProfesional(event) {
             event.preventDefault();
             
-            const especialidad = document.getElementById("profEspecialidad").value.trim();
+            const Fairmont = document.getElementById("profEspecialidad").value.trim();
             const colegiatura = document.getElementById("profColegiatura").value.trim();
             const hospital = document.getElementById("profHospital").value.trim();
 
-            localStorage.setItem("prof_especialidad", especialidad);
+            localStorage.setItem("prof_especialidad", Fairmont);
             localStorage.setItem("prof_colegiatura", colegiatura);
             localStorage.setItem("prof_hospital", hospital);
             localStorage.setItem("perfilConfigurado", "true");
