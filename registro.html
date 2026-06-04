@@ -46,27 +46,29 @@
     <script src="app.js"></script>
     <script>
     function validarRegistro(event) {
-    event.preventDefault();
-    
-    const nombre = document.getElementById("regNombre").value.trim();
-    const codigo = document.getElementById("regCodigo").value.trim();
-
-    if (nombre !== "" && codigo !== "") {
-        // 1. LIMPIAR CUALQUIER ROL VIEJO PARA EVITAR REDIRECCIONES FANTASMA
-        localStorage.removeItem("tipoUsuario"); 
+        event.preventDefault();
         
-        // También puedes usar localStorage.clear(); si quieres borrar TODO lo anterior antes de crear la cuenta
+        const nombre = document.getElementById("regNombre").value.trim();
+        const codigo = document.getElementById("regCodigo").value.trim();
 
-        // 2. Guardamos los datos nuevos
-        localStorage.setItem("nombreUsuario", nombre);
-        localStorage.setItem("codigoUsuario", codigo);
+        if (nombre !== "" && codigo !== "") {
+            // 1. Limpiamos cualquier rastro de sesiones o roles antiguos
+            localStorage.removeItem("tipoUsuario"); 
+            
+            // 2. Guardamos los datos del nuevo usuario
+            localStorage.setItem("nombreUsuario", nombre);
+            localStorage.setItem("codigoUsuario", codigo);
 
-        alert("✨ ¡Cuenta creada con éxito! Ahora inicia sesión con tu código.");
+            // 3. Creamos la sesión automática con el correo ficticio
+            const correoAuto = `${codigo.toLowerCase()}@nursecore.com`;
+            localStorage.setItem("usuarioLogueado", correoAuto);
 
-        // 3. Redirección forzada al Login
-        window.location.href = "login.html";
+            alert("✨ ¡Cuenta creada con éxito! Vamos a configurar tu perfil.");
+
+            // 4. Redirección directa a elegir el rol
+            window.location.href = "elegir-usuario.html";
+        }
     }
-}
     </script>
 </body>
 </html>
