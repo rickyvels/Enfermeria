@@ -33,33 +33,22 @@
         </div>
 
         <!-- TARJETA: ESTUDIANTE (Interactiva) -->
-        <div onclick="seleccionarUsuario('estudiante')" 
-             class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-emerald-400 group">
-            
-            <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110">🎓</div>
-            
-            <h2 class="text-2xl font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">
-                Estudiante / Practicante
-            </h2>
-            
-            <p class="text-sm text-slate-500 leading-relaxed max-w-[240px]">
-                Funciones académicas, guías de simulación y prácticas supervisadas.
-            </p>
-        </div>
-
+       <div onclick="seleccionarRol('profesional')" class="cursor-pointer ...">
     </div>
 
-    <!-- SCRIPT DE LOGICA DE ENRUTAMIENTO -->
-    <script src="app.js"></script>
-    <script>
-        function seleccionarUsuario(tipo) {
-            // Guardamos la elección en el navegador
-            localStorage.setItem("tipoUsuario", tipo);
-            
-            // Flujo corregido: Una vez elegido, lo mandamos al registro 
-            // para que desde ahí use 'irPerfil()' o vaya directo
-            window.location.href = "registro.html";
-        }
-    </script>
-</body>
-</html>
+<div onclick="seleccionarRol('estudiante')" class="cursor-pointer ...">
+    </div>
+
+<script>
+function seleccionarRol(rol) {
+    // 1. Guardamos el rol inmediatamente para que las siguientes páginas sepan quién eres
+    localStorage.setItem("tipoUsuario", rol);
+    
+    // 2. Redirigimos a la pantalla de configuración de perfil correspondiente
+    if (rol === 'profesional') {
+        window.location.href = "perfil-profesional.html";
+    } else {
+        window.location.href = "perfil-estudiante.html";
+    }
+}
+</script>
