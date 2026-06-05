@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Profesional - NurseCore</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     
+    <!-- FullCalendar Kit Completo v6 -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.11/index.global.min.js"></script>
     
@@ -16,77 +16,148 @@
         .fc { 
             --fc-border-color: #e2e8f0; 
             --fc-today-bg-color: #f0fdf4; 
-            max-height: 650px;
+            max-height: 520px;
         }
         .fc .fc-button-primary { background-color: #2EC4B6 !important; border-color: #2EC4B6 !important; color: #0f172a !important; font-weight: 700; border-radius: 0.75rem; }
         .fc .fc-button-primary:hover { background-color: #239c90 !important; border-color: #239c90 !important; color: #ffffff !important; }
         .fc .fc-button-primary:disabled { background-color: #a5f3fc !important; border-color: #a5f3fc !important; }
-        .fc .fc-toolbar-title { font-size: 1.25rem !important; font-weight: 900; color: #0f172a; text-transform: capitalize; }
+        .fc .fc-toolbar-title { font-size: 1.15rem !important; font-weight: 900; color: #0f172a; text-transform: capitalize; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-[#f0fdf4] font-sans text-slate-800 flex min-h-screen">
 
-    <nav class="bg-white border-b border-slate-100 px-6 py-4 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div class="flex items-center gap-3">
-            <span class="text-3xl">👩‍⚕️</span>
+    <!-- SIDEBAR RECEPTOR DE COLOR -->
+    <aside id="sidebar" class="w-64 bg-[#2EC4B6] text-slate-950 flex flex-col justify-between shadow-xl transition-colors duration-300 flex-shrink-0">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold tracking-wider text-white">NurseCore</h1>
+            <p class="text-xs text-white/70 mb-8 uppercase tracking-wide font-semibold">Sistema de Enfermería</p>
+            <nav class="space-y-1">
+                <a href="#" class="block py-3 px-4 rounded-xl bg-white/20 font-bold active-item shadow-sm text-slate-900">🏠 Dashboard</a>
+                <a href="perfil-paciente.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">👨‍⚕️ Pacientes</a>
+                <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💗 Signos Vitales</a>
+                <a href="medicamentos.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💊 Medicación</a>
+                
+                <div class="border-t border-black/10 my-4"></div>
+                
+                <a href="alertas.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">🚨 Alertas</a>
+                <a href="historial-clinico.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📋 Historial Clínico</a>
+                <a href="kardex.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📄 Kardex</a>
+                
+                <a href="configuracion.html" class="sidebar-item-light bg-black/10 hover:bg-black/20 rounded-xl transition block py-2.5 px-4 mt-6 text-center font-bold text-xs">⚙️ Personalizar Color</a>
+            </nav>
+        </div>
+        <div class="p-6 border-t border-black/5 text-xs opacity-75 font-medium">
+            Entorno Profesional Verificado
+        </div>
+    </aside>
+
+    <!-- SECCIÓN CONTENIDO -->
+    <div class="flex-1 flex flex-col">
+        <!-- TOPBAR RECEPTOR DE COLOR -->
+        <header id="topbar" class="h-20 bg-[#0d3d38] flex items-center justify-between px-8 text-white shadow-md transition-colors duration-300">
             <div>
-                <h1 class="text-xl font-black text-slate-900 tracking-tight">NurseCore <span class="text-[#2EC4B6] font-medium text-sm">Clínico</span></h1>
-                <p class="text-xs text-slate-400 font-medium" id="txtHospital">Cargando centro clínico...</p>
+                <h1 class="text-2xl font-bold tracking-wide text-[#7eeee6]">Dashboard</h1>
+                <p class="text-sm text-[#8ececa]" id="txtHospital">Bienvenido al sistema NurseCore</p>
             </div>
-        </div>
-        <div class="flex items-center gap-4">
-            <div class="text-right hidden sm:block">
-                <p class="text-sm font-bold text-slate-800" id="navNombre">Profesional</p>
-                <p class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md inline-block mt-0.5" id="txtColegiatura">CEP-XXXXX</p>
-            </div>
-            <button onclick="cerrarSesion()" class="bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 font-bold px-4 py-2 rounded-xl text-xs transition-all tracking-wide uppercase">
-                Cerrar Sesión
-            </button>
-        </div>
-    </nav>
-
-    <main class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <div class="space-y-6 lg:col-span-1">
-            <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100">
-                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Credenciales Sanitarias</h2>
-                <div class="space-y-4">
-                    <div>
-                        <p class="text-xs font-bold text-teal-900 uppercase">Especialidad Clínica</p>
-                        <p class="text-sm font-semibold text-slate-700 mt-0.5" id="txtEspecialidad">No configurada</p>
-                    </div>
-                    <div class="pt-3 border-t border-slate-100">
-                        <p class="text-xs font-bold text-teal-900 uppercase">ID de Conexión Segura</p>
-                        <p class="text-sm font-semibold text-slate-700 mt-0.5" id="txtCorreo">usuario@nursecore.com</p>
-                    </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block mr-2">
+                    <p class="text-sm font-bold text-slate-100" id="navNombre">Profesional</p>
+                    <p class="text-xs font-semibold text-teal-300" id="txtColegiatura">CEP-XXXXX</p>
                 </div>
-            </div>
-
-            <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-xl">
-                <h3 class="text-lg font-black text-[#2EC4B6] mb-2">Monitoreo General</h3>
-                <p class="text-xs text-slate-400 leading-relaxed mb-4">Gestión de alertas en tiempo real y opciones para seleccionar o agendar actividades clínicas.</p>
-                <button onclick="abrirModalClinico()" class="w-full bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3.5 rounded-xl transition-all text-xs uppercase tracking-wider shadow-lg shadow-teal-500/10">
-                    Panel Clínico Central →
+                <span class="bg-teal-500/20 text-[#40E0D0] text-xs px-4 py-2 rounded-full font-bold border border-[#40E0D0]/30 flex items-center gap-1.5">
+                    🧑‍⚕️ Profesional
+                </span>
+                <button onclick="cerrarSesion()" class="bg-rose-500/20 hover:bg-rose-500 text-rose-200 hover:text-white transition-all duration-200 text-xs font-bold px-4 py-2 rounded-xl border border-rose-500/30">
+                    Cerrar Sesión
                 </button>
             </div>
-        </div>
+        </header>
 
-        <div class="lg:col-span-2 space-y-6">
-            <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
-                    <div>
-                        <h3 class="text-xl font-black text-slate-900 tracking-tight">🗓️ Agenda de Turnos y Monitoreo</h3>
-                        <p class="text-xs text-slate-400 font-medium">Planificación de guardias, supervisiones y auditorías clínicas</p>
+        <!-- CONTENIDO DINÁMICO -->
+        <main class="p-8 space-y-8">
+            <!-- CARDS ORIGINALES -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pacientes</p>
+                    <p class="text-5xl font-bold text-slate-800 mt-2">32</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Alertas</p>
+                    <p class="text-5xl font-bold text-teal-400 mt-2">5</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Medicamentos</p>
+                    <p class="text-5xl font-bold text-slate-800 mt-2">14</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Reportes</p>
+                    <p class="text-5xl font-bold text-teal-400 mt-2">7</p>
+                </div>
+            </div>
+
+            <!-- SECCIÓN INTERMEDIA: PLANIFICACIÓN CLÍNICA Y CALENDARIO -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- CALENDARIO INSTITUCIONAL (OCUPA 2 COLUMNAS) -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 tracking-tight">🗓️ Agenda de Turnos y Monitoreo</h3>
+                            <p class="text-xs text-slate-400 font-medium">Planificación de guardias, supervisiones y auditorías clínicas</p>
+                        </div>
                     </div>
-                    <div class="self-start sm:self-center">
-                        <span class="text-xs font-bold text-teal-600 bg-teal-50 px-3 py-1 rounded-full uppercase tracking-wider border border-teal-100">Sincronizado</span>
+                    <div id="calendar" class="text-slate-700 font-medium text-sm"></div>
+                </div>
+
+                <!-- COLUMNA DE MONITOREO Y CREDENCIALES (OCUPA 1 COLUMNA) -->
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- TARJETA ACCIÓN DE PANEL CLÍNICO -->
+                    <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-md flex flex-col justify-between min-h-[220px]">
+                        <div>
+                            <h3 class="text-lg font-black text-[#2EC4B6] mb-2">Monitoreo General</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">Gestión integral de alertas clínicas en tiempo real y asignación de actividades en agenda.</p>
+                        </div>
+                        <button onclick="abrirModalClinico()" class="w-full bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3.5 rounded-xl transition-all text-xs uppercase tracking-wider mt-4 shadow-lg shadow-teal-500/10">
+                            Panel Clínico Central →
+                        </button>
+                    </div>
+
+                    <!-- TARJETA CREDENCIALES SANITARIAS (MIGRADOS DEL DISEÑO EXCLUSIVO) -->
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Credenciales Sanitarias</h2>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-xs font-bold text-teal-800 uppercase">Especialidad Clínica</p>
+                                <p class="text-sm font-semibold text-slate-700 mt-0.5" id="txtEspecialidad">Cargando...</p>
+                            </div>
+                            <div class="pt-3 border-t border-slate-100">
+                                <p class="text-xs font-bold text-teal-800 uppercase">ID de Conexión Segura</p>
+                                <p class="text-xs font-semibold text-slate-500 mt-0.5 break-all" id="txtCorreo">usuario@nursecore.com</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div id="calendar" class="text-slate-700 font-medium text-sm"></div>
             </div>
-        </div>
-    </main>
 
+            <!-- ACTIVIDAD RECIENTE ORIGINAL -->
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">Actividad reciente</h3>
+                <div class="space-y-3">
+                    <div class="bg-[#f0fdf4] p-4 rounded-2xl border-l-4 border-[#2EC4B6] flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <span>👨‍⚕️</span> Se registró un nuevo paciente
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border-l-4 border-slate-800 flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <span>💊</span> Administración de Paracetamol completada
+                    </div>
+                    <div class="bg-[#f0fdf4] p-4 rounded-2xl border-l-4 border-[#2EC4B6] flex items-center gap-3 text-sm font-medium text-slate-700">
+                        <span>🚨</span> Alerta de otra cosa pendiente
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL INTERACTIVO: PANEL CLÍNICO CENTRAL (ACCIONES DE ENFERMERÍA) -->
     <div id="modalClinico" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
         <div class="bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300" id="modalContainer">
             <div class="flex justify-between items-start mb-4">
@@ -127,23 +198,25 @@
         </div>
     </div>
 
+    <!-- SCRIPTS ENLAZADOS Y LÓGICA DE CONTROL -->
+    <script src="app.js"></script>
     <script>
-        // SHIELD DE SEGURIDAD
+        // SHIELD DE SEGURIDAD PROFESIONAL
         if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "profesional") {
             window.location.href = "login.html";
         }
 
-        let calendar; // Variable global para manipular el calendario
+        let calendar;
 
-        // CARGAR DATOS EN PANTALLA
         document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("navNombre").textContent = localStorage.getItem("nombreUsuario") || "Personal de Enfermería";
-            document.getElementById("txtHospital").textContent = localStorage.getItem("prof_hospital") || "No asignado";
-            document.getElementById("txtColegiatura").textContent = localStorage.getItem("prof_colegiatura") || "Sin Colegiatura";
-            document.getElementById("txtEspecialidad").textContent = localStorage.getItem("prof_especialidad") || "General";
-            document.getElementById("txtCorreo").textContent = localStorage.getItem("usuarioLogueado");
+            // Sincronización con el LocalStorage del flujo asistencial
+            if(document.getElementById("navNombre")) document.getElementById("navNombre").textContent = localStorage.getItem("nombreUsuario") || "Personal de Enfermería";
+            if(document.getElementById("txtHospital")) document.getElementById("txtHospital").textContent = localStorage.getItem("prof_hospital") || "Hospital Essalud";
+            if(document.getElementById("txtColegiatura")) document.getElementById("txtColegiatura").textContent = localStorage.getItem("prof_colegiatura") || "CEP-XXXXX";
+            if(document.getElementById("txtEspecialidad")) document.getElementById("txtEspecialidad").textContent = localStorage.getItem("prof_especialidad") || "Cuidados Intensivos";
+            if(document.getElementById("txtCorreo")) document.getElementById("txtCorreo").textContent = localStorage.getItem("usuarioLogueado");
 
-            // CONFIGURACIÓN DE FULLCALENDAR
+            // Configuración del FullCalendar acoplado
             const calendarEl = document.getElementById('calendar');
             calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -154,8 +227,6 @@
                     right: 'dayGridMonth,timeGridWeek'
                 },
                 buttonText: { today: 'Hoy', month: 'Mes', week: 'Semana' },
-                
-                // Eventos locales iniciales
                 events: [
                     { title: 'Guardia: Turno Mañana (UCI)', start: '2026-06-08', end: '2026-06-08', color: '#2EC4B6' },
                     { title: 'Auditoría de Historias Clínicas', start: '2026-06-12', color: '#f59e0b' }
@@ -163,34 +234,30 @@
             });
             calendar.render();
 
-            // CAPTURAR EL SUBMIT DEL FORMULARIO DEL MODAL
+            // Capturar la inserción del formulario asistencial
             document.getElementById("formAgendarActividad").addEventListener("submit", function(e) {
                 e.preventDefault();
                 
                 const titulo = document.getElementById("selActividad").value;
                 const fecha = document.getElementById("fechaActividad").value;
                 
-                // Determinar color base según la actividad
-                let colorEvento = '#2EC4B6'; // Turquesa por defecto
-                if (titulo.includes('Auditoría')) colorEvento = '#f59e0b'; // Ámbar
-                if (titulo.includes('Noche')) colorEvento = '#6366f1'; // Índigo
-                if (titulo.includes('Capacitación')) colorEvento = '#10b981'; // Esmeralda
+                let colorEvento = '#2EC4B6'; 
+                if (titulo.includes('Auditoría')) colorEvento = '#f59e0b'; 
+                if (titulo.includes('Noche')) colorEvento = '#6366f1'; 
+                if (titulo.includes('Capacitación')) colorEvento = '#10b981'; 
 
-                // Añadir el nuevo evento dinámicamente al calendario en pantalla
                 calendar.addEvent({
                     title: titulo,
                     start: fecha,
                     color: colorEvento
                 });
 
-                // Opcional: Aquí podrías guardar el array de eventos en tu localStorage si quieres que persistan
-
                 cerrarModalClinico();
                 document.getElementById("formAgendarActividad").reset();
             });
         });
 
-        // MANEJO DEL MODAL INTERACTIVO (EFECTOS DE TRANSICIÓN)
+        // MANEJO DE ANIMACIONES DEL COMPONENTE MODAL
         function abrirModalClinico() {
             const modal = document.getElementById("modalClinico");
             const container = document.getElementById("modalContainer");
@@ -201,7 +268,7 @@
             }, 10);
         }
 
-        function cerrarModalClinico() {
+        fn = cerrarModalClinico = function() {
             const modal = document.getElementById("modalClinico");
             const container = document.getElementById("modalContainer");
             modal.classList.add("opacity-0");
@@ -211,7 +278,6 @@
             }, 300);
         }
 
-        // CONTROL DE SALIDA
         function cerrarSesion() {
             localStorage.clear();
             window.location.href = "login.html";
