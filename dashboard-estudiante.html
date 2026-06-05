@@ -7,17 +7,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <!-- FullCalendar CSS y JS -->
+   <!-- FullCalendar CSS y JS (V6 Kit Completo) -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .fc { --fc-border-color: #e2e8f0; --fc-today-bg-color: #f0fdf4; }
-        .fc .fc-button-primary { background-color: #10b981; border-color: #10b981; font-weight: 700; border-radius: 0.75rem; }
-        .fc .fc-button-primary:hover { background-color: #059669; border-color: #059669; }
-        .fc .fc-button-primary:disabled { background-color: #a7f3d0; border-color: #a7f3d0; }
+        
+        /* Corrección de renderizado para FullCalendar v6 en CDN */
+        .fc { 
+            --fc-border-color: #e2e8f0; 
+            --fc-today-bg-color: #f0fdf4; 
+            max-height: 650px;
+        }
+        /* Estilos de botones adaptados a tu paleta Emerald */
+        .fc .fc-button-primary { background-color: #10b981 !important; border-color: #10b981 !important; font-weight: 700; border-radius: 0.75rem; color: #ffffff !important; }
+        .fc .fc-button-primary:hover { background-color: #059669 !important; border-color: #059669 !important; }
+        .fc .fc-button-primary:disabled { background-color: #a7f3d0 !important; border-color: #a7f3d0 !important; }
+        .fc .fc-toolbar-title { font-size: 1.25rem !important; font-weight: 900; color: #0f172a; text-transform: capitalize; }
     </style>
-</head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- BARRA DE NAVEGACIÓN -->
     <nav class="bg-white border-b border-slate-100 px-6 py-4 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
