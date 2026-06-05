@@ -8,20 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- FullCalendar Kit Completo v6 (Core + Google Calendar Plugin) -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.11/index.global.min.js"></script>
     
     <style>
         body { font-family: 'Inter', sans-serif; }
-        
-        /* Corrección de renderizado para FullCalendar v6 en CDN */
         .fc { 
             --fc-border-color: #e2e8f0; 
             --fc-today-bg-color: #f0fdf4; 
             max-height: 650px;
         }
-        /* Estilos de botones adaptados a la paleta Turquesa Clínico */
         .fc .fc-button-primary { background-color: #2EC4B6 !important; border-color: #2EC4B6 !important; color: #0f172a !important; font-weight: 700; border-radius: 0.75rem; }
         .fc .fc-button-primary:hover { background-color: #239c90 !important; border-color: #239c90 !important; color: #ffffff !important; }
         .fc .fc-button-primary:disabled { background-color: #a5f3fc !important; border-color: #a5f3fc !important; }
@@ -30,7 +26,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- BARRA DE NAVEGACIÓN -->
     <nav class="bg-white border-b border-slate-100 px-6 py-4 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-3">
             <span class="text-3xl">👩‍⚕️</span>
@@ -50,12 +45,9 @@
         </div>
     </nav>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <!-- COLUMNA IZQUIERDA: DATOS Y RESUMEN -->
         <div class="space-y-6 lg:col-span-1">
-            <!-- TARJETA PERFIL -->
             <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100">
                 <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Credenciales Sanitarias</h2>
                 <div class="space-y-4">
@@ -70,17 +62,15 @@
                 </div>
             </div>
 
-            <!-- CONTROLES RÁPIDOS -->
             <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-xl">
                 <h3 class="text-lg font-black text-[#2EC4B6] mb-2">Monitoreo General</h3>
-                <p class="text-xs text-slate-400 leading-relaxed mb-4">Gestión integral de alertas clínicas en tiempo real y asignación de actividades.</p>
-                <button class="w-full bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3.5 rounded-xl transition-all text-xs uppercase tracking-wider">
+                <p class="text-xs text-slate-400 leading-relaxed mb-4">Gestión de alertas en tiempo real y opciones para seleccionar o agendar actividades clínicas.</p>
+                <button onclick="abrirModalClinico()" class="w-full bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3.5 rounded-xl transition-all text-xs uppercase tracking-wider shadow-lg shadow-teal-500/10">
                     Panel Clínico Central →
                 </button>
             </div>
         </div>
 
-        <!-- COLUMNA DERECHA: CALENDARIO -->
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
@@ -92,18 +82,58 @@
                         <span class="text-xs font-bold text-teal-600 bg-teal-50 px-3 py-1 rounded-full uppercase tracking-wider border border-teal-100">Sincronizado</span>
                     </div>
                 </div>
-
-                <!-- CONTENEDOR DEL CALENDARIO -->
                 <div id="calendar" class="text-slate-700 font-medium text-sm"></div>
             </div>
         </div>
     </main>
 
+    <div id="modalClinico" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300" id="modalContainer">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-xl font-black text-slate-900 tracking-tight">🏥 Opciones Clínicas Centrales</h3>
+                    <p class="text-xs text-slate-400 mt-0.5">Selecciona y agenda una actividad en tu entorno clínico.</p>
+                </div>
+                <button onclick="cerrarModalClinico()" class="text-slate-400 hover:text-slate-600 font-bold text-lg p-1">✕</button>
+            </div>
+            
+            <form id="formAgendarActividad" class="space-y-4 pt-2">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tipo de Actividad / Guardia</label>
+                    <select id="selActividad" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#2EC4B6]" required>
+                        <option value="" disabled selected>Selecciona una opción...</option>
+                        <option value="Guardia: Turno Mañana (UCI)">Guardia: Turno Mañana (UCI)</option>
+                        <option value="Guardia: Turno Noche (Emergencias)">Guardia: Turno Noche (Emergencias)</option>
+                        <option value="Auditoría de Historias Clínicas">Auditoría de Historias Clínicas</option>
+                        <option value="Supervisión de Prácticas / Alumnos">Supervisión de Prácticas / Alumnos</option>
+                        <option value="Capacitación: Nuevos Protocolos RCP">Capacitación: Nuevos Protocolos</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Fecha Programada</label>
+                    <input type="date" id="fechaActividad" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#2EC4B6]" required>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" onclick="cerrarModalClinico()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-xl transition-all text-xs uppercase tracking-wider">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="w-2/3 bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3 rounded-xl transition-all text-xs uppercase tracking-wider">
+                        Agendar Actividad →
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // SHIELD DE SEGURIDAD: Evita el acceso si no hay sesión iniciada o el rol no coincide
+        // SHIELD DE SEGURIDAD
         if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "profesional") {
             window.location.href = "login.html";
         }
+
+        let calendar; // Variable global para manipular el calendario
 
         // CARGAR DATOS EN PANTALLA
         document.addEventListener("DOMContentLoaded", function() {
@@ -115,7 +145,7 @@
 
             // CONFIGURACIÓN DE FULLCALENDAR
             const calendarEl = document.getElementById('calendar');
-            const calendar = new FullCalendar.Calendar(calendarEl, {
+            calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'es',
                 headerToolbar: {
@@ -125,30 +155,61 @@
                 },
                 buttonText: { today: 'Hoy', month: 'Mes', week: 'Semana' },
                 
-                // --- CONEXIÓN DE GOOGLE CALENDAR ---
-                // Para activar la sincronización real, descomenta este bloque y borra los "events" locales de abajo:
-                /*
-                googleCalendarApiKey: 'TU_API_KEY_AQUÍ',
-                eventSources: [
-                    {
-                        googleCalendarId: 'tu_id_calendario_o_correo@gmail.com',
-                        color: '#2EC4B6'
-                    }
-                ],
-                eventClick: function(info) {
-                    info.jsEvent.preventDefault();
-                    alert('Turno / Guardia: ' + info.event.title + '\nDetalles: ' + info.event.extendedProps.description);
-                },
-                */
-
-                // Eventos locales provisionales de enfermería
+                // Eventos locales iniciales
                 events: [
                     { title: 'Guardia: Turno Mañana (UCI)', start: '2026-06-08', end: '2026-06-08', color: '#2EC4B6' },
                     { title: 'Auditoría de Historias Clínicas', start: '2026-06-12', color: '#f59e0b' }
                 ]
             });
             calendar.render();
+
+            // CAPTURAR EL SUBMIT DEL FORMULARIO DEL MODAL
+            document.getElementById("formAgendarActividad").addEventListener("submit", function(e) {
+                e.preventDefault();
+                
+                const titulo = document.getElementById("selActividad").value;
+                const fecha = document.getElementById("fechaActividad").value;
+                
+                // Determinar color base según la actividad
+                let colorEvento = '#2EC4B6'; // Turquesa por defecto
+                if (titulo.includes('Auditoría')) colorEvento = '#f59e0b'; // Ámbar
+                if (titulo.includes('Noche')) colorEvento = '#6366f1'; // Índigo
+                if (titulo.includes('Capacitación')) colorEvento = '#10b981'; // Esmeralda
+
+                // Añadir el nuevo evento dinámicamente al calendario en pantalla
+                calendar.addEvent({
+                    title: titulo,
+                    start: fecha,
+                    color: colorEvento
+                });
+
+                // Opcional: Aquí podrías guardar el array de eventos en tu localStorage si quieres que persistan
+
+                cerrarModalClinico();
+                document.getElementById("formAgendarActividad").reset();
+            });
         });
+
+        // MANEJO DEL MODAL INTERACTIVO (EFECTOS DE TRANSICIÓN)
+        function abrirModalClinico() {
+            const modal = document.getElementById("modalClinico");
+            const container = document.getElementById("modalContainer");
+            modal.classList.remove("hidden");
+            setTimeout(() => {
+                modal.classList.remove("opacity-0");
+                container.classList.remove("scale-95");
+            }, 10);
+        }
+
+        function cerrarModalClinico() {
+            const modal = document.getElementById("modalClinico");
+            const container = document.getElementById("modalContainer");
+            modal.classList.add("opacity-0");
+            container.classList.add("scale-95");
+            setTimeout(() => {
+                modal.classList.add("hidden");
+            }, 300);
+        }
 
         // CONTROL DE SALIDA
         function cerrarSesion() {
