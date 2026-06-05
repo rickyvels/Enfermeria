@@ -7,8 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-   <!-- FullCalendar CSS y JS (V6 Kit Completo) -->
+    
+    <!-- FullCalendar Kit Completo v6 (Core + Google Calendar Plugin) -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.11/index.global.min.js"></script>
+    
     <style>
         body { font-family: 'Inter', sans-serif; }
         
@@ -18,12 +21,14 @@
             --fc-today-bg-color: #f0fdf4; 
             max-height: 650px;
         }
-        /* Estilos de botones adaptados a tu paleta Turquesa Clínico */
+        /* Estilos de botones adaptados a la paleta Turquesa Clínico */
         .fc .fc-button-primary { background-color: #2EC4B6 !important; border-color: #2EC4B6 !important; color: #0f172a !important; font-weight: 700; border-radius: 0.75rem; }
         .fc .fc-button-primary:hover { background-color: #239c90 !important; border-color: #239c90 !important; color: #ffffff !important; }
         .fc .fc-button-primary:disabled { background-color: #a5f3fc !important; border-color: #a5f3fc !important; }
         .fc .fc-toolbar-title { font-size: 1.25rem !important; font-weight: 900; color: #0f172a; text-transform: capitalize; }
     </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- BARRA DE NAVEGACIÓN -->
     <nav class="bg-white border-b border-slate-100 px-6 py-4 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -121,12 +126,15 @@
                 buttonText: { today: 'Hoy', month: 'Mes', week: 'Semana' },
                 
                 // --- CONEXIÓN DE GOOGLE CALENDAR ---
-                // Descomenta y rellena estos campos cuando configures tus llaves en Google Cloud Console:
+                // Para activar la sincronización real, descomenta este bloque y borra los "events" locales de abajo:
                 /*
                 googleCalendarApiKey: 'TU_API_KEY_AQUÍ',
-                events: {
-                    googleCalendarId: 'tu_id_calendario_o_correo@gmail.com'
-                },
+                eventSources: [
+                    {
+                        googleCalendarId: 'tu_id_calendario_o_correo@gmail.com',
+                        color: '#2EC4B6'
+                    }
+                ],
                 eventClick: function(info) {
                     info.jsEvent.preventDefault();
                     alert('Turno / Guardia: ' + info.event.title + '\nDetalles: ' + info.event.extendedProps.description);
