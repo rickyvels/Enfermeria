@@ -15,61 +15,255 @@
 
         <div class="flex justify-between items-center mb-10">
             <div class="flex items-center gap-4">
-                <button
-                    onclick="history.back()"
-                    class="bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition text-slate-700 font-medium"
-                >
+                <button onclick="history.back()" class="bg-white px-5 py-3 rounded-2xl shadow hover:scale-105 transition text-slate-700 font-medium">
                     ← Regresar
                 </button>
                 <h1 class="text-5xl font-bold text-slate-800">Kardex de Enfermería</h1>
             </div>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-2xl font-semibold">
+            <button onclick="abrirModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-2xl font-semibold transition">
                 + Nuevo Registro
             </button>
         </div>
 
+        <!-- Tabla -->
         <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
             <table class="w-full">
                 <thead class="bg-blue-600 text-white">
                     <tr>
                         <th class="p-5 text-left">Hora</th>
-                        <th class="p-5 text-left">Procedimiento</th>
-                        <th class="p-5 text-left">Responsable</th>
+                        <th class="p-5 text-left">Medicamento / Procedimiento</th>
+                        <th class="p-5 text-left">Dosis / Vía</th>
+                        <th class="p-5 text-left">Paciente</th>
                         <th class="p-5 text-left">Estado</th>
+                        <th class="p-5 text-left">Acción</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="border-b hover:bg-slate-50">
-                        <td class="p-5 text-slate-800">08:00 AM</td>
-                        <td class="p-5 text-slate-800">Administración de medicamentos</td>
-                        <td class="p-5 text-slate-600">Enf. María López</td>
-                        <td class="p-5">
-                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-lg font-semibold text-sm">Completado</span>
-                        </td>
-                    </tr>
-                    <tr class="border-b hover:bg-slate-50">
-                        <td class="p-5 text-slate-800">12:00 PM</td>
-                        <td class="p-5 text-slate-800">Control de glucosa</td>
-                        <td class="p-5 text-slate-600">Enf. Carlos Ruiz</td>
-                        <td class="p-5">
-                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-lg font-semibold text-sm">Pendiente</span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-slate-50">
-                        <td class="p-5 text-slate-800">04:00 PM</td>
-                        <td class="p-5 text-slate-800">Monitoreo de signos vitales</td>
-                        <td class="p-5 text-slate-600">Enf. Ana Torres</td>
-                        <td class="p-5">
-                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg font-semibold text-sm">Programado</span>
+                <tbody id="kardexTabla">
+                    <tr>
+                        <td colspan="6" class="p-10 text-center text-slate-400">
+                            <div class="animate-pulse">Cargando registros...</div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+    </div>
 
+    <!-- MODAL NUEVO REGISTRO -->
+    <div id="modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-slate-800">Nuevo Registro Kardex</h2>
+                <button onclick="cerrarModal()" class="text-slate-400 hover:text-slate-700 text-2xl font-bold">✕</button>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Paciente -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Paciente</label>
+                    <select id="k_paciente" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-blue-500">
+                        <option value="">Seleccionar paciente...</option>
+                    </select>
+                </div>
+
+                <!-- Medicamento -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Medicamento / Procedimiento</label>
+                    <input type="text" id="k_medicamento" placeholder="Ej: Paracetamol 500mg" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Dosis -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dosis</label>
+                        <input type="text" id="k_dosis" placeholder="Ej: 1 tableta" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <!-- Vía -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Vía</label>
+                        <select id="k_via" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:border-blue-500">
+                            <option value="oral">Oral</option>
+                            <option value="intravenosa">Intravenosa</option>
+                            <option value="intramuscular">Intramuscular</option>
+                            <option value="subcutanea">Subcutánea</option>
+                            <option value="topica">Tópica</option>
+                            <option value="inhalatoria">Inhalatoria</option>
+                            <option value="otra">Otra</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Frecuencia -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Frecuencia</label>
+                        <input type="text" id="k_frecuencia" placeholder="Ej: Cada 8 horas" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <!-- Hora -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Hora de Admin.</label>
+                        <input type="time" id="k_hora" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+
+                <!-- Indicación -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Indicación</label>
+                    <textarea id="k_indicacion" rows="2" placeholder="Indicación médica..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-blue-500 resize-none"></textarea>
+                </div>
+            </div>
+
+            <div id="modalError" class="hidden mt-4 bg-red-100 border border-red-300 text-red-700 text-sm px-4 py-3 rounded-xl"></div>
+
+            <div class="flex gap-3 mt-6">
+                <button onclick="cerrarModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 rounded-xl transition">
+                    Cancelar
+                </button>
+                <button onclick="guardarKardex()" id="btnGuardar" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition">
+                    Guardar Registro
+                </button>
+            </div>
+        </div>
     </div>
 
     <script src="supabase.js"></script>
     <script src="app.js"></script>
+    <script>
+        const coloresEstado = {
+            activo:      'bg-blue-100 text-blue-700',
+            suspendido:  'bg-red-100 text-red-700',
+            completado:  'bg-green-100 text-green-700'
+        };
+        const etiquetasEstado = {
+            activo: 'Activo', suspendido: 'Suspendido', completado: 'Completado'
+        };
+        const etiquetasVia = {
+            oral: 'Oral', intravenosa: 'IV', intramuscular: 'IM',
+            subcutanea: 'SC', topica: 'Tópica', inhalatoria: 'Inh.', otra: 'Otra'
+        };
+
+        // Formatear hora HH:MM a 12h
+        function formatHora(hora) {
+            if (!hora) return '—';
+            const [h, m] = hora.split(':');
+            const hNum = parseInt(h);
+            const ampm = hNum >= 12 ? 'PM' : 'AM';
+            const h12 = hNum % 12 || 12;
+            return `${h12}:${m} ${ampm}`;
+        }
+
+        async function cargarKardex() {
+            const tbody = document.getElementById('kardexTabla');
+            try {
+                // Cargar todos los registros con join manual
+                const registros = await db.select('kardex', 'order=created_at.desc&limit=50');
+                const pacientes = await db.select('pacientes', 'select=id,nombre,apellido');
+
+                const mapPacientes = {};
+                pacientes.forEach(p => mapPacientes[p.id] = `${p.nombre} ${p.apellido}`);
+
+                if (registros.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center text-slate-400">No hay registros aún. ¡Crea el primero!</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = registros.map(r => `
+                    <tr class="border-b hover:bg-slate-50 transition">
+                        <td class="p-5 text-slate-800 font-medium">${formatHora(r.hora_administracion)}</td>
+                        <td class="p-5 text-slate-800">${r.medicamento}</td>
+                        <td class="p-5 text-slate-600 text-sm">${r.dosis} — ${etiquetasVia[r.via] || r.via}<br><span class="text-xs text-slate-400">${r.frecuencia}</span></td>
+                        <td class="p-5 text-slate-600 text-sm">${mapPacientes[r.paciente_id] || '—'}</td>
+                        <td class="p-5">
+                            <span class="px-3 py-1 rounded-lg font-semibold text-sm ${coloresEstado[r.estado] || 'bg-slate-100 text-slate-700'}">
+                                ${etiquetasEstado[r.estado] || r.estado}
+                            </span>
+                        </td>
+                        <td class="p-5">
+                            <button onclick="cambiarEstado('${r.id}', '${r.estado}')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-lg transition font-medium">
+                                Cambiar estado
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center text-red-400">Error al cargar: ${e.message || e}</td></tr>`;
+            }
+        }
+
+        async function cargarPacientesSelect() {
+            const sel = document.getElementById('k_paciente');
+            const pacientes = await db.select('pacientes', 'order=nombre.asc');
+            sel.innerHTML = '<option value="">Seleccionar paciente...</option>' +
+                pacientes.map(p => `<option value="${p.id}">${p.nombre} ${p.apellido} — Cama ${p.cama || '?'}</option>`).join('');
+        }
+
+        function abrirModal() {
+            cargarPacientesSelect();
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modalError').classList.add('hidden');
+            // Limpiar campos
+            ['k_paciente','k_medicamento','k_dosis','k_frecuencia','k_hora','k_indicacion'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+        }
+
+        async function guardarKardex() {
+            const paciente_id   = document.getElementById('k_paciente').value;
+            const medicamento   = document.getElementById('k_medicamento').value.trim();
+            const dosis         = document.getElementById('k_dosis').value.trim();
+            const via           = document.getElementById('k_via').value;
+            const frecuencia    = document.getElementById('k_frecuencia').value.trim();
+            const hora          = document.getElementById('k_hora').value;
+            const indicacion    = document.getElementById('k_indicacion').value.trim();
+            const errorDiv      = document.getElementById('modalError');
+
+            if (!paciente_id || !medicamento || !dosis || !frecuencia) {
+                errorDiv.textContent = '⚠️ Completa los campos obligatorios: paciente, medicamento, dosis y frecuencia.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('btnGuardar').textContent = 'Guardando...';
+            document.getElementById('btnGuardar').disabled = true;
+            errorDiv.classList.add('hidden');
+
+            try {
+                const usuario = getUsuarioActual();
+                await db.insert('kardex', {
+                    paciente_id,
+                    medicamento,
+                    dosis,
+                    via,
+                    frecuencia,
+                    hora_administracion: hora || null,
+                    indicacion: indicacion || null,
+                    usuario_id: usuario.id || null,
+                    estado: 'activo'
+                });
+                cerrarModal();
+                cargarKardex();
+            } catch (e) {
+                errorDiv.textContent = '❌ Error al guardar: ' + (e.message || JSON.stringify(e));
+                errorDiv.classList.remove('hidden');
+            }
+
+            document.getElementById('btnGuardar').textContent = 'Guardar Registro';
+            document.getElementById('btnGuardar').disabled = false;
+        }
+
+        async function cambiarEstado(id, estadoActual) {
+            const estados = ['activo', 'completado', 'suspendido'];
+            const siguiente = estados[(estados.indexOf(estadoActual) + 1) % estados.length];
+            await db.update('kardex', { estado: siguiente }, `id=eq.${id}`);
+            cargarKardex();
+        }
+
+        // Cargar al inicio
+        cargarKardex();
+    </script>
 </body>
 </html>
