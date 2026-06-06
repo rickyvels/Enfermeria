@@ -82,7 +82,7 @@
         const btn = document.getElementById('btnGoogle');
         btn.innerHTML = `<div class="w-5 h-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin"></div><span>Conectando con Google...</span>`;
         btn.disabled = true;
-        auth.loginConGoogle(window.location.origin + '/auth-callback.html');
+        auth.loginConGoogle("https://rickyvels.github.io/Enfermeria/auth-callback.html");
     }
 
     async function validarLogin() {
