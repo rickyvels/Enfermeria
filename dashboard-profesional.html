@@ -6,283 +6,593 @@
     <title>Dashboard Profesional - NurseCore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- FullCalendar Kit Completo v6 -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.11/index.global.min.js"></script>
-    
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .fc { 
-            --fc-border-color: #e2e8f0; 
-            --fc-today-bg-color: #f0fdf4; 
-            max-height: 520px;
-        }
+        .fc { --fc-border-color: #e2e8f0; --fc-today-bg-color: #f0fdf4; max-height: 460px; }
         .fc .fc-button-primary { background-color: #2EC4B6 !important; border-color: #2EC4B6 !important; color: #0f172a !important; font-weight: 700; border-radius: 0.75rem; }
-        .fc .fc-button-primary:hover { background-color: #239c90 !important; border-color: #239c90 !important; color: #ffffff !important; }
-        .fc .fc-button-primary:disabled { background-color: #a5f3fc !important; border-color: #a5f3fc !important; }
-        .fc .fc-toolbar-title { font-size: 1.15rem !important; font-weight: 900; color: #0f172a; text-transform: capitalize; }
+        .fc .fc-button-primary:hover { background-color: #239c90 !important; color: #fff !important; }
+        .fc .fc-toolbar-title { font-size: 1.1rem !important; font-weight: 900; color: #0f172a; text-transform: capitalize; }
+
+        /* Notificaciones dropdown */
+        #notifDropdown { transform-origin: top right; transition: transform 0.2s ease, opacity 0.2s ease; }
+        #notifDropdown.hidden { transform: scale(0.95); opacity: 0; pointer-events: none; }
+        #notifDropdown.visible { transform: scale(1); opacity: 1; pointer-events: all; }
+
+        /* Calculadora */
+        .calc-btn { transition: all 0.15s; }
+        .calc-btn:active { transform: scale(0.92); }
+
+        /* Sidebar scroll */
+        aside { overflow-y: auto; }
+        aside::-webkit-scrollbar { width: 4px; }
+        aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+        /* Badge animado */
+        @keyframes pulse-badge { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .badge-pulse { animation: pulse-badge 1.5s infinite; }
     </style>
 </head>
 <body class="bg-[#f0fdf4] font-sans text-slate-800 flex min-h-screen">
 
-    <!-- SIDEBAR RECEPTOR DE COLOR -->
-    <aside id="sidebar" class="w-64 bg-[#2EC4B6] text-slate-950 flex flex-col justify-between shadow-xl transition-colors duration-300 flex-shrink-0">
-        <div class="p-6">
-            <h1 class="text-2xl font-bold tracking-wider text-white">NurseCore</h1>
-            <p class="text-xs text-white/70 mb-8 uppercase tracking-wide font-semibold">Sistema de Enfermería</p>
-            <nav class="space-y-1">
-                <a href="#" class="block py-3 px-4 rounded-xl bg-white/20 font-bold active-item shadow-sm text-slate-900">🏠 Dashboard</a>
-                <a href="perfil-paciente.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">👨‍⚕️ Pacientes</a>
-                <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💗 Signos Vitales</a>
-                <a href="medicamentos.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💊 Medicación</a>
-                
-                <div class="border-t border-black/10 my-4"></div>
-                
-                <a href="alertas.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">🚨 Alertas</a>
-                <a href="historial-clinico.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📋 Historial Clínico</a>
-                <a href="kardex.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📄 Kardex</a>
-                
-                <a href="configuracion.html" class="sidebar-item-light bg-black/10 hover:bg-black/20 rounded-xl transition block py-2.5 px-4 mt-6 text-center font-bold text-xs">⚙️ Personalizar Color</a>
-            </nav>
-        </div>
-        <div class="p-6 border-t border-black/5 text-xs opacity-75 font-medium">
-            Entorno Profesional Verificado
-        </div>
-    </aside>
+<!-- ══════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════ -->
+<aside id="sidebar" class="w-72 bg-[#2EC4B6] text-slate-950 flex flex-col shadow-xl transition-colors duration-300 flex-shrink-0">
+    <div class="p-6 flex-1">
+        <h1 class="text-2xl font-bold tracking-wider text-white">NurseCore</h1>
+        <p class="text-xs text-white/70 mb-6 uppercase tracking-wide font-semibold">Sistema de Enfermería</p>
 
-    <!-- SECCIÓN CONTENIDO -->
-    <div class="flex-1 flex flex-col">
-        <!-- TOPBAR RECEPTOR DE COLOR -->
-        <header id="topbar" class="h-20 bg-[#0d3d38] flex items-center justify-between px-8 text-white shadow-md transition-colors duration-300">
-            <div>
-                <h1 class="text-2xl font-bold tracking-wide text-[#7eeee6]">Dashboard</h1>
-                <p class="text-sm text-[#8ececa]" id="txtHospital">Bienvenido al sistema NurseCore</p>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="text-right hidden sm:block mr-2">
-                    <p class="text-sm font-bold text-slate-100" id="navNombre">Profesional</p>
-                    <p class="text-xs font-semibold text-teal-300" id="txtColegiatura">CEP-XXXXX</p>
+        <!-- Navegación -->
+        <nav class="space-y-1 mb-6">
+            <a href="#" class="block py-3 px-4 rounded-xl bg-white/20 font-bold active-item shadow-sm text-slate-900">🏠 Dashboard</a>
+            <a href="perfil-paciente.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">👨‍⚕️ Pacientes</a>
+            <a href="signos-vitales.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💗 Signos Vitales</a>
+            <a href="medicamentos.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">💊 Medicación</a>
+            <div class="border-t border-black/10 my-3"></div>
+            <a href="alertas.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">🚨 Alertas</a>
+            <a href="historial-clinico.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📋 Historial Clínico</a>
+            <a href="kardex.html" class="sidebar-item-light hover:bg-white/10 rounded-xl transition block py-2.5 px-4 font-medium">📄 Kardex</a>
+            <a href="configuracion.html" class="sidebar-item-light bg-black/10 hover:bg-black/20 rounded-xl transition block py-2.5 px-4 font-bold text-xs mt-2 text-center">⚙️ Personalizar Color</a>
+        </nav>
+
+        <!-- ══ CALCULADORA CLÍNICA ══ -->
+        <div class="bg-white/15 backdrop-blur rounded-2xl p-4 border border-white/20">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-white font-bold text-sm tracking-wide">🧮 Calculadora Clínica</h3>
+                <div class="flex gap-1">
+                    <button onclick="setCalcMode('basica')" id="btnBasica" class="text-xs px-2 py-1 rounded-lg bg-white/30 text-white font-semibold transition">Básica</button>
+                    <button onclick="setCalcMode('imc')" id="btnIMC" class="text-xs px-2 py-1 rounded-lg hover:bg-white/20 text-white/70 font-semibold transition">IMC</button>
+                    <button onclick="setCalcMode('dosis')" id="btnDosis" class="text-xs px-2 py-1 rounded-lg hover:bg-white/20 text-white/70 font-semibold transition">Dosis</button>
                 </div>
-                <span class="bg-teal-500/20 text-[#40E0D0] text-xs px-4 py-2 rounded-full font-bold border border-[#40E0D0]/30 flex items-center gap-1.5">
-                    🧑‍⚕️ Profesional
-                </span>
-                <button onclick="cerrarSesion()" class="bg-rose-500/20 hover:bg-rose-500 text-rose-200 hover:text-white transition-all duration-200 text-xs font-bold px-4 py-2 rounded-xl border border-rose-500/30">
-                    Cerrar Sesión
+            </div>
+
+            <!-- Calculadora básica -->
+            <div id="calcBasica">
+                <div class="bg-white/20 rounded-xl px-3 py-2 mb-3 text-right">
+                    <div class="text-white/60 text-xs min-h-[16px]" id="calcExpr"></div>
+                    <div class="text-white text-xl font-bold min-h-[28px] truncate" id="calcDisplay">0</div>
+                </div>
+                <div class="grid grid-cols-4 gap-1.5">
+                    <button onclick="calcClear()" class="calc-btn col-span-2 bg-rose-500/70 hover:bg-rose-500 text-white text-sm font-bold py-2.5 rounded-xl">AC</button>
+                    <button onclick="calcInput('±')" class="calc-btn bg-white/20 hover:bg-white/30 text-white text-sm font-bold py-2.5 rounded-xl">±</button>
+                    <button onclick="calcInput('/')" class="calc-btn bg-amber-400/80 hover:bg-amber-400 text-white text-sm font-bold py-2.5 rounded-xl">÷</button>
+
+                    <button onclick="calcInput('7')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">7</button>
+                    <button onclick="calcInput('8')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">8</button>
+                    <button onclick="calcInput('9')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">9</button>
+                    <button onclick="calcInput('*')" class="calc-btn bg-amber-400/80 hover:bg-amber-400 text-white text-sm font-bold py-2.5 rounded-xl">×</button>
+
+                    <button onclick="calcInput('4')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">4</button>
+                    <button onclick="calcInput('5')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">5</button>
+                    <button onclick="calcInput('6')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">6</button>
+                    <button onclick="calcInput('-')" class="calc-btn bg-amber-400/80 hover:bg-amber-400 text-white text-sm font-bold py-2.5 rounded-xl">−</button>
+
+                    <button onclick="calcInput('1')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">1</button>
+                    <button onclick="calcInput('2')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">2</button>
+                    <button onclick="calcInput('3')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">3</button>
+                    <button onclick="calcInput('+')" class="calc-btn bg-amber-400/80 hover:bg-amber-400 text-white text-sm font-bold py-2.5 rounded-xl">+</button>
+
+                    <button onclick="calcInput('0')" class="calc-btn col-span-2 bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">0</button>
+                    <button onclick="calcInput('.')" class="calc-btn bg-white/10 hover:bg-white/20 text-white text-sm font-semibold py-2.5 rounded-xl">.</button>
+                    <button onclick="calcEquals()" class="calc-btn bg-[#0d3d38] hover:bg-[#0a2e2b] text-[#2EC4B6] text-sm font-bold py-2.5 rounded-xl">=</button>
+                </div>
+                <button onclick="calcBackspace()" class="mt-1.5 w-full bg-white/10 hover:bg-white/20 text-white/70 text-xs py-1.5 rounded-xl transition">⌫ Borrar</button>
+            </div>
+
+            <!-- Calculadora IMC -->
+            <div id="calcIMC" class="hidden space-y-2">
+                <input id="imcPeso" type="number" placeholder="Peso (kg)" class="w-full bg-white/20 text-white placeholder-white/50 text-sm px-3 py-2 rounded-xl outline-none border border-white/20 focus:border-white/60">
+                <input id="imcTalla" type="number" placeholder="Talla (cm)" class="w-full bg-white/20 text-white placeholder-white/50 text-sm px-3 py-2 rounded-xl outline-none border border-white/20 focus:border-white/60">
+                <button onclick="calcIMC()" class="w-full bg-[#0d3d38] hover:bg-[#0a2e2b] text-[#2EC4B6] text-sm font-bold py-2.5 rounded-xl transition">Calcular IMC</button>
+                <div id="imcResultado" class="text-center text-white text-sm font-semibold min-h-[36px] bg-white/10 rounded-xl py-2 px-3"></div>
+            </div>
+
+            <!-- Calculadora Dosis -->
+            <div id="calcDosis" class="hidden space-y-2">
+                <input id="dosisPeso" type="number" placeholder="Peso paciente (kg)" class="w-full bg-white/20 text-white placeholder-white/50 text-sm px-3 py-2 rounded-xl outline-none border border-white/20 focus:border-white/60">
+                <input id="dosisDosis" type="number" placeholder="Dosis (mg/kg)" class="w-full bg-white/20 text-white placeholder-white/50 text-sm px-3 py-2 rounded-xl outline-none border border-white/20 focus:border-white/60">
+                <input id="dosisConc" type="number" placeholder="Concentración (mg/ml)" class="w-full bg-white/20 text-white placeholder-white/50 text-sm px-3 py-2 rounded-xl outline-none border border-white/20 focus:border-white/60">
+                <button onclick="calcDosis()" class="w-full bg-[#0d3d38] hover:bg-[#0a2e2b] text-[#2EC4B6] text-sm font-bold py-2.5 rounded-xl transition">Calcular Volumen</button>
+                <div id="dosisResultado" class="text-center text-white text-sm font-semibold min-h-[36px] bg-white/10 rounded-xl py-2 px-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 border-t border-black/10 text-xs text-white/60 font-medium">
+        Entorno Profesional Verificado
+    </div>
+</aside>
+
+<!-- ══════════════════════════════════════
+     CONTENIDO PRINCIPAL
+══════════════════════════════════════ -->
+<div class="flex-1 flex flex-col min-w-0">
+
+    <!-- TOPBAR -->
+    <header id="topbar" class="h-20 bg-[#0d3d38] flex items-center justify-between px-8 text-white shadow-md transition-colors duration-300 sticky top-0 z-40">
+        <div>
+            <h1 class="text-2xl font-bold tracking-wide text-[#7eeee6]">Dashboard</h1>
+            <p class="text-sm text-[#8ececa]" id="txtHospital">Bienvenido al sistema NurseCore</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="text-right hidden sm:block mr-1">
+                <p class="text-sm font-bold text-slate-100" id="navNombre">Profesional</p>
+                <p class="text-xs font-semibold text-teal-300" id="txtColegiatura">CEP-XXXXX</p>
+            </div>
+            <span class="bg-teal-500/20 text-[#40E0D0] text-xs px-3 py-2 rounded-full font-bold border border-[#40E0D0]/30 flex items-center gap-1.5">
+                🧑‍⚕️ Profesional
+            </span>
+
+            <!-- 🔔 CAMPANA DE NOTIFICACIONES -->
+            <div class="relative" id="notifContainer">
+                <button onclick="toggleNotif()" class="relative bg-white/10 hover:bg-white/20 transition p-2.5 rounded-xl">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                    </svg>
+                    <span id="notifBadge" class="badge-pulse absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
                 </button>
-            </div>
-        </header>
 
-        <!-- CONTENIDO DINÁMICO -->
-        <main class="p-8 space-y-8">
-            <!-- CARDS ORIGINALES -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pacientes</p>
-                    <p class="text-5xl font-bold text-slate-800 mt-2">32</p>
-                </div>
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Alertas</p>
-                    <p class="text-5xl font-bold text-teal-400 mt-2">5</p>
-                </div>
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Medicamentos</p>
-                    <p class="text-5xl font-bold text-slate-800 mt-2">14</p>
-                </div>
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Reportes</p>
-                    <p class="text-5xl font-bold text-teal-400 mt-2">7</p>
-                </div>
-            </div>
-
-            <!-- SECCIÓN INTERMEDIA: PLANIFICACIÓN CLÍNICA Y CALENDARIO -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
-                <!-- CALENDARIO INSTITUCIONAL (OCUPA 2 COLUMNAS) -->
-                <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
-                        <div>
-                            <h3 class="text-xl font-bold text-slate-800 tracking-tight">🗓️ Agenda de Turnos y Monitoreo</h3>
-                            <p class="text-xs text-slate-400 font-medium">Planificación de guardias, supervisiones y auditorías clínicas</p>
+                <!-- DROPDOWN NOTIFICACIONES (estilo Gmail) -->
+                <div id="notifDropdown" class="hidden absolute right-0 top-12 w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50">
+                    <div class="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50">
+                        <h4 class="font-bold text-slate-800 text-sm">Notificaciones</h4>
+                        <button onclick="marcarTodasLeidas()" class="text-xs text-teal-600 hover:text-teal-800 font-semibold transition">Marcar todas leídas</button>
+                    </div>
+                    <div id="notifLista" class="max-h-80 overflow-y-auto divide-y divide-slate-50">
+                        <div class="px-5 py-8 text-center text-slate-400 text-sm">
+                            <div class="text-3xl mb-2">🔔</div>
+                            Cargando notificaciones...
                         </div>
                     </div>
-                    <div id="calendar" class="text-slate-700 font-medium text-sm"></div>
-                </div>
-
-                <!-- COLUMNA DE MONITOREO Y CREDENCIALES (OCUPA 1 COLUMNA) -->
-                <div class="lg:col-span-1 space-y-6">
-                    <!-- TARJETA ACCIÓN DE PANEL CLÍNICO -->
-                    <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-md flex flex-col justify-between min-h-[220px]">
-                        <div>
-                            <h3 class="text-lg font-black text-[#2EC4B6] mb-2">Monitoreo General</h3>
-                            <p class="text-xs text-slate-400 leading-relaxed">Gestión integral de alertas clínicas en tiempo real y asignación de actividades en agenda.</p>
-                        </div>
-                        <button onclick="abrirModalClinico()" class="w-full bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3.5 rounded-xl transition-all text-xs uppercase tracking-wider mt-4 shadow-lg shadow-teal-500/10">
-                            Panel Clínico Central →
-                        </button>
-                    </div>
-
-                    <!-- TARJETA CREDENCIALES SANITARIAS (MIGRADOS DEL DISEÑO EXCLUSIVO) -->
-                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Credenciales Sanitarias</h2>
-                        <div class="space-y-3">
-                            <div>
-                                <p class="text-xs font-bold text-teal-800 uppercase">Especialidad Clínica</p>
-                                <p class="text-sm font-semibold text-slate-700 mt-0.5" id="txtEspecialidad">Cargando...</p>
-                            </div>
-                            <div class="pt-3 border-t border-slate-100">
-                                <p class="text-xs font-bold text-teal-800 uppercase">ID de Conexión Segura</p>
-                                <p class="text-xs font-semibold text-slate-500 mt-0.5 break-all" id="txtCorreo">usuario@nursecore.com</p>
-                            </div>
-                        </div>
+                    <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 text-center">
+                        <a href="alertas.html" class="text-xs text-teal-600 hover:text-teal-800 font-semibold transition">Ver todas las alertas →</a>
                     </div>
                 </div>
             </div>
 
-            <!-- ACTIVIDAD RECIENTE ORIGINAL -->
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">Actividad reciente</h3>
-                <div class="space-y-3">
-                    <div class="bg-[#f0fdf4] p-4 rounded-2xl border-l-4 border-[#2EC4B6] flex items-center gap-3 text-sm font-medium text-slate-700">
-                        <span>👨‍⚕️</span> Se registró un nuevo paciente
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl border-l-4 border-slate-800 flex items-center gap-3 text-sm font-medium text-slate-700">
-                        <span>💊</span> Administración de Paracetamol completada
-                    </div>
-                    <div class="bg-[#f0fdf4] p-4 rounded-2xl border-l-4 border-[#2EC4B6] flex items-center gap-3 text-sm font-medium text-slate-700">
-                        <span>🚨</span> Alerta de otra cosa pendiente
-                    </div>
-                </div>
+            <button onclick="cerrarSesion()" class="bg-rose-500/20 hover:bg-rose-500 text-rose-200 hover:text-white transition-all duration-200 text-xs font-bold px-4 py-2 rounded-xl border border-rose-500/30">
+                Cerrar Sesión
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-8 space-y-6">
+
+        <!-- STATS CARDS (datos reales de Supabase) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[130px] hover:shadow-md transition">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pacientes</p>
+                <p class="text-5xl font-bold text-slate-800 mt-2" id="statPacientes">—</p>
+                <p class="text-xs text-slate-400 mt-1">registrados</p>
             </div>
-        </main>
-    </div>
-
-    <!-- MODAL INTERACTIVO: PANEL CLÍNICO CENTRAL (ACCIONES DE ENFERMERÍA) -->
-    <div id="modalClinico" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300" id="modalContainer">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h3 class="text-xl font-black text-slate-900 tracking-tight">🏥 Opciones Clínicas Centrales</h3>
-                    <p class="text-xs text-slate-400 mt-0.5">Selecciona y agenda una actividad en tu entorno clínico.</p>
-                </div>
-                <button onclick="cerrarModalClinico()" class="text-slate-400 hover:text-slate-600 font-bold text-lg p-1">✕</button>
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[130px] hover:shadow-md transition">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Alertas</p>
+                <p class="text-5xl font-bold text-rose-400 mt-2" id="statAlertas">—</p>
+                <p class="text-xs text-slate-400 mt-1">sin leer</p>
             </div>
-            
-            <form id="formAgendarActividad" class="space-y-4 pt-2">
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tipo de Actividad / Guardia</label>
-                    <select id="selActividad" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#2EC4B6]" required>
-                        <option value="" disabled selected>Selecciona una opción...</option>
-                        <option value="Guardia: Turno Mañana (UCI)">Guardia: Turno Mañana (UCI)</option>
-                        <option value="Guardia: Turno Noche (Emergencias)">Guardia: Turno Noche (Emergencias)</option>
-                        <option value="Auditoría de Historias Clínicas">Auditoría de Historias Clínicas</option>
-                        <option value="Supervisión de Prácticas / Alumnos">Supervisión de Prácticas / Alumnos</option>
-                        <option value="Capacitación: Nuevos Protocolos RCP">Capacitación: Nuevos Protocolos</option>
-                    </select>
-                </div>
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[130px] hover:shadow-md transition">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Kardex</p>
+                <p class="text-5xl font-bold text-slate-800 mt-2" id="statKardex">—</p>
+                <p class="text-xs text-slate-400 mt-1">activos hoy</p>
+            </div>
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[130px] hover:shadow-md transition">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Medicamentos</p>
+                <p class="text-5xl font-bold text-teal-400 mt-2" id="statMeds">—</p>
+                <p class="text-xs text-slate-400 mt-1">en catálogo</p>
+            </div>
+        </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Fecha Programada</label>
-                    <input type="date" id="fechaActividad" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#2EC4B6]" required>
+        <!-- CALENDARIO + PANEL -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">🗓️ Agenda de Turnos</h3>
+                        <p class="text-xs text-slate-400">Guardias, supervisiones y auditorías</p>
+                    </div>
                 </div>
+                <div id="calendar" class="text-slate-700 font-medium text-sm"></div>
+            </div>
 
-                <div class="pt-2 flex gap-3">
-                    <button type="button" onclick="cerrarModalClinico()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-xl transition-all text-xs uppercase tracking-wider">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="w-2/3 bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3 rounded-xl transition-all text-xs uppercase tracking-wider">
-                        Agendar Actividad →
+            <div class="space-y-5">
+                <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-md flex flex-col justify-between min-h-[180px]">
+                    <div>
+                        <h3 class="text-lg font-black text-[#2EC4B6] mb-2">Monitoreo General</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Gestión integral de alertas clínicas y asignación de actividades.</p>
+                    </div>
+                    <button onclick="abrirModalClinico()" class="w-full bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3 rounded-xl transition text-xs uppercase tracking-wider mt-4">
+                        Panel Clínico →
                     </button>
                 </div>
-            </form>
+
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Credenciales Sanitarias</h2>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-xs font-bold text-teal-800 uppercase">Especialidad</p>
+                            <p class="text-sm font-semibold text-slate-700 mt-0.5" id="txtEspecialidad">Cuidados Intensivos</p>
+                        </div>
+                        <div class="pt-3 border-t border-slate-100">
+                            <p class="text-xs font-bold text-teal-800 uppercase">Correo</p>
+                            <p class="text-xs font-semibold text-slate-500 mt-0.5 break-all" id="txtCorreo">—</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIVIDAD RECIENTE (dinámica desde Supabase) -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+            <h3 class="text-xl font-bold text-slate-800 mb-5">⏱️ Actividad Reciente</h3>
+            <div id="actividadReciente" class="space-y-3">
+                <div class="animate-pulse bg-slate-50 p-4 rounded-2xl h-12"></div>
+                <div class="animate-pulse bg-slate-50 p-4 rounded-2xl h-12"></div>
+            </div>
+        </div>
+
+        <!-- PACIENTES CRÍTICOS -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="text-xl font-bold text-slate-800">🚨 Pacientes Críticos</h3>
+                <a href="perfil-paciente.html" class="text-xs text-teal-600 font-semibold hover:underline">Ver todos →</a>
+            </div>
+            <div id="pacientesCriticos" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="animate-pulse bg-slate-50 rounded-2xl h-24"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- ══ MODAL PANEL CLÍNICO ══ -->
+<div id="modalClinico" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300" id="modalContainer">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h3 class="text-xl font-black text-slate-900">🏥 Panel Clínico Central</h3>
+                <p class="text-xs text-slate-400 mt-0.5">Agenda una actividad en tu entorno clínico</p>
+            </div>
+            <button onclick="cerrarModalClinico()" class="text-slate-400 hover:text-slate-600 font-bold text-xl p-1">✕</button>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tipo de Actividad</label>
+                <select id="selActividad" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#2EC4B6]">
+                    <option value="" disabled selected>Selecciona una opción...</option>
+                    <option>Guardia: Turno Mañana (UCI)</option>
+                    <option>Guardia: Turno Noche (Emergencias)</option>
+                    <option>Auditoría de Historias Clínicas</option>
+                    <option>Supervisión de Prácticas</option>
+                    <option>Capacitación: Nuevos Protocolos RCP</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Fecha Programada</label>
+                <input type="date" id="fechaActividad" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#2EC4B6]">
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="cerrarModalClinico()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-xl transition text-xs uppercase">Cancelar</button>
+                <button onclick="agendarActividad()" class="w-2/3 bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-3 rounded-xl transition text-xs uppercase">Agendar →</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- SCRIPTS ENLAZADOS Y LÓGICA DE CONTROL -->
-    <script src="supabase.js"></script>
-    <script src="app.js"></script>
-    <script>
-        // SHIELD DE SEGURIDAD PROFESIONAL
-        if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "profesional") {
-            window.location.href = "login.html";
+<script src="supabase.js"></script>
+<script src="app.js"></script>
+<script>
+// ══ SEGURIDAD ══
+if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "profesional") {
+    window.location.href = "login.html";
+}
+
+// ══ INIT ══
+document.addEventListener("DOMContentLoaded", async () => {
+    // Datos perfil
+    document.getElementById("navNombre").textContent = localStorage.getItem("nombreUsuario") || "Profesional";
+    document.getElementById("txtHospital").textContent = localStorage.getItem("prof_hospital") || "Hospital NurseCore";
+    document.getElementById("txtColegiatura").textContent = localStorage.getItem("prof_colegiatura") || "CEP-XXXXX";
+    document.getElementById("txtEspecialidad").textContent = localStorage.getItem("prof_especialidad") || "Cuidados Intensivos";
+    document.getElementById("txtCorreo").textContent = localStorage.getItem("usuarioLogueado") || "—";
+
+    // Cargar stats, notificaciones y datos
+    await Promise.all([cargarStats(), cargarNotificaciones(), cargarActividad(), cargarPacientesCriticos()]);
+    initCalendar();
+});
+
+// ══ STATS REALES ══
+async function cargarStats() {
+    try {
+        const [pacientes, alertas, kardex, meds] = await Promise.all([
+            db.select('pacientes', 'select=id'),
+            db.select('alertas', 'select=id&leida=eq.false'),
+            db.select('kardex', 'select=id&estado=eq.activo'),
+            db.select('medicamentos_catalogo', 'select=id')
+        ]);
+        document.getElementById('statPacientes').textContent = pacientes.length;
+        document.getElementById('statAlertas').textContent = alertas.length;
+        document.getElementById('statKardex').textContent = kardex.length;
+        document.getElementById('statMeds').textContent = meds.length;
+
+        // Badge campana
+        if (alertas.length > 0) {
+            const badge = document.getElementById('notifBadge');
+            badge.textContent = alertas.length > 9 ? '9+' : alertas.length;
+            badge.classList.remove('hidden');
+        }
+    } catch(e) { console.error(e); }
+}
+
+// ══ NOTIFICACIONES (campana) ══
+let notifAbiertas = false;
+
+function toggleNotif() {
+    const drop = document.getElementById('notifDropdown');
+    notifAbiertas = !notifAbiertas;
+    if (notifAbiertas) {
+        drop.classList.remove('hidden');
+        setTimeout(() => drop.classList.add('visible'), 10);
+    } else {
+        drop.classList.remove('visible');
+        setTimeout(() => drop.classList.add('hidden'), 200);
+    }
+}
+
+// Cerrar al click fuera
+document.addEventListener('click', (e) => {
+    if (!document.getElementById('notifContainer').contains(e.target) && notifAbiertas) {
+        toggleNotif();
+    }
+});
+
+async function cargarNotificaciones() {
+    const lista = document.getElementById('notifLista');
+    try {
+        const alertas = await db.select('alertas', 'order=fecha_alerta.desc&limit=10');
+        const pacientes = await db.select('pacientes', 'select=id,nombre,apellido');
+        const mapP = {};
+        pacientes.forEach(p => mapP[p.id] = `${p.nombre} ${p.apellido}`);
+
+        if (alertas.length === 0) {
+            lista.innerHTML = `<div class="px-5 py-8 text-center text-slate-400 text-sm"><div class="text-3xl mb-2">✅</div>Sin notificaciones</div>`;
+            return;
         }
 
-        let calendar;
+        const iconos = { critica: '🔴', advertencia: '🟡', informativa: '🔵' };
+        lista.innerHTML = alertas.map(a => `
+            <div class="flex items-start gap-3 px-5 py-3.5 hover:bg-slate-50 transition cursor-pointer ${a.leida ? 'opacity-60' : 'bg-teal-50/40'}" onclick="leerAlerta('${a.id}', this)">
+                <span class="text-lg mt-0.5 flex-shrink-0">${iconos[a.tipo] || '🔔'}</span>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between gap-2">
+                        <p class="text-sm font-${a.leida ? 'medium' : 'bold'} text-slate-800 truncate">${a.titulo}</p>
+                        ${!a.leida ? '<span class="w-2 h-2 bg-teal-500 rounded-full flex-shrink-0"></span>' : ''}
+                    </div>
+                    <p class="text-xs text-slate-500 mt-0.5 truncate">${a.descripcion || mapP[a.paciente_id] || 'Sin descripción'}</p>
+                    <p class="text-xs text-slate-400 mt-0.5">${new Date(a.fecha_alerta).toLocaleString('es', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</p>
+                </div>
+            </div>
+        `).join('');
+    } catch(e) {
+        lista.innerHTML = `<div class="px-5 py-8 text-center text-rose-400 text-sm">Error al cargar</div>`;
+    }
+}
 
-        document.addEventListener("DOMContentLoaded", function() {
-            // Sincronización con el LocalStorage del flujo asistencial
-            if(document.getElementById("navNombre")) document.getElementById("navNombre").textContent = localStorage.getItem("nombreUsuario") || "Personal de Enfermería";
-            if(document.getElementById("txtHospital")) document.getElementById("txtHospital").textContent = localStorage.getItem("prof_hospital") || "Hospital Essalud";
-            if(document.getElementById("txtColegiatura")) document.getElementById("txtColegiatura").textContent = localStorage.getItem("prof_colegiatura") || "CEP-XXXXX";
-            if(document.getElementById("txtEspecialidad")) document.getElementById("txtEspecialidad").textContent = localStorage.getItem("prof_especialidad") || "Cuidados Intensivos";
-            if(document.getElementById("txtCorreo")) document.getElementById("txtCorreo").textContent = localStorage.getItem("usuarioLogueado");
+async function leerAlerta(id, el) {
+    await db.update('alertas', { leida: true }, `id=eq.${id}`);
+    el.classList.add('opacity-60');
+    el.classList.remove('bg-teal-50/40');
+    el.querySelector('.w-2')?.remove();
+    // Actualizar badge
+    const badge = document.getElementById('notifBadge');
+    const actual = parseInt(badge.textContent) || 0;
+    if (actual <= 1) badge.classList.add('hidden');
+    else badge.textContent = actual - 1;
+}
 
-            // Configuración del FullCalendar acoplado
-            const calendarEl = document.getElementById('calendar');
-            calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'es',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek'
-                },
-                buttonText: { today: 'Hoy', month: 'Mes', week: 'Semana' },
-                events: [
-                    { title: 'Guardia: Turno Mañana (UCI)', start: '2026-06-08', end: '2026-06-08', color: '#2EC4B6' },
-                    { title: 'Auditoría de Historias Clínicas', start: '2026-06-12', color: '#f59e0b' }
-                ]
-            });
-            calendar.render();
+async function marcarTodasLeidas() {
+    const alertas = await db.select('alertas', 'select=id&leida=eq.false');
+    for (const a of alertas) await db.update('alertas', { leida: true }, `id=eq.${a.id}`);
+    document.getElementById('notifBadge').classList.add('hidden');
+    await cargarNotificaciones();
+}
 
-            // Capturar la inserción del formulario asistencial
-            document.getElementById("formAgendarActividad").addEventListener("submit", function(e) {
-                e.preventDefault();
-                
-                const titulo = document.getElementById("selActividad").value;
-                const fecha = document.getElementById("fechaActividad").value;
-                
-                let colorEvento = '#2EC4B6'; 
-                if (titulo.includes('Auditoría')) colorEvento = '#f59e0b'; 
-                if (titulo.includes('Noche')) colorEvento = '#6366f1'; 
-                if (titulo.includes('Capacitación')) colorEvento = '#10b981'; 
+// ══ ACTIVIDAD RECIENTE ══
+async function cargarActividad() {
+    const cont = document.getElementById('actividadReciente');
+    try {
+        const kardex = await db.select('kardex', 'order=created_at.desc&limit=3');
+        const signos = await db.select('signos_vitales', 'order=fecha_registro.desc&limit=2');
+        const items = [
+            ...kardex.map(k => ({ icono: '💊', texto: `Kardex: ${k.medicamento} ${k.dosis} — ${k.estado}`, color: 'border-teal-400 bg-teal-50', tiempo: k.created_at })),
+            ...signos.map(s => ({ icono: '💗', texto: `Signos vitales registrados — PA: ${s.presion_arterial || '?'} FC: ${s.frecuencia_cardiaca || '?'}`, color: 'border-blue-400 bg-blue-50', tiempo: s.fecha_registro }))
+        ].sort((a,b) => new Date(b.tiempo) - new Date(a.tiempo)).slice(0,4);
 
-                calendar.addEvent({
-                    title: titulo,
-                    start: fecha,
-                    color: colorEvento
-                });
-
-                cerrarModalClinico();
-                document.getElementById("formAgendarActividad").reset();
-            });
-        });
-
-        // MANEJO DE ANIMACIONES DEL COMPONENTE MODAL
-        function abrirModalClinico() {
-            const modal = document.getElementById("modalClinico");
-            const container = document.getElementById("modalContainer");
-            modal.classList.remove("hidden");
-            setTimeout(() => {
-                modal.classList.remove("opacity-0");
-                container.classList.remove("scale-95");
-            }, 10);
+        if (items.length === 0) {
+            cont.innerHTML = `<p class="text-slate-400 text-sm text-center py-4">Sin actividad reciente. ¡Comienza registrando datos!</p>`;
+            return;
         }
+        cont.innerHTML = items.map(i => `
+            <div class="p-4 rounded-2xl border-l-4 flex items-center gap-3 text-sm font-medium text-slate-700 ${i.color}">
+                <span class="text-lg">${i.icono}</span>
+                <span class="flex-1">${i.texto}</span>
+                <span class="text-xs text-slate-400 whitespace-nowrap">${new Date(i.tiempo).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})}</span>
+            </div>
+        `).join('');
+    } catch(e) {
+        cont.innerHTML = `<p class="text-slate-400 text-sm text-center py-4">Sin actividad reciente aún.</p>`;
+    }
+}
 
-        fn = cerrarModalClinico = function() {
-            const modal = document.getElementById("modalClinico");
-            const container = document.getElementById("modalContainer");
-            modal.classList.add("opacity-0");
-            container.classList.add("scale-95");
-            setTimeout(() => {
-                modal.classList.add("hidden");
-            }, 300);
+// ══ PACIENTES CRÍTICOS ══
+async function cargarPacientesCriticos() {
+    const cont = document.getElementById('pacientesCriticos');
+    try {
+        const pacientes = await db.select('pacientes', 'order=created_at.desc&limit=3');
+        if (pacientes.length === 0) {
+            cont.innerHTML = `<p class="text-slate-400 text-sm col-span-3 text-center py-4">No hay pacientes registrados aún.</p>`;
+            return;
         }
+        const colores = { critico: 'border-red-400 bg-red-50', estable: 'border-green-400 bg-green-50', alta: 'border-blue-400 bg-blue-50', activo: 'border-slate-300 bg-slate-50' };
+        cont.innerHTML = pacientes.map(p => `
+            <div class="border-l-4 p-4 rounded-2xl ${colores[p.estado] || colores.activo} hover:shadow-md transition cursor-pointer" onclick="window.location='perfil-paciente.html'">
+                <div class="flex items-center justify-between mb-1">
+                    <p class="font-bold text-slate-800 text-sm">${p.nombre} ${p.apellido}</p>
+                    <span class="text-xs font-semibold capitalize px-2 py-0.5 rounded-full ${p.estado === 'critico' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}">${p.estado || 'activo'}</span>
+                </div>
+                <p class="text-xs text-slate-500">Cama ${p.cama || '—'} · ${p.servicio || 'Sin servicio'}</p>
+                <p class="text-xs text-slate-400 mt-1 truncate">${p.diagnostico_principal || 'Sin diagnóstico'}</p>
+            </div>
+        `).join('');
+    } catch(e) {
+        cont.innerHTML = `<p class="text-slate-400 text-sm col-span-3 text-center py-4">Error al cargar pacientes.</p>`;
+    }
+}
 
-        function cerrarSesion() {
-            localStorage.clear();
-            window.location.href = "login.html";
-        }
-    </script>
+// ══ CALENDARIO ══
+let calendar;
+function initCalendar() {
+    calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek' },
+        buttonText: { today: 'Hoy', month: 'Mes', week: 'Semana' },
+        events: [
+            { title: 'Guardia Mañana (UCI)', start: '2026-06-08', color: '#2EC4B6' },
+            { title: 'Auditoría HC', start: '2026-06-12', color: '#f59e0b' }
+        ]
+    });
+    calendar.render();
+}
+
+// ══ MODAL CLÍNICO ══
+function abrirModalClinico() {
+    const m = document.getElementById("modalClinico"), c = document.getElementById("modalContainer");
+    m.classList.remove("hidden");
+    setTimeout(() => { m.classList.remove("opacity-0"); c.classList.remove("scale-95"); }, 10);
+}
+function cerrarModalClinico() {
+    const m = document.getElementById("modalClinico"), c = document.getElementById("modalContainer");
+    m.classList.add("opacity-0"); c.classList.add("scale-95");
+    setTimeout(() => m.classList.add("hidden"), 300);
+}
+function agendarActividad() {
+    const titulo = document.getElementById("selActividad").value;
+    const fecha = document.getElementById("fechaActividad").value;
+    if (!titulo || !fecha) return;
+    const colores = { 'Auditoría': '#f59e0b', 'Noche': '#6366f1', 'Capacitación': '#10b981' };
+    const color = Object.keys(colores).find(k => titulo.includes(k)) ? colores[Object.keys(colores).find(k => titulo.includes(k))] : '#2EC4B6';
+    calendar.addEvent({ title: titulo, start: fecha, color });
+    cerrarModalClinico();
+}
+
+// ══ CALCULADORA BÁSICA ══
+let calcExpr = '';
+let calcReady = false;
+
+function calcInput(val) {
+    const display = document.getElementById('calcDisplay');
+    const expr = document.getElementById('calcExpr');
+    if (calcReady && !isNaN(val)) { calcExpr = ''; calcReady = false; }
+    if (val === '±') {
+        calcExpr = calcExpr ? (calcExpr.startsWith('-') ? calcExpr.slice(1) : '-' + calcExpr) : '';
+        display.textContent = calcExpr || '0'; return;
+    }
+    calcExpr += val;
+    display.textContent = calcExpr;
+    expr.textContent = '';
+}
+function calcEquals() {
+    const display = document.getElementById('calcDisplay');
+    const expr = document.getElementById('calcExpr');
+    try {
+        const result = Function('"use strict"; return (' + calcExpr + ')')();
+        expr.textContent = calcExpr + ' =';
+        const rounded = Math.round(result * 10000) / 10000;
+        display.textContent = rounded;
+        calcExpr = String(rounded);
+        calcReady = true;
+    } catch { display.textContent = 'Error'; calcExpr = ''; }
+}
+function calcClear() {
+    calcExpr = ''; calcReady = false;
+    document.getElementById('calcDisplay').textContent = '0';
+    document.getElementById('calcExpr').textContent = '';
+}
+function calcBackspace() {
+    calcExpr = calcExpr.slice(0, -1);
+    document.getElementById('calcDisplay').textContent = calcExpr || '0';
+}
+
+// ══ MODOS CALCULADORA ══
+function setCalcMode(mode) {
+    ['calcBasica','calcIMC','calcDosis'].forEach(id => document.getElementById(id).classList.add('hidden'));
+    ['btnBasica','btnIMC','btnDosis'].forEach(id => {
+        document.getElementById(id).classList.remove('bg-white/30');
+        document.getElementById(id).classList.add('hover:bg-white/20','text-white/70');
+        document.getElementById(id).classList.remove('text-white');
+    });
+    const modeMap = { basica: 'calcBasica', imc: 'calcIMC', dosis: 'calcDosis' };
+    const btnMap = { basica: 'btnBasica', imc: 'btnIMC', dosis: 'btnDosis' };
+    document.getElementById(modeMap[mode]).classList.remove('hidden');
+    const btn = document.getElementById(btnMap[mode]);
+    btn.classList.add('bg-white/30','text-white');
+    btn.classList.remove('text-white/70');
+}
+
+// ══ IMC ══
+function calcIMC() {
+    const peso = parseFloat(document.getElementById('imcPeso').value);
+    const talla = parseFloat(document.getElementById('imcTalla').value) / 100;
+    const res = document.getElementById('imcResultado');
+    if (!peso || !talla) { res.textContent = '⚠️ Completa los campos'; return; }
+    const imc = peso / (talla * talla);
+    let cat = '', color = '';
+    if (imc < 18.5) { cat = 'Bajo peso'; color = 'text-blue-300'; }
+    else if (imc < 25) { cat = 'Normal ✅'; color = 'text-green-300'; }
+    else if (imc < 30) { cat = 'Sobrepeso'; color = 'text-yellow-300'; }
+    else { cat = 'Obesidad'; color = 'text-red-300'; }
+    res.innerHTML = `<span class="${color} font-bold">IMC: ${imc.toFixed(1)}</span><br><span class="text-white/70 text-xs">${cat}</span>`;
+}
+
+// ══ DOSIS ══
+function calcDosis() {
+    const peso = parseFloat(document.getElementById('dosisPeso').value);
+    const dosis = parseFloat(document.getElementById('dosisDosis').value);
+    const conc = parseFloat(document.getElementById('dosisConc').value);
+    const res = document.getElementById('dosisResultado');
+    if (!peso || !dosis) { res.textContent = '⚠️ Completa peso y dosis'; return; }
+    const dosisTotal = peso * dosis;
+    let html = `<span class="text-green-300 font-bold">Dosis total: ${dosisTotal.toFixed(2)} mg</span>`;
+    if (conc) {
+        const vol = dosisTotal / conc;
+        html += `<br><span class="text-white/70 text-xs">Volumen: ${vol.toFixed(2)} ml</span>`;
+    }
+    res.innerHTML = html;
+}
+
+// ══ SESIÓN ══
+function cerrarSesion() { localStorage.clear(); window.location.href = "login.html"; }
+</script>
 </body>
 </html>
