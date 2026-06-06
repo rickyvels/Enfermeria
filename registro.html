@@ -5,53 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - NurseCore</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-[#1e293b] font-sans text-slate-200 flex flex-col items-center justify-center min-h-screen p-4">
 
-    <div class="max-w-md w-full bg-[#0f172a] p-8 rounded-3xl shadow-2xl border border-slate-800 transition-all duration-300">
-        
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-black text-[#2EC4B6] tracking-tight">Crea tu Cuenta</h1>
-            <p class="text-xs text-slate-400 font-medium mt-2 uppercase tracking-wider">Paso previo a la configuración de perfil</p>
+    <div class="max-w-md w-full bg-[#0f172a] p-8 rounded-3xl shadow-2xl border border-slate-800">
+
+        <div class="text-center mb-7">
+            <h1 class="text-4xl font-black text-[#2EC4B6] tracking-tight">NurseCore</h1>
+            <p class="text-xs text-slate-400 font-medium mt-1 uppercase tracking-wider">Crear cuenta nueva</p>
         </div>
 
-        <div id="registroForm" class="space-y-5">
+        <!-- ══ BOTÓN GOOGLE (principal) ══ -->
+        <button onclick="registrarConGoogle()" id="btnGoogle"
+            class="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-50 text-slate-800 font-bold py-4 rounded-xl shadow-md hover:shadow-lg transition-all border border-slate-200 mb-6">
+            <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            <span>Registrarse con Google</span>
+        </button>
+
+        <!-- Separador -->
+        <div class="flex items-center gap-3 mb-6">
+            <div class="flex-1 h-px bg-slate-700"></div>
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">o con email</span>
+            <div class="flex-1 h-px bg-slate-700"></div>
+        </div>
+
+        <!-- ══ FORMULARIO CLÁSICO ══ -->
+        <div class="space-y-4">
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Nombre Completo</label>
-                <input type="text" id="regNombre" required 
-                       class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
-                       placeholder="Juan Pérez">
+                <input type="text" id="regNombre"
+                    class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors"
+                    placeholder="Juan Pérez">
             </div>
-            
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Correo Electrónico</label>
-                <input type="email" id="regEmail" required 
-                       class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
-                       placeholder="juan@ejemplo.com">
+                <input type="email" id="regEmail"
+                    class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors"
+                    placeholder="juan@ejemplo.com">
             </div>
-
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Identificación Médica / Código Estudiante</label>
-                <input type="text" id="regCodigo" required 
-                       class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
-                       placeholder="NUC-10293 (este será tu contraseña)">
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Código de Identificación</label>
+                <input type="text" id="regCodigo"
+                    class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors"
+                    placeholder="CEP-12345 (será tu contraseña)">
             </div>
-
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tipo de Usuario</label>
                 <select id="regTipo" class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors">
-                    <option value="profesional">Profesional de Enfermería</option>
-                    <option value="estudiante">Estudiante de Enfermería</option>
+                    <option value="profesional">🧑‍⚕️ Profesional de Enfermería</option>
+                    <option value="estudiante">📚 Estudiante de Enfermería</option>
                 </select>
             </div>
 
             <div id="regError" class="hidden bg-red-900/40 border border-red-700 text-red-300 text-sm px-4 py-3 rounded-xl"></div>
 
-            <button onclick="validarRegistro()" id="btnRegistro" class="w-full bg-[#2EC4B6] hover:bg-[#259b8f] text-slate-950 font-black py-4 rounded-xl shadow-md hover:shadow-xl transition-all text-sm mt-6 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
-                <span id="btnRegText">Registrar y Configurar Perfil</span> →
+            <button onclick="validarRegistro()" id="btnRegistro"
+                class="w-full bg-[#2EC4B6] hover:bg-[#259b8f] text-slate-950 font-black py-4 rounded-xl shadow-md hover:shadow-xl transition-all text-sm mt-2 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                <span id="btnRegText">Crear Cuenta →</span>
             </button>
         </div>
 
@@ -63,48 +80,45 @@
     <script src="supabase.js"></script>
     <script src="app.js"></script>
     <script>
+    function registrarConGoogle() {
+        const btn = document.getElementById('btnGoogle');
+        btn.innerHTML = `<div class="w-5 h-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin"></div><span>Conectando con Google...</span>`;
+        btn.disabled = true;
+        auth.loginConGoogle(window.location.origin + '/auth-callback.html');
+    }
+
     async function validarRegistro() {
-        const nombre = document.getElementById("regNombre").value.trim();
-        const email = document.getElementById("regEmail").value.trim();
-        const codigo = document.getElementById("regCodigo").value.trim();
-        const tipo = document.getElementById("regTipo").value;
-        const errorDiv = document.getElementById("regError");
-        const btnText = document.getElementById("btnRegText");
+        const nombre = document.getElementById('regNombre').value.trim();
+        const email  = document.getElementById('regEmail').value.trim();
+        const codigo = document.getElementById('regCodigo').value.trim();
+        const tipo   = document.getElementById('regTipo').value;
+        const errorDiv = document.getElementById('regError');
+        const btnText  = document.getElementById('btnRegText');
 
         if (!nombre || !email || !codigo) {
-            mostrarError("Por favor completa todos los campos.");
+            errorDiv.textContent = '⚠️ Completa todos los campos.';
+            errorDiv.classList.remove('hidden');
             return;
         }
 
-        btnText.textContent = "Registrando...";
-        document.getElementById("btnRegistro").disabled = true;
+        btnText.textContent = 'Registrando...';
+        document.getElementById('btnRegistro').disabled = true;
         errorDiv.classList.add('hidden');
 
         const { data, error } = await registrarUsuario(nombre, codigo, email, tipo);
 
         if (error) {
-            mostrarError(error);
-            btnText.textContent = "Registrar y Configurar Perfil";
-            document.getElementById("btnRegistro").disabled = false;
+            errorDiv.textContent = '❌ ' + error;
+            errorDiv.classList.remove('hidden');
+            btnText.textContent = 'Crear Cuenta →';
+            document.getElementById('btnRegistro').disabled = false;
         } else {
-            // Guardar sesión
-            localStorage.setItem('nc_usuario_id', data.id);
-            localStorage.setItem('nc_usuario_nombre', data.nombre);
-            localStorage.setItem('nc_usuario_email', data.email);
-            localStorage.setItem('tipoUsuario', data.tipo);
-            localStorage.setItem('usuarioLogueado', data.email);
-            localStorage.setItem('nombreUsuario', data.nombre);
-            localStorage.setItem('codigoUsuario', data.codigo);
-
-            window.location.href = "elegir-usuario.html";
+            guardarSesionLocal(data);
+            window.location.href = 'elegir-usuario.html';
         }
     }
 
-    function mostrarError(msg) {
-        const errorDiv = document.getElementById("regError");
-        errorDiv.textContent = "❌ " + msg;
-        errorDiv.classList.remove('hidden');
-    }
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') validarRegistro(); });
     </script>
 </body>
 </html>

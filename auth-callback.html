@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticando... - NurseCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#1e293b] min-h-screen flex items-center justify-center">
+    <div class="text-center">
+        <!-- Spinner -->
+        <div class="relative w-20 h-20 mx-auto mb-6">
+            <div class="absolute inset-0 rounded-full border-4 border-teal-500/20"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-[#2EC4B6] animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center text-2xl">🔐</div>
+        </div>
+        <h2 class="text-white text-xl font-bold mb-2">Verificando tu cuenta Google</h2>
+        <p class="text-slate-400 text-sm" id="statusMsg">Conectando con el servidor...</p>
+    </div>
+
+    <script src="supabase.js"></script>
+    <script>
+    async function procesarCallback() {
+        const msg = document.getElementById('statusMsg');
+
+        // 1. Obtener sesión desde la URL (hash de Google OAuth)
+        msg.textContent = 'Obteniendo datos de Google...';
+        const session = await auth.getSessionFromURL();
+
+        if (!session) {
+            // Si no hay hash, puede que ya esté en localStorage
+            const sesionGuardada = auth.getSession();
+            if (sesionGuardada) {
+                msg.textContent = 'Sesión activa encontrada...';
+                await continuarConSesion(sesionGuardada.user);
+                return;
+            }
+            msg.textContent = '❌ No se pudo obtener la sesión';
+            setTimeout(() => window.location.href = 'login.html', 2000);
+            return;
+        }
+
+        await continuarConSesion(session.user);
+    }
+
+    async function continuarConSesion(googleUser) {
+        const msg = document.getElementById('statusMsg');
+        msg.textContent = 'Buscando tu perfil...';
+
+        // 2. Buscar si ya existe en nuestra tabla usuarios
+        try {
+            const existentes = await db.select('usuarios', `email=eq.${encodeURIComponent(googleUser.email)}`);
+
+            if (existentes.length > 0) {
+                // Usuario ya registrado → guardar sesión e ir al dashboard
+                guardarSesionLocal(existentes[0]);
+                msg.textContent = `✅ Bienvenido, ${existentes[0].nombre}!`;
+                setTimeout(() => window.location.href = 'elegir-usuario.html', 800);
+            } else {
+                // Usuario nuevo → necesita completar registro (código + tipo)
+                msg.textContent = 'Primera vez con Google, completando registro...';
+                // Guardar datos de Google temporalmente
+                localStorage.setItem('nc_google_email', googleUser.email);
+                localStorage.setItem('nc_google_nombre', googleUser.user_metadata?.full_name || googleUser.email.split('@')[0]);
+                localStorage.setItem('nc_google_avatar', googleUser.user_metadata?.avatar_url || '');
+                setTimeout(() => window.location.href = 'completar-registro.html', 800);
+            }
+        } catch(e) {
+            msg.textContent = '❌ Error al verificar perfil: ' + (e.message || e);
+            setTimeout(() => window.location.href = 'login.html', 3000);
+        }
+    }
+
+    procesarCallback();
+    </script>
+</body>
+</html>
