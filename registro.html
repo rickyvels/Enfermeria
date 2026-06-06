@@ -18,7 +18,7 @@
             <p class="text-xs text-slate-400 font-medium mt-2 uppercase tracking-wider">Paso previo a la configuración de perfil</p>
         </div>
 
-        <form id="registroForm" class="space-y-5" onsubmit="validarRegistro(event)">
+        <div id="registroForm" class="space-y-5">
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Nombre Completo</label>
                 <input type="text" id="regNombre" required 
@@ -27,47 +27,83 @@
             </div>
             
             <div>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Correo Electrónico</label>
+                <input type="email" id="regEmail" required 
+                       class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
+                       placeholder="juan@ejemplo.com">
+            </div>
+
+            <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Identificación Médica / Código Estudiante</label>
                 <input type="text" id="regCodigo" required 
                        class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
-                       placeholder="NUC-10293">
+                       placeholder="NUC-10293 (este será tu contraseña)">
             </div>
 
-            <button type="submit" class="w-full bg-[#2EC4B6] hover:bg-[#259b8f] text-slate-950 font-black py-4 rounded-xl shadow-md hover:shadow-xl transition-all text-sm mt-6 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
-                Registrar y Configurar Perfil →
+            <div>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tipo de Usuario</label>
+                <select id="regTipo" class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors">
+                    <option value="profesional">Profesional de Enfermería</option>
+                    <option value="estudiante">Estudiante de Enfermería</option>
+                </select>
+            </div>
+
+            <div id="regError" class="hidden bg-red-900/40 border border-red-700 text-red-300 text-sm px-4 py-3 rounded-xl"></div>
+
+            <button onclick="validarRegistro()" id="btnRegistro" class="w-full bg-[#2EC4B6] hover:bg-[#259b8f] text-slate-950 font-black py-4 rounded-xl shadow-md hover:shadow-xl transition-all text-sm mt-6 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                <span id="btnRegText">Registrar y Configurar Perfil</span> →
             </button>
-        </form>
+        </div>
 
         <div class="text-center mt-6">
             <p class="text-xs text-slate-500">¿Ya tienes cuenta? <a href="login.html" class="text-[#2EC4B6] hover:underline font-semibold">Inicia sesión</a></p>
         </div>
     </div>
 
+    <script src="supabase.js"></script>
     <script src="app.js"></script>
     <script>
-    function validarRegistro(event) {
-        event.preventDefault();
-        
+    async function validarRegistro() {
         const nombre = document.getElementById("regNombre").value.trim();
+        const email = document.getElementById("regEmail").value.trim();
         const codigo = document.getElementById("regCodigo").value.trim();
+        const tipo = document.getElementById("regTipo").value;
+        const errorDiv = document.getElementById("regError");
+        const btnText = document.getElementById("btnRegText");
 
-        if (nombre !== "" && codigo !== "") {
-            // 1. Limpiamos cualquier rastro de sesiones o roles antiguos
-            localStorage.removeItem("tipoUsuario"); 
-            
-            // 2. Guardamos los datos del nuevo usuario
-            localStorage.setItem("nombreUsuario", nombre);
-            localStorage.setItem("codigoUsuario", codigo);
+        if (!nombre || !email || !codigo) {
+            mostrarError("Por favor completa todos los campos.");
+            return;
+        }
 
-            // 3. Creamos la sesión automática con el correo ficticio
-            const correoAuto = `${codigo.toLowerCase()}@nursecore.com`;
-            localStorage.setItem("usuarioLogueado", correoAuto);
+        btnText.textContent = "Registrando...";
+        document.getElementById("btnRegistro").disabled = true;
+        errorDiv.classList.add('hidden');
 
-            alert("✨ ¡Cuenta creada con éxito! Vamos a configurar tu perfil.");
+        const { data, error } = await registrarUsuario(nombre, codigo, email, tipo);
 
-            // 4. Redirección directa a elegir el rol
+        if (error) {
+            mostrarError(error);
+            btnText.textContent = "Registrar y Configurar Perfil";
+            document.getElementById("btnRegistro").disabled = false;
+        } else {
+            // Guardar sesión
+            localStorage.setItem('nc_usuario_id', data.id);
+            localStorage.setItem('nc_usuario_nombre', data.nombre);
+            localStorage.setItem('nc_usuario_email', data.email);
+            localStorage.setItem('tipoUsuario', data.tipo);
+            localStorage.setItem('usuarioLogueado', data.email);
+            localStorage.setItem('nombreUsuario', data.nombre);
+            localStorage.setItem('codigoUsuario', data.codigo);
+
             window.location.href = "elegir-usuario.html";
         }
+    }
+
+    function mostrarError(msg) {
+        const errorDiv = document.getElementById("regError");
+        errorDiv.textContent = "❌ " + msg;
+        errorDiv.classList.remove('hidden');
     }
     </script>
 </body>

@@ -16,7 +16,7 @@
             <p class="text-xs text-slate-400 font-medium mt-2 uppercase tracking-wider">Sistema de Enfermería</p>
         </div>
 
-        <form id="loginForm" onsubmit="validarLogin(event)" class="space-y-5">
+        <div id="loginForm" class="space-y-5">
             
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Correo Electrónico</label>
@@ -26,51 +26,63 @@
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Contraseña</label>
-                <input type="password" id="loginPassword" required 
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Código de Identificación</label>
+                <input type="text" id="loginCodigo" required 
                        class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
-                       placeholder="••••••••">
+                       placeholder="Tu código (ej. ENF-001)">
             </div>
 
-            <button type="submit" class="w-full bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-4 rounded-xl shadow-md hover:shadow-xl transition-all text-sm mt-6 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
-                <span>Ingresar</span> →
+            <div id="loginError" class="hidden bg-red-900/40 border border-red-700 text-red-300 text-sm px-4 py-3 rounded-xl"></div>
+
+            <button onclick="validarLogin()" id="btnLogin" class="w-full bg-[#2EC4B6] hover:bg-[#239c90] text-slate-950 font-black py-4 rounded-xl shadow-md hover:shadow-xl transition-all text-sm mt-6 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                <span id="btnLoginText">Ingresar</span> →
             </button>
-        </form>
+        </div>
 
         <div class="text-center mt-6">
             <p class="text-xs text-slate-500">¿No tienes una cuenta? <a href="registro.html" class="text-[#2EC4B6] hover:underline font-semibold">Regístrate aquí</a></p>
         </div>
     </div>
 
+    <script src="supabase.js"></script>
     <script src="app.js"></script>
     <script>
-        function validarLogin(event) {
-            event.preventDefault(); 
-            
+        async function validarLogin() {
             const email = document.getElementById("loginEmail").value.trim();
-            const pass = document.getElementById("loginPassword").value.trim();
+            const codigo = document.getElementById("loginCodigo").value.trim();
+            const btnText = document.getElementById("btnLoginText");
+            const errorDiv = document.getElementById("loginError");
 
-            // 1. Intentamos recuperar al usuario que se registró previamente
-            const codigoRegistrado = localStorage.getItem("codigoUsuario");
-            const nombreRegistrado = localStorage.getItem("nombreUsuario");
-
-            // 2. CONTROL DE SEGURIDAD: Si no hay nadie registrado en el navegador...
-            if (!codigoRegistrado || !nombreRegistrado) {
-                alert("❌ Error: No hay ninguna cuenta registrada en este dispositivo. Por favor, regístrate primero.");
-                window.location.href = "registro.html";
+            if (!email || !codigo) {
+                mostrarError("Por favor completa todos los campos.");
                 return;
             }
 
-            // 3. VALIDACIÓN COHERENTE
-            if (email.includes(codigoRegistrado) || pass === codigoRegistrado) {
-                // Si coincide, guardamos la sesión y pasa
-                localStorage.setItem("usuarioLogueado", email);
-                window.location.href = "elegir-usuario.html";
+            btnText.textContent = "Ingresando...";
+            document.getElementById("btnLogin").disabled = true;
+            errorDiv.classList.add('hidden');
+
+            const { data, error } = await loginUsuario(email, codigo);
+
+            if (error) {
+                mostrarError(error);
+                btnText.textContent = "Ingresar";
+                document.getElementById("btnLogin").disabled = false;
             } else {
-                // Si mete cualquier otra cosa aleatoria, lo rebotamos
-                alert("❌ Credenciales incorrectas. El correo o la contraseña no coinciden con los datos registrados (Tip: Usa tu código de identificación).");
+                window.location.href = "elegir-usuario.html";
             }
         }
+
+        function mostrarError(msg) {
+            const errorDiv = document.getElementById("loginError");
+            errorDiv.textContent = "❌ " + msg;
+            errorDiv.classList.remove('hidden');
+        }
+
+        // Permitir Enter para enviar
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') validarLogin();
+        });
     </script>
 </body>
 </html>
