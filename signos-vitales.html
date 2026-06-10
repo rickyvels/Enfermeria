@@ -11,7 +11,7 @@
 </head>
 <body class="bg-slate-100">
 
-    <div class="p-10">
+    <div class="p-4 md:p-10 max-w-5xl mx-auto">
 
         <div class="flex items-center gap-4 mb-8">
             <button
@@ -22,10 +22,11 @@
             </button>
         </div>
 
-        <h1 class="text-5xl font-bold text-slate-800 mb-10">Registro de Signos Vitales</h1>
+        <h1 class="text-3xl md:text-5xl font-bold text-slate-800 mb-10">Registro de Signos Vitales</h1>
 
-        <div class="bg-white p-10 rounded-3xl shadow-xl">
-            <div class="grid grid-cols-2 gap-6">
+        <div class="bg-white p-6 md:p-10 rounded-3xl shadow-xl">
+            <!-- Optimización: Grid responsivo de 1 columna en móvil y 2 en escritorio -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="text" placeholder="Presión arterial (ej. 120/80)" class="input-light" />
                 <input type="text" placeholder="Frecuencia cardíaca (lpm)" class="input-light" />
                 <input type="text" placeholder="Temperatura (°C)" class="input-light" />
@@ -36,17 +37,15 @@
             <button class="btn-primary mt-8">Guardar Registro</button>
         </div>
 
-        <div class="bg-white mt-10 p-8 rounded-3xl shadow-xl">
-            <h2 class="text-3xl font-bold mb-6">Historial reciente</h2>
+        <div class="bg-white mt-10 p-6 md:p-8 rounded-3xl shadow-xl">
+            <h2 class="text-2xl font-bold mb-6">Historial reciente</h2>
             <div class="space-y-4">
-                <div class="bg-slate-50 p-4 rounded-2xl text-slate-700">08:00 AM — Presión: 120/80</div>
-                <div class="bg-slate-50 p-4 rounded-2xl text-slate-700">12:00 PM — Temperatura: 36.7°C</div>
-                <div class="bg-slate-50 p-4 rounded-2xl text-slate-700">04:00 PM — Saturación: 98%</div>
+                <div class="bg-slate-50 p-4 rounded-2xl text-slate-700 font-medium border-l-4 border-blue-500">08:00 AM — Presión: 120/80</div>
+                <div class="bg-slate-50 p-4 rounded-2xl text-slate-700 font-medium border-l-4 border-orange-500">12:00 PM — Temperatura: 36.7°C</div>
+                <div class="bg-slate-50 p-4 rounded-2xl text-slate-700 font-medium border-l-4 border-green-500">04:00 PM — Saturación: 98%</div>
             </div>
         </div>
 
     </div>
-
-    <script src="app.js"></script>
 </body>
 </html>
