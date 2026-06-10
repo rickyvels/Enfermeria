@@ -52,14 +52,15 @@
         const codigo = document.getElementById("regCodigo").value.trim();
 
         if (nombre !== "" && codigo !== "") {
-            // 1. Limpiamos cualquier rastro de sesiones o roles antiguos
+            // 1. Limpiamos cualquier rastro de sesiones o roles antiguos por seguridad
             localStorage.removeItem("tipoUsuario"); 
+            localStorage.removeItem("perfilConfigurado");
             
-            // 2. Guardamos los datos del nuevo usuario
+            // 2. Guardamos los datos permanentes del nuevo usuario
             localStorage.setItem("nombreUsuario", nombre);
             localStorage.setItem("codigoUsuario", codigo);
 
-            // 3. Creamos la sesión automática con el correo ficticio
+            // 3. Creamos la sesión automática para que el validador lo deje pasar directo
             const correoAuto = `${codigo.toLowerCase()}@nursecore.com`;
             localStorage.setItem("usuarioLogueado", correoAuto);
 
