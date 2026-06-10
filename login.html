@@ -45,24 +45,43 @@
         function validarLogin(event) {
             event.preventDefault(); 
             
-            const email = document.getElementById("loginEmail").value.trim();
+            // Convertimos a minúsculas para evitar problemas de mayúsculas/minúsculas en el correo
+            const email = document.getElementById("loginEmail").value.trim().toLowerCase();
             const pass = document.getElementById("loginPassword").value.trim();
 
             const codigoRegistrado = localStorage.getItem("codigoUsuario");
             const nombreRegistrado = localStorage.getItem("nombreUsuario");
 
+            // Si el código no existe en la máquina, significa que nunca se ha registrado nadie aquí
             if (!codigoRegistrado || !nombreRegistrado) {
                 alert("❌ Error: No hay ninguna cuenta registrada en este dispositivo. Por favor, regístrate primero.");
                 window.location.href = "registro.html";
                 return;
             }
 
-            // Corrección de seguridad: Validación exacta de credenciales
+            // Construimos de forma exacta el correo que se generó
             const correoEsperado = `${codigoRegistrado.toLowerCase()}@nursecore.com`;
             
+            // Validación estricta
             if (email === correoEsperado && pass === codigoRegistrado) {
+                // Guardamos la sesión activa
                 localStorage.setItem("usuarioLogueado", email);
-                window.location.href = "elegir-usuario.html";
+                
+                // 🚀 LÓGICA INTELIGENTE DE ENRUTAMIENTO:
+                // Evaluamos si el usuario ya tiene un rol guardado previamente en el equipo
+                const rolExistente = localStorage.getItem("tipoUsuario");
+                
+                if (rolExistente) {
+                    if (rolExistente === "estudiante") {
+                        window.location.href = "dashboard-estudiante.html";
+                    } else if (rolExistente === "profesional") {
+                        window.location.href = "dashboard-profesional.html";
+                    }
+                } else {
+                    // Si se registró pero cerró la pestaña antes de elegir rol, lo mandamos aquí
+                    window.location.href = "elegir-usuario.html";
+                }
+                
             } else {
                 alert("❌ Credenciales incorrectas. Usa el correo generado en el registro y tu código como contraseña.");
             }
