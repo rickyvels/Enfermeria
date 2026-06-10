@@ -20,7 +20,7 @@
 
         <form id="registroForm" class="space-y-5" onsubmit="validarRegistro(event)">
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Nombre Completo</label>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Nombre Completo (Tu Usuario)</label>
                 <input type="text" id="regNombre" required 
                        class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
                        placeholder="Juan Pérez">
@@ -52,19 +52,18 @@
         const codigo = document.getElementById("regCodigo").value.trim();
 
         if (nombre !== "" && codigo !== "") {
-            // 1. Limpiamos cualquier rastro de sesiones o roles antiguos por seguridad
+            // 1. Limpieza de seguridad para flujos nuevos
             localStorage.removeItem("tipoUsuario"); 
             localStorage.removeItem("perfilConfigurado");
             
-            // 2. Guardamos los datos permanentes del nuevo usuario
+            // 2. Guardamos los datos de acceso limpios y directos
             localStorage.setItem("nombreUsuario", nombre);
             localStorage.setItem("codigoUsuario", codigo);
 
-            // 3. Creamos la sesión automática para que el validador lo deje pasar directo
-            const correoAuto = `${codigo.toLowerCase()}@nursecore.com`;
-            localStorage.setItem("usuarioLogueado", correoAuto);
+            // 3. Dejamos iniciada la sesión con su nombre de usuario
+            localStorage.setItem("usuarioLogueado", nombre);
 
-            alert("✨ ¡Cuenta creada con éxito! Vamos a configurar tu perfil.");
+            alert("✨ ¡Cuenta creada con éxito! Tu usuario para ingresar será tu nombre: " + nombre);
 
             // 4. Redirección directa a elegir el rol
             window.location.href = "elegir-usuario.html";
