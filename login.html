@@ -9,7 +9,7 @@
 </head>
 <body class="bg-[#1e293b] font-sans text-slate-200 flex flex-col items-center justify-center min-h-screen p-4">
 
-    <div class="max-w-md w-full bg-[#0f172a] p-8 rounded-3xl shadow-2xl border border-slate-800 transition-all duration-300">
+    <div class="max-w-md w-full bg-[#0f172a] p-8 rounded-3xl shadow-2xl border border-slate-800">
         
         <div class="text-center mb-8">
             <h1 class="text-4xl font-black text-[#2EC4B6] tracking-tight">NurseCore</h1>
@@ -17,7 +17,6 @@
         </div>
 
         <form id="loginForm" onsubmit="validarLogin(event)" class="space-y-5">
-            
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Correo Electrónico</label>
                 <input type="email" id="loginEmail" required 
@@ -26,7 +25,7 @@
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Contraseña</label>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Contraseña (Tu Código)</label>
                 <input type="password" id="loginPassword" required 
                        class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
                        placeholder="••••••••">
@@ -42,7 +41,6 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
     <script>
         function validarLogin(event) {
             event.preventDefault(); 
@@ -50,25 +48,23 @@
             const email = document.getElementById("loginEmail").value.trim();
             const pass = document.getElementById("loginPassword").value.trim();
 
-            // 1. Intentamos recuperar al usuario que se registró previamente
             const codigoRegistrado = localStorage.getItem("codigoUsuario");
             const nombreRegistrado = localStorage.getItem("nombreUsuario");
 
-            // 2. CONTROL DE SEGURIDAD: Si no hay nadie registrado en el navegador...
             if (!codigoRegistrado || !nombreRegistrado) {
                 alert("❌ Error: No hay ninguna cuenta registrada en este dispositivo. Por favor, regístrate primero.");
                 window.location.href = "registro.html";
                 return;
             }
 
-            // 3. VALIDACIÓN COHERENTE
-            if (email.includes(codigoRegistrado) || pass === codigoRegistrado) {
-                // Si coincide, guardamos la sesión y pasa
+            // Corrección de seguridad: Validación exacta de credenciales
+            const correoEsperado = `${codigoRegistrado.toLowerCase()}@nursecore.com`;
+            
+            if (email === correoEsperado && pass === codigoRegistrado) {
                 localStorage.setItem("usuarioLogueado", email);
                 window.location.href = "elegir-usuario.html";
             } else {
-                // Si mete cualquier otra cosa aleatoria, lo rebotamos
-                alert("❌ Credenciales incorrectas. El correo o la contraseña no coinciden con los datos registrados (Tip: Usa tu código de identificación).");
+                alert("❌ Credenciales incorrectas. Usa el correo generado en el registro y tu código como contraseña.");
             }
         }
     </script>
