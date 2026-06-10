@@ -18,14 +18,14 @@
 
         <form id="loginForm" onsubmit="validarLogin(event)" class="space-y-5">
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Correo Electrónico</label>
-                <input type="email" id="loginEmail" required 
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Nombre de Usuario o Código</label>
+                <input type="text" id="loginUser" required 
                        class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
-                       placeholder="ejemplo@nursecore.com">
+                       placeholder="Tu nombre o código registrado">
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Contraseña (Tu Código)</label>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Contraseña (Tu Código NUC)</label>
                 <input type="password" id="loginPassword" required 
                        class="w-full px-4 py-3.5 rounded-xl border border-slate-700 focus:outline-none focus:border-[#2EC4B6] bg-slate-900 text-sm font-medium text-white transition-colors" 
                        placeholder="••••••••">
@@ -45,30 +45,31 @@
         function validarLogin(event) {
             event.preventDefault(); 
             
-            // Convertimos a minúsculas para evitar problemas de mayúsculas/minúsculas en el correo
-            const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-            const pass = document.getElementById("loginPassword").value.trim();
+            // Obtenemos los valores ingresados por el usuario
+            const usuarioIngresado = document.getElementById("loginUser").value.trim();
+            const passIngresada = document.getElementById("loginPassword").value.trim();
 
+            // Recuperamos lo que está guardado en el navegador
             const codigoRegistrado = localStorage.getItem("codigoUsuario");
             const nombreRegistrado = localStorage.getItem("nombreUsuario");
 
-            // Si el código no existe en la máquina, significa que nunca se ha registrado nadie aquí
+            // Si no hay datos en la máquina, mandamos a registrar
             if (!codigoRegistrado || !nombreRegistrado) {
                 alert("❌ Error: No hay ninguna cuenta registrada en este dispositivo. Por favor, regístrate primero.");
                 window.location.href = "registro.html";
                 return;
             }
 
-            // Construimos de forma exacta el correo que se generó
-            const correoEsperado = `${codigoRegistrado.toLowerCase()}@nursecore.com`;
+            // Flexibilidad total: El usuario puede poner su NOMBRE o su CÓDIGO en el primer campo,
+            // pero en la contraseña SIEMPRE debe poner su código NUC.
+            const esUsuarioValido = (usuarioIngresado === nombreRegistrado || usuarioIngresado === codigoRegistrado);
+            const esPasswordValido = (passIngresada === codigoRegistrado);
             
-            // Validación estricta
-            if (email === correoEsperado && pass === codigoRegistrado) {
-                // Guardamos la sesión activa
-                localStorage.setItem("usuarioLogueado", email);
+            if (esUsuarioValido && esPasswordValido) {
+                // Guardamos la sesión activa con el nombre
+                localStorage.setItem("usuarioLogueado", nombreRegistrado);
                 
-                // 🚀 LÓGICA INTELIGENTE DE ENRUTAMIENTO:
-                // Evaluamos si el usuario ya tiene un rol guardado previamente en el equipo
+                // Enrutamiento inteligente según el rol previo
                 const rolExistente = localStorage.getItem("tipoUsuario");
                 
                 if (rolExistente) {
@@ -78,12 +79,11 @@
                         window.location.href = "dashboard-profesional.html";
                     }
                 } else {
-                    // Si se registró pero cerró la pestaña antes de elegir rol, lo mandamos aquí
                     window.location.href = "elegir-usuario.html";
                 }
                 
             } else {
-                alert("❌ Credenciales incorrectas. Usa el correo generado en el registro y tu código como contraseña.");
+                alert("❌ Credenciales incorrectas. Verifica que hayas escrito bien tu nombre (o código) y que tu contraseña coincida exactamente con tu código NUC registrado.");
             }
         }
     </script>
