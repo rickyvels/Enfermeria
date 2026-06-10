@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     
-    <!-- FullCalendar Kit Completo v6 -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.11/index.global.min.js"></script>
     
@@ -26,7 +25,6 @@
 </head>
 <body class="bg-[#f0fdf4] font-sans text-slate-800 flex min-h-screen">
 
-    <!-- BARRA LATERAL (SIDEBAR) -->
     <aside id="sidebar" class="w-64 bg-[#86efac] text-emerald-950 flex flex-col justify-between shadow-lg transition-colors duration-300 flex-shrink-0">
         <div class="p-6">
             <h1 class="text-2xl font-bold tracking-wider text-emerald-900">NurseCore</h1>
@@ -48,9 +46,7 @@
         </div>
     </aside>
 
-    <!-- ÁREA DE CONTENIDO PRINCIPAL -->
     <div class="flex-1 flex flex-col">
-        <!-- CABECERA (TOPBAR) -->
         <header id="topbar" class="h-20 bg-[#14532d] flex items-center justify-between px-8 text-white shadow-md transition-colors duration-300">
             <div>
                 <h1 class="text-2xl font-bold tracking-wide text-emerald-200">Dashboard Estudiante</h1>
@@ -70,10 +66,8 @@
             </div>
         </header>
 
-        <!-- CONTENIDO DINÁMICO -->
         <main class="p-8 space-y-8">
             
-            <!-- CONTADORES SUPERIORES -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[140px]">
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Casos Clínicos</p>
@@ -93,10 +87,8 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN CENTRAL: CALENDARIO Y AGENDA (NUEVA INTEGRACIÓN) -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
-                <!-- COLUMNA CALENDARIO DE LA SECCIÓN (OCUPA 2 COLUMNAS) -->
                 <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
                         <div>
@@ -104,13 +96,10 @@
                             <p class="text-xs text-slate-400 font-medium">Control de rotaciones, exámenes y laboratorios</p>
                         </div>
                     </div>
-                    <!-- CONTENEDOR DEL CALENDARIO -->
                     <div id="calendar" class="text-slate-700 font-medium text-sm"></div>
                 </div>
 
-                <!-- COLUMNA DE INTERACCIÓN Y ACCIONES RÁPIDAS (OCUPA 1 COLUMNA) -->
                 <div class="lg:col-span-1 space-y-6">
-                    <!-- ACCIÓN NUEVA SIMULACIÓN -->
                     <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-md flex flex-col justify-between min-h-[220px]">
                         <div>
                             <h3 class="text-lg font-black text-emerald-400 mb-2">Simulaciones Clínicas</h3>
@@ -121,7 +110,6 @@
                         </button>
                     </div>
 
-                    <!-- TARJETA DOCENTE SUPERVISOR (DINÁMICA) -->
                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
                         <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Información Académica</h2>
                         <div class="space-y-3">
@@ -131,14 +119,13 @@
                             </div>
                             <div class="pt-3 border-t border-slate-100">
                                 <p class="text-xs font-bold text-emerald-900 uppercase">Identificador de Usuario</p>
-                                <p class="text-xs font-semibold text-slate-500 mt-0.5 breakdown-all" id="txtCorreo">usuario@nursecore.com</p>
+                                <p class="text-xs font-semibold text-slate-500 mt-0.5 break-all" id="txtCorreo">usuario@nursecore.com</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECCIÓN INFERIOR: ACTIVIDAD RECIENTE -->
             <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
                 <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">Actividad reciente</h3>
                 <div class="space-y-3">
@@ -153,7 +140,6 @@
         </main>
     </div>
 
-    <!-- MODAL INTERACTIVO: ENTORNO ACADÉMICO -->
     <div id="modalEstudiante" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
         <div class="bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300" id="modalContainer">
             <div class="flex justify-between items-start mb-4">
@@ -194,7 +180,6 @@
         </div>
     </div>
 
-    <!-- SCRIPTS MIGRADOS Y COMPLEMENTADOS -->
     <script src="app.js"></script>
     <script>
         // SHIELD DE SEGURIDAD ACADÉMICO
@@ -203,6 +188,8 @@
         }
 
         let calendar;
+        const STORAGE_KEY = "nursecore_eventos";
+        const usuarioActivo = localStorage.getItem("usuarioLogueado");
 
         document.addEventListener("DOMContentLoaded", function() {
             // Sincronización dinámica de datos del LocalStorage heredado
@@ -210,7 +197,11 @@
             if(document.getElementById("txtUniversidad")) document.getElementById("txtUniversidad").textContent = localStorage.getItem("est_universidad") || "Universidad Católica San Pablo";
             if(document.getElementById("txtCiclo")) document.getElementById("txtCiclo").textContent = localStorage.getItem("est_ciclo") || "Ciclo no configurado";
             if(document.getElementById("txtDocente")) document.getElementById("txtDocente").textContent = localStorage.getItem("est_docente") || "Sin docente asignado";
-            if(document.getElementById("txtCorreo")) document.getElementById("txtCorreo").textContent = localStorage.getItem("usuarioLogueado");
+            if(document.getElementById("txtCorreo")) document.getElementById("txtCorreo").textContent = usuarioActivo;
+
+            // Obtener eventos guardados persistentes de este usuario específico
+            const todosLosEventos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const eventosUsuario = todosLosEventos.filter(ev => ev.usuario === usuarioActivo);
 
             // Inicialización de FullCalendar acoplado a la rejilla interna
             const calendarEl = document.getElementById('calendar');
@@ -223,10 +214,14 @@
                     right: 'dayGridMonth,timeGridWeek'
                 },
                 buttonText: { today: 'Hoy', month: 'Mes', week: 'Semana' },
-                events: [
-                    { title: 'Simulación: Reanimación RCP', start: '2026-06-10', color: '#10b981' },
-                    { title: 'Examen de Base de Datos', start: '2026-06-15', color: '#ef4444' }
-                ]
+                events: eventosUsuario, // Pasamos la carga inicial guardada en localStorage
+                eventClick: function(info) {
+                    // Opción cómoda para borrar un evento al hacerle click
+                    if (confirm(`¿Deseas eliminar la actividad "${info.event.title}"?`)) {
+                        eliminarEvento(info.event.id);
+                        info.event.remove();
+                    }
+                }
             });
             calendar.render();
 
@@ -236,22 +231,40 @@
                 
                 const titulo = document.getElementById("selActividad").value;
                 const fecha = document.getElementById("fechaActividad").value;
+                const nuevoId = Date.now().toString(); // ID único para interactuar luego
                 
                 let colorEvento = '#10b981'; 
                 if (titulo.includes('Examen')) colorEvento = '#ef4444'; 
                 if (titulo.includes('Reporte')) colorEvento = '#3b82f6'; 
                 if (titulo.includes('Laboratorio')) colorEvento = '#f59e0b'; 
 
-                calendar.addEvent({
+                const nuevoEvento = {
+                    id: nuevoId,
                     title: titulo,
                     start: fecha,
-                    color: colorEvento
-                });
+                    color: colorEvento,
+                    usuario: usuarioActivo // Atado al usuario en sesión
+                };
+
+                // Guardar permanentemente en LocalStorage
+                const eventosActuales = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                eventosActuales.push(nuevoEvento);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(eventosActuales));
+
+                // Añadir al render dinámico en caliente del calendario
+                calendar.addEvent(nuevoEvento);
 
                 cerrarModalEstudiante();
                 document.getElementById("formAgendarEstudiante").reset();
             });
         });
+
+        // Función auxiliar para purgar del LocalStorage
+        function eliminarEvento(idEvento) {
+            let todosLosEventos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            todosLosEventos = todosLosEventos.filter(ev => ev.id !== idEvento);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(todosLosEventos));
+        }
 
         // CONTROLERS DE MODAL ANIMADO
         function abrirModalEstudiante() {
@@ -275,7 +288,7 @@
         }
 
         function cerrarSesion() {
-            localStorage.clear();
+            localStorage.removeItem("usuarioLogueado"); // Solo borra la sesión activa sin romper cuentas guardadas
             window.location.href = "login.html";
         }
     </script>
