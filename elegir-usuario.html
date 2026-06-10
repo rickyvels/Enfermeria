@@ -3,61 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Quién eres? - NurseCore</title>
+    <title>Seleccionar Rol - NurseCore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 flex flex-col items-center justify-center min-h-screen p-4">
+<body class="bg-[#1e293b] text-slate-100 flex flex-col items-center justify-center min-h-screen p-4">
 
-    <div class="text-center mb-12">
-        <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight mb-3">¿Quién eres?</h1>
-        <p class="text-base text-slate-500 font-medium">Selecciona tu tipo de usuario para configurar tu entorno</p>
-    </div>
+    <div class="max-w-2xl w-full text-center">
+        <h1 class="text-4xl font-black mb-2 text-white">Bienvenido a <span class="text-[#2EC4B6]">NurseCore</span></h1>
+        <p class="text-slate-400 mb-10 text-sm">Selecciona tu rol para personalizar tu espacio de trabajo de enfermería</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full px-4">
-        
-        <div onclick="seleccionarRol('profesional')" 
-             class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-teal-400 group">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110">👩‍⚕️</div>
-            
-            <h2 class="text-2xl font-bold text-slate-800 mb-3 group-hover:text-teal-600 transition-colors">
-                Profesional de Enfermería
-            </h2>
-            
-            <p class="text-sm text-slate-500 leading-relaxed max-w-[240px]">
-                Enfermeros titulados con acceso completo al monitoreo clínico.
-            </p>
-        </div>
+            <!-- Opción Estudiante -->
+            <button onclick="seleccionarRol('estudiante')" class="bg-[#0f172a] border border-slate-800 p-8 rounded-3xl text-left hover:border-emerald-400 transition-all card-hover group">
+                <div class="text-4xl mb-4">🎓</div>
+                <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400">Estudiante / Interno</h2>
+                <p class="text-xs text-slate-400 leading-relaxed">Accede de forma guiada a simulación clínica, control de Kardex educativo e historiales controlados.</p>
+            </button>
 
-        <div onclick="seleccionarRol('estudiante')" 
-             class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-emerald-400 group">
-            
-            <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110">🎓</div>
-            
-            <h2 class="text-2xl font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">
-                Estudiante / Practicante
-            </h2>
-            
-            <p class="text-sm text-slate-500 leading-relaxed max-w-[240px]">
-                Funciones académicas, guías de simulación y prácticas supervisadas.
-            </p>
+            <!-- Opción Profesional -->
+            <button onclick="seleccionarRol('profesional')" class="bg-[#0f172a] border border-slate-800 p-8 rounded-3xl text-left hover:border-cyan-400 transition-all card-hover group">
+                <div class="text-4xl mb-4">👩‍⚕️</div>
+                <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400">Enfermero Profesional</h2>
+                <p class="text-xs text-slate-400 leading-relaxed">Módulo clínico completo. Gestión hospitalaria avanzada, validación de CEP y monitoreo crítico en tiempo real.</p>
+            </button>
+
         </div>
     </div>
 
-    <script src="app.js"></script>
     <script>
-    function seleccionarRol(rol) {
-        // 1. Guardamos el rol inmediatamente en el localStorage
-        localStorage.setItem("tipoUsuario", rol);
-        
-        // 2. Redirigimos a la pantalla de configuración correspondiente
-        if (rol === 'profesional') {
-            window.location.href = "perfil-profesional.html";
-        } else {
-            window.location.href = "perfil-estudiante.html";
+        // Verificación de seguridad básica
+        if (!localStorage.getItem("usuarioLogueado")) {
+            window.location.href = "login.html";
         }
-    }
+
+        function seleccionarRol(rol) {
+            localStorage.setItem("tipoUsuario", rol);
+            if (rol === "estudiante") {
+                window.location.href = "perfil-estudiante.html";
+            } else {
+                window.location.href = "perfil-profesional.html";
+            }
+        }
     </script>
 </body>
 </html>
