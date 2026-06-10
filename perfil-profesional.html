@@ -9,7 +9,7 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 flex flex-col items-center justify-center min-h-screen p-4">
 
-    <div class="max-w-md w-full bg-white p-8 rounded-3xl shadow-xl border border-slate-100 transition-all duration-300">
+    <div class="max-w-md w-full bg-white p-8 rounded-3xl shadow-xl border border-slate-100">
         <div class="text-center mb-8">
             <div class="text-5xl mb-3">👩‍⚕️</div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight">Perfil Profesional</h1>
@@ -44,9 +44,7 @@
         </form>
     </div>
 
-    <script src="app.js"></script>
     <script>
-        // ESCUDO DE SEGURIDAD: Evita el rebote al login si vienes del registro correcto
         if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "profesional") {
             window.location.href = "login.html";
         }
@@ -54,11 +52,12 @@
         function guardarPerfilProfesional(event) {
             event.preventDefault();
             
-            const Fairmont = document.getElementById("profEspecialidad").value.trim();
+            // Corrección aquí: Nombre de variable coherente
+            const especialidad = document.getElementById("profEspecialidad").value.trim();
             const colegiatura = document.getElementById("profColegiatura").value.trim();
             const hospital = document.getElementById("profHospital").value.trim();
 
-            localStorage.setItem("prof_especialidad", Fairmont);
+            localStorage.setItem("prof_especialidad", especialidad);
             localStorage.setItem("prof_colegiatura", colegiatura);
             localStorage.setItem("prof_hospital", hospital);
             localStorage.setItem("perfilConfigurado", "true");
