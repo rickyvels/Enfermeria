@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casos Clínicos - NurseCore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f0fdf4] font-sans text-slate-800 flex min-h-screen">
+
+    <aside id="sidebar" class="w-64 bg-[#86efac] text-emerald-950 flex flex-col justify-between shadow-lg flex-shrink-0">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold tracking-wider text-emerald-900">NurseCore</h1>
+            <p class="text-xs text-emerald-700 mb-8 uppercase tracking-wide font-semibold">Panel Académico</p>
+            <nav class="space-y-1">
+                <a href="dashboard-estudiante.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">🏠 Dashboard</a>
+                
+                <a href="#" class="block py-3 px-4 rounded-xl bg-white/40 font-bold active-item shadow-sm text-emerald-950">📚 Casos Clínicos</a>
+                
+                <a href="#" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">📝 Reg. de Prácticas</a>
+                
+                <div class="border-t border-emerald-900/10 my-4"></div>
+                
+                <a href="guias.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">📖 Guías</a>
+                <a href="evaluaciones.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium">✅ Evaluaciones</a>
+                
+                <a href="perfil-estudiante.html" class="sidebar-item-light hover:bg-white/20 rounded-xl transition block py-2.5 px-4 font-medium mt-4">👤 Mi Perfil Académico</a>
+            </nav>
+        </div>
+        <div class="p-6 border-t border-emerald-900/10 text-xs font-semibold text-emerald-800">
+            Modo: Prácticas Académicas
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+        
+        <header class="h-20 bg-[#14532d] flex items-center justify-between px-8 text-white shadow-md">
+            <div>
+                <h1 class="text-2xl font-bold tracking-wide text-emerald-200">Módulo de Casos Clínicos</h1>
+                <p class="text-sm text-emerald-300/80">Resolución, análisis y escenarios simulados</p>
+            </div>
+            <div>
+                <a href="dashboard-estudiante.html" class="bg-emerald-600 hover:bg-emerald-500 transition text-white text-xs font-bold px-4 py-2.5 rounded-xl border border-emerald-500/30">
+                    ← Volver al Dashboard
+                </a>
+            </div>
+        </header>
+
+        <main class="p-8 space-y-8">
+            
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col sm:flex-row gap-4 justify-between items-center">
+                <div class="w-full sm:w-72">
+                    <input type="text" placeholder="Buscar caso por diagnóstico..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-medium focus:outline-none focus:border-emerald-500">
+                </div>
+                <div class="flex gap-2">
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-lg">Todos (3)</span>
+                    <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1.5 rounded-lg">En Progreso</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1.5 rounded-lg">Pendientes</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[250px]">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Completado</span>
+                            <span class="text-xs font-bold text-slate-400">ID: #CC-081</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 leading-snug">Insuficiencia Cardíaca Congestiva</h3>
+                        <p class="text-xs text-slate-400 mt-1">Paciente varón de 65 años con disnea progresiva y edema de miembros inferiores.</p>
+                        
+                        <div class="mt-4 space-y-1.5 text-xs font-medium text-slate-600">
+                            <p>🩺 <strong>Área:</strong> Medicina Interna</p>
+                            <p>⏱️ <strong>Duración estimada:</strong> 45 min</p>
+                        </div>
+                    </div>
+                    <button class="w-full bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-xs mt-4 hover:bg-slate-200 transition">
+                        Revisar Historial Evaluado
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[250px]">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">En Progreso</span>
+                            <span class="text-xs font-bold text-slate-400">ID: #CC-094</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 leading-snug">Cetoacidosis Diabética</h3>
+                        <p class="text-xs text-slate-400 mt-1">Paciente femenina de 22 años con diabetes tipo 1, presenta respiración de Kussmaul y deshidratación severa.</p>
+                        
+                        <div class="mt-4 space-y-1.5 text-xs font-medium text-slate-600">
+                            <p>🩺 <strong>Área:</strong> Urgencias / Emergencias</p>
+                            <p>⏱️ <strong>Duración estimada:</strong> 60 min</p>
+                        </div>
+                    </div>
+                    <button class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black py-2.5 rounded-xl text-xs mt-4 transition">
+                        Continuar Simulación →
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between min-h-[250px]">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">Pendiente</span>
+                            <span class="text-xs font-bold text-slate-400">ID: #CC-102</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 leading-snug">Apendicitis Aguda Pediátrica</h3>
+                        <p class="text-xs text-slate-400 mt-1">Paciente masculino de 9 años con dolor en fosa ilíaca derecha, náuseas y signo de Blumberg positivo.</p>
+                        
+                        <div class="mt-4 space-y-1.5 text-xs font-medium text-slate-600">
+                            <p>🩺 <strong>Área:</strong> Pediatría / Cirugía</p>
+                            <p>⏱️ <strong>Duración estimada:</strong> 40 min</p>
+                        </div>
+                    </div>
+                    <button class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-xs mt-4 hover:bg-slate-800 transition">
+                        Iniciar Caso Clínico
+                    </button>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // ESCUDO DE SEGURIDAD GENERAL DE NURSECORE
+        if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "estudiante") {
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
