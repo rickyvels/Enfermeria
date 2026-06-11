@@ -39,17 +39,28 @@
             </div>
 
             <button type="submit" class="w-full bg-[#86efac] hover:bg-[#6be094] text-emerald-950 font-bold py-4 rounded-xl shadow-md hover:shadow-lg transition-all text-sm mt-6 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
-                <span>Guardar y Finalizar Configuración</span> →
+                <span>Guardar y Actualizar Configuración</span> →
             </button>
         </form>
     </div>
 
     <script src="app.js"></script>
     <script>
-        // ESCUDO DE SEGURIDAD: Evita el rebote al login si vienes del registro correcto
+        // ESCUDO DE SEGURIDAD Y REDIRECCIÓN INTELIGENTE
         if (!localStorage.getItem("usuarioLogueado") || localStorage.getItem("tipoUsuario") !== "estudiante") {
             window.location.href = "login.html";
         }
+
+        // AUTO-RELLENAR SI YA TIENE DATOS GUARDADOS
+        document.addEventListener("DOMContentLoaded", function() {
+            const uniGuardada = localStorage.getItem("est_universidad");
+            const cicloGuardado = localStorage.getItem("est_ciclo");
+            const docenteGuardado = localStorage.getItem("est_docente");
+
+            if (uniGuardada) document.getElementById("estUniversidad").value = uniGuardada;
+            if (cicloGuardado) document.getElementById("estCiclo").value = cicloGuardado;
+            if (docenteGuardado) document.getElementById("estDocente").value = docenteGuardado;
+        });
 
         function guardarPerfilEstudiante(event) {
             event.preventDefault();
